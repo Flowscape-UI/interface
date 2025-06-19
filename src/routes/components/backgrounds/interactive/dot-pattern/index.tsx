@@ -1,0 +1,448 @@
+import React, { useRef, useEffect, useState, useCallback } from "react";
+import PageTitle from "@/components/ui/page-title";
+import { PreviewTabs } from "@/components/preview-tabs";
+import { UsageSection } from "@/components/usage-section";
+import { cn } from "@/lib/utils";
+import { DocsSection } from "@/components/docs-section";
+import type { PropsTableRow } from "@/components/props-table";
+import { createFileRoute } from "@tanstack/react-router";
+import { MainLayout } from "@/main-layout";
+
+export const Route = createFileRoute(
+  "/components/backgrounds/interactive/dot-pattern/"
+)({
+  component: DotPatternPage,
+});
+
+function DotPatternPage() {
+    return (
+        <MainLayout>
+        <div className="px-6 py-16 w-full">
+            <PageTitle data-toc>Interactive backgrounds</PageTitle>
+            <p className="text-white/60 max-w-xl">
+                Sprinkle life behind your content. Below are three lightweight, pointer-aware
+                backgrounds you can drop into any section — no heavy WebGL required.
+            </p>
+
+            <div className="mt-8 flex flex-col gap-10">
+                <PreviewTabs title="Whole functionality for Dot Pattern" codeText={dotPatternCode}>
+                    <DotPatternInteractive
+                        gap={16}
+                        baseRadius={1}
+                        maxRadius={3}
+                        reach={80}
+                        staticColor="#64748b"
+                        activeColor="#38bdf8"
+                        className="absolute inset-0 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 size-full"
+                        trailing
+                        trailLength={20}
+                        minTrailLength={1}
+                        animate="on-hover"
+                        trailingRadius={10}
+                        trailingGradient={{ from: "#38bdf8", to: "#FF0000" }}
+                        trailingLifetime={50}
+                    />
+                    <div
+                        className="absolute inset-0 bg-black mask-[radial-gradient(600px_circle_at_center,transparent,black)] pointer-events-none"
+                    />
+                </PreviewTabs>
+
+                <PreviewTabs title="Without trailing" codeText={dotPatternCode}>
+                    <DotPatternInteractive
+                        gap={16}
+                        baseRadius={1}
+                        maxRadius={3}
+                        reach={80}
+                        staticColor="#64748b"
+                        activeColor="#38bdf8"
+                        className="absolute inset-0 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 size-full"
+                    />
+                    <div
+                        className="absolute inset-0 bg-black mask-[radial-gradient(600px_circle_at_center,transparent,black)] pointer-events-none"
+                    />
+                </PreviewTabs>
+
+                <PreviewTabs title="Only when mouse clicked" codeText={dotPatternCode}>
+                    <DotPatternInteractive
+                        gap={16}
+                        baseRadius={1}
+                        maxRadius={3}
+                        reach={80}
+                        staticColor="#64748b"
+                        activeColor="#38bdf8"
+                        className="absolute inset-0 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 size-full"
+                        animate="on-action"
+                    />
+                    <div
+                        className="absolute inset-0 bg-black mask-[radial-gradient(600px_circle_at_center,transparent,black)] pointer-events-none"
+                    />
+                </PreviewTabs>
+            </div>
+
+            <UsageSection
+                description={
+                    <>
+                        A CSS radial gradient that follows the pointer. The gradient is
+                        configurable, and you can use it as a background for any element.
+                    </>
+                }
+                code={dotPatternCode}
+            />
+
+            <DocsSection
+                description={
+                    <>
+                        <p className="mb-4">
+                            <strong>Interactive dot-grid background</strong> &mdash; a
+                            lightweight&nbsp;<code>&lt;canvas&gt;</code> effect with zero external
+                            dependencies.
+                        </p>
+
+                        <ul className="list-disc space-y-1 pl-5 text-slate-300">
+                            <li>
+                                <span className="text-white font-medium">Idle&nbsp;state:</span> static
+                                dots&nbsp;• optional <em>fish-eye</em> warp towards the centre.
+                            </li>
+                            <li>
+                                <span className="text-white font-medium">Pointer&nbsp;state:</span> nearby
+                                dots expand &amp; change colour while the cursor leaves a smooth,
+                                tapering trail.
+                            </li>
+                        </ul>
+
+                        <p className="mt-4">
+                            Tune every detail&nbsp;&mdash;&nbsp;
+                            <code>gap</code>, <code>baseRadius</code>, <code>maxRadius</code>,
+                            <code>blur</code>, colours, interaction radius, trail length&nbsp;&amp;
+                            lifetime&nbsp;&mdash; through simple props.
+                        </p>
+                    </>
+                }
+                rows={rows}
+            />
+        </div>
+        </MainLayout>
+    );
+}
+
+const rows: PropsTableRow[] = [
+    {
+        prop: "title",
+        type: "string",
+        required: true,
+        description: "Main heading displayed on the card.",
+    },
+    {
+        prop: "description",
+        type: "ReactNode",
+        required: false,
+        description: "Optional descriptive text.",
+    },
+    {
+        prop: "code",
+        type: "string",
+        required: true,
+        description: "Raw code snippet to show inside the block.",
+    },
+];
+
+
+/* --------------------------------------------------
+ * 1. DotPatternInteractive — configurable canvas background
+ *    (container‑aware ResizeObserver implementation)
+ * -------------------------------------------------- */
+interface DotPatternProps {
+    gap?: number;
+    baseRadius?: number;
+    maxRadius?: number;
+    reach?: number;
+    blur?: number;
+    staticColor?: string;
+    activeColor?: string;
+    trailing?: boolean;
+    trailLength?: number;
+    minTrailLength?: number;
+    trailingLifetime?: number;
+    trailingRadius?: number;
+    trailingColor?: string;
+    trailingGradient?: { from: string; to: string };
+    animate?: "on-hover" | "on-action";
+    drawEffect?: "normal" | "fish-eye";
+    className?: string;
+}
+
+function DotPatternInteractive({
+    className,
+    gap = 40,
+    baseRadius = 2,
+    maxRadius = 6,
+    reach = 150,
+    blur = 0,
+    staticColor = "#64748b",
+    activeColor = "#38bdf8",
+    trailing = false,
+    trailLength = 20,
+    minTrailLength = 4,
+    trailingLifetime = 50,
+    trailingRadius,
+    trailingColor,
+    trailingGradient,
+    animate = "on-hover",
+    drawEffect = "normal",
+}: DotPatternProps) {
+    const canvasRef = useRef<HTMLCanvasElement | null>(null);
+    const [dpr, setDpr] = useState(1);
+    const trail = useRef<{ x: number; y: number }[]>([]);
+    const lastMove = useRef(Date.now());
+    const active = useRef(animate === "on-hover");
+
+    /* ---------- helpers ---------- */
+    const lerpColor = (a: string, b: string, t: number) => {
+        const ca = parseInt(a.slice(1), 16);
+        const cb = parseInt(b.slice(1), 16);
+        const ar = (ca >> 16) & 255,
+            ag = (ca >> 8) & 255,
+            ab = ca & 255;
+        const br = (cb >> 16) & 255,
+            bg = (cb >> 8) & 255,
+            bb = cb & 255;
+        return `rgb(${Math.round(ar + (br - ar) * t)},${Math.round(
+            ag + (bg - ag) * t
+        )},${Math.round(ab + (bb - ab) * t)})`;
+    };
+
+
+    /* ---------- draw ---------- */
+    const draw = useCallback(
+        (pointer?: { x: number; y: number }) => {
+            const cvs = canvasRef.current;
+            if (!cvs) return;
+            const ctx = cvs.getContext("2d");
+            if (!ctx) return;
+
+            ctx.clearRect(0, 0, cvs.width, cvs.height);
+            ctx.filter = blur ? `blur(${blur * dpr}px)` : "none";
+
+            const rBase = baseRadius * dpr;
+            const rHover = maxRadius * dpr;
+            const reachPx = reach * dpr;
+
+            for (let y = gap / 2; y < cvs.height; y += gap) {
+                for (let x = gap / 2; x < cvs.width; x += gap) {
+                    let r = rBase;
+                    let color = staticColor;
+
+                    // fish‑eye only when idle
+                    if (!pointer && drawEffect === "fish-eye") {
+                        const cx = cvs.width / 2;
+                        const cy = cvs.height / 2;
+                        const tLens = 1 - Math.hypot(x - cx, y - cy) / Math.hypot(cx, cy);
+                        r *= 0.5 + 0.5 * tLens;
+                        color = lerpColor("#000000", staticColor, 0.3 + 0.7 * tLens);
+                    }
+
+                    // hover interaction
+                    if (pointer) {
+                        const d = Math.hypot(pointer.x - x, pointer.y - y);
+                        if (d < reachPx) {
+                            const t = 1 - d / reachPx;
+                            r = rBase + t * (rHover - rBase);
+                            color = lerpColor(color, activeColor, t);
+                        }
+                    }
+
+                    ctx.beginPath();
+                    ctx.arc(x, y, r, 0, Math.PI * 2);
+                    ctx.fillStyle = color;
+                    ctx.fill();
+                }
+            }
+
+            /* trail */
+            if (trailing && trail.current.length > 1) {
+                ctx.filter = "none";
+                ctx.lineCap = "round";
+                const head = (trailingRadius ?? maxRadius) * dpr;
+                for (let i = 0; i < trail.current.length - 1; i++) {
+                    const p1 = trail.current[i];
+                    const p2 = trail.current[i + 1];
+                    const t = i / (trail.current.length - 1);
+                    ctx.lineWidth = head * (1 - t);
+                    ctx.strokeStyle = trailingGradient
+                        ? lerpColor(trailingGradient.from, trailingGradient.to, t)
+                        : trailingColor ?? activeColor;
+                    ctx.beginPath();
+                    ctx.moveTo(p1.x, p1.y);
+                    ctx.lineTo(p2.x, p2.y);
+                    ctx.stroke();
+                }
+            }
+        },
+        [dpr, gap, baseRadius, maxRadius, reach, blur, staticColor, activeColor, drawEffect, trailing, trailingRadius, trailingColor, trailingGradient]
+    );
+
+    /* ---------- resize (container) ---------- */
+    useEffect(() => {
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+        const resize = () => {
+            const scale = window.devicePixelRatio || 1;
+            setDpr(scale);
+            canvas.width = canvas.offsetWidth * scale;
+            canvas.height = canvas.offsetHeight * scale;
+            draw();
+        };
+        resize();
+        const ro = new ResizeObserver(resize);
+        ro.observe(canvas);
+        return () => ro.disconnect();
+    }, [draw]);
+
+    /* ---------- decay ---------- */
+    useEffect(() => {
+        if (!trailing) return;
+        const tick = () => {
+            if (Date.now() - lastMove.current > trailingLifetime && trail.current.length > minTrailLength) {
+                trail.current.pop();
+                draw(trail.current[0]);
+            }
+            requestAnimationFrame(tick);
+        };
+        const id = requestAnimationFrame(tick);
+        return () => cancelAnimationFrame(id);
+    }, [draw, trailing, minTrailLength, trailingLifetime]);
+
+    /* ---------- pointer events ---------- */
+    useEffect(() => {
+        const cvs = canvasRef.current;
+        if (!cvs) return;
+        const getPos = (e: PointerEvent) => {
+            const rect = cvs.getBoundingClientRect();
+            return { x: (e.clientX - rect.left) * dpr, y: (e.clientY - rect.top) * dpr };
+        };
+        const move = (e: PointerEvent) => {
+            if (!active.current) return;
+            const pos = getPos(e);
+            lastMove.current = Date.now();
+            if (trailing) {
+                trail.current.unshift(pos);
+                if (trail.current.length > trailLength) trail.current.pop();
+            }
+            draw(pos);
+        };
+        const down = (e: PointerEvent) => {
+            if (animate === "on-action") {
+                active.current = true;
+                trail.current = [getPos(e)];
+            }
+        };
+        const clear = () => {
+            active.current = animate === "on-hover";
+            trail.current = [];
+            draw();
+        };
+        cvs.addEventListener("pointermove", move);
+        cvs.addEventListener("pointerdown", down);
+        cvs.addEventListener("pointerup", clear);
+        cvs.addEventListener("pointerleave", clear);
+        cvs.addEventListener("pointercancel", clear);
+        return () => {
+            cvs.removeEventListener("pointermove", move);
+            cvs.removeEventListener("pointerdown", down);
+            cvs.removeEventListener("pointerup", clear);
+            cvs.removeEventListener("pointerleave", clear);
+            cvs.removeEventListener("pointercancel", clear);
+        };
+    }, [dpr, draw, trailing, trailLength, animate]);
+
+    return (
+        <canvas
+            ref={canvasRef}
+            style={{ touchAction: "none" }}
+            className={cn("h-64 w-full rounded-lg select-none", className)}
+        />
+    );
+}
+
+/* --------------------------------------------------
+ * 3. ParallaxStarsInteractive — star layer parallax on pointer
+ * -------------------------------------------------- */
+function ParallaxStarsInteractive() {
+    const ref = useRef<HTMLDivElement | null>(null);
+
+    // generate star positions once
+    const [stars] = useState(() =>
+        Array.from({ length: 60 }).map(() => ({
+            x: Math.random() * 100,
+            y: Math.random() * 100,
+            size: 1 + Math.random() * 2,
+            depth: 0.3 + Math.random() * 0.7,
+        }))
+    );
+
+    useEffect(() => {
+        const el = ref.current;
+        if (!el) return;
+        const handle = (e: PointerEvent) => {
+            const rect = el.getBoundingClientRect();
+            const rx = (e.clientX - rect.width / 2) / rect.width;
+            const ry = (e.clientY - rect.height / 2) / rect.height;
+            stars.forEach((s, i) => {
+                const star = el.children[i] as HTMLDivElement;
+                star.style.transform = `translate(${rx * -20 * s.depth}px, ${ry * -20 * s.depth}px)`;
+            });
+        };
+        el.addEventListener("pointermove", handle);
+        return () => el.removeEventListener("pointermove", handle);
+    }, [stars]);
+
+    return (
+        <div ref={ref} className="relative h-64 w-full overflow-hidden rounded-lg bg-slate-900">
+            {stars.map((s, i) => (
+                <div
+                    key={i}
+                    style={{
+                        left: `${s.x}%`,
+                        top: `${s.y}%`,
+                        width: s.size,
+                        height: s.size,
+                        opacity: s.depth,
+                    }}
+                    className="absolute rounded-full bg-white"
+                />
+            ))}
+        </div>
+    );
+}
+
+/* --------- Code snippets for PreviewTabs (trimmed for brevity) --------- */
+const dotPatternCode =
+    `import { DotPatternInteractive } from "@/components/backgrounds/dot-pattern";
+import { cn } from "@/lib/utils";
+
+export default function Page() {
+    return (
+        <DotPatternInteractive
+            {/* Pattern settings */}
+            gap={16}
+            baseRadius={1}
+            maxRadius={3}
+            reach={80}
+            staticColor="#64748b"
+            activeColor="#38bdf8"
+            animate="on-action" {/* Or use: 'on-hover' */}
+
+            {/* Trailing settings */}
+            trailing
+            trailLength={20}
+            minTrailLength={1}
+            trailingRadius={10}
+            trailingGradient={{ from: "#38bdf8", to: "#FF0000" }}
+            trailingLifetime={50}
+
+            {/* Standard className for canvas styles */}
+            className="absolute inset-0 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 size-full"
+        />
+    );
+}
+`;
