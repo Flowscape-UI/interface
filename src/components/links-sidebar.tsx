@@ -37,8 +37,8 @@ export const nav: Section[] = [
         section: 'Components',
         children: [
             { href: '/components/buttons', label: 'Buttons' },
-            { href: '/components/inputs', label: 'Inputs' },
             { href: '/components/cards', label: 'Cards' },
+            { href: '/components/inputs', label: 'Inputs' },
         ],
     },
     {
@@ -60,14 +60,30 @@ export const nav: Section[] = [
                             {
                                 href: '/components/backgrounds/interactive/dot-pattern',
                                 label: 'Dot pattern',
-                            },
-                            {
-                                href: '/components/backgrounds/interactive/aurora-gradient',
-                                label: 'Aurora gradient',
-                            },
+                            },     
                             {
                                 href: '/components/backgrounds/interactive/parallax-stars',
                                 label: 'Parallax stars',
+                            },
+                            {
+                                href: '/components/backgrounds/interactive/particle-floor',
+                                label: 'Particle floor',
+                            },
+                            {
+                                label: 'Particles',
+                                href: '/components/backgrounds/interactive/particles',
+                            },
+                            {
+                                href: '/components/backgrounds/interactive/hyperspeed',
+                                label: 'Hyperspeed',
+                            },
+                            {
+                                href: '/components/backgrounds/interactive/iridescence',
+                                label: 'Iridescence',
+                            },
+                            {
+                                href: '/components/backgrounds/interactive/ballpit',
+                                label: 'Ballpit',
                             },
                         ],
                     },
@@ -75,20 +91,29 @@ export const nav: Section[] = [
                         label: 'Animated',
                         children: [
                             {
-                                href: '/components/backgrounds/animated/css-keyframes',
-                                label: 'CSS keyframes',
+                                href: '/components/backgrounds/animated/bubbles',
+                                label: 'Bubbles',
                             },
-                            { href: '/components/backgrounds/animated/lottie', label: 'Lottie' },
-                        ],
-                    },
-                    {
-                        label: 'Static',
-                        children: [
                             {
-                                href: '/components/backgrounds/static/gradients',
-                                label: 'Gradients',
+                                href: '/components/backgrounds/animated/wavy',
+                                label: 'Wavy',
                             },
-                            { href: '/components/backgrounds/static/images', label: 'Images' },
+                            {
+                                label: 'Gradient',
+                                href: '/components/backgrounds/animated/gradient',
+                            },
+                            {
+                                label: 'Silk',
+                                href: '/components/backgrounds/animated/silk',
+                            },
+                            {
+                                label: 'Aurora',
+                                href: '/components/backgrounds/animated/aurora',
+                            },
+                            {
+                                label: 'Lightning',
+                                href: '/components/backgrounds/animated/lightning',
+                            },
                         ],
                     },
                 ],
@@ -163,7 +188,7 @@ function SidebarNode({
                 <button
                     onClick={() => toggle(branchKey)}
                     className={cn(
-                        'flex w-full items-center justify-between rounded px-2 py-1.5 text-base font-medium md:text-sm',
+                        'flex w-full items-center justify-between rounded pl-2 py-1.5 text-base font-medium md:text-sm',
                         branchActive ? 'text-sky-400' : 'text-white',
                         'hover:text-sky-300',
                     )}
@@ -260,7 +285,7 @@ export default function LinksSidebar() {
         </>
     );
 }
-
 /* --------------------------------------------------
  * End
  * -------------------------------------------------- */
+

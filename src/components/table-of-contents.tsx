@@ -100,7 +100,7 @@ export default function TableOfContents() {
                 {items.map(({ id, text, level }) => (
                     <li key={id} className={cn(level === 3 && 'pl-4', level === 2 && 'pl-2')}>
                         <Link
-                            to={pathname as any}
+                            to={pathname as string}
                             hash={id}
                             onClick={() => setActive(id)}
                             className={cn(

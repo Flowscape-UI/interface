@@ -24,9 +24,19 @@ import { Route as DocsAboutUsIndexRouteImport } from './routes/docs/about-us/ind
 import { Route as ComponentsInputsIndexRouteImport } from './routes/components/inputs/index'
 import { Route as ComponentsCardsIndexRouteImport } from './routes/components/cards/index'
 import { Route as ComponentsButtonsIndexRouteImport } from './routes/components/buttons/index'
+import { Route as ComponentsBackgroundsInteractiveParticlesIndexRouteImport } from './routes/components/backgrounds/interactive/particles/index'
+import { Route as ComponentsBackgroundsInteractiveParticleFloorIndexRouteImport } from './routes/components/backgrounds/interactive/particle-floor/index'
 import { Route as ComponentsBackgroundsInteractiveParallaxStarsIndexRouteImport } from './routes/components/backgrounds/interactive/parallax-stars/index'
+import { Route as ComponentsBackgroundsInteractiveIridescenceIndexRouteImport } from './routes/components/backgrounds/interactive/iridescence/index'
+import { Route as ComponentsBackgroundsInteractiveHyperspeedIndexRouteImport } from './routes/components/backgrounds/interactive/hyperspeed/index'
 import { Route as ComponentsBackgroundsInteractiveDotPatternIndexRouteImport } from './routes/components/backgrounds/interactive/dot-pattern/index'
-import { Route as ComponentsBackgroundsInteractiveAuroraGradientIndexRouteImport } from './routes/components/backgrounds/interactive/aurora-gradient/index'
+import { Route as ComponentsBackgroundsInteractiveBallpitIndexRouteImport } from './routes/components/backgrounds/interactive/ballpit/index'
+import { Route as ComponentsBackgroundsAnimatedWavyIndexRouteImport } from './routes/components/backgrounds/animated/wavy/index'
+import { Route as ComponentsBackgroundsAnimatedSilkIndexRouteImport } from './routes/components/backgrounds/animated/silk/index'
+import { Route as ComponentsBackgroundsAnimatedLightningIndexRouteImport } from './routes/components/backgrounds/animated/lightning/index'
+import { Route as ComponentsBackgroundsAnimatedGradientIndexRouteImport } from './routes/components/backgrounds/animated/gradient/index'
+import { Route as ComponentsBackgroundsAnimatedBubblesIndexRouteImport } from './routes/components/backgrounds/animated/bubbles/index'
+import { Route as ComponentsBackgroundsAnimatedAuroraIndexRouteImport } from './routes/components/backgrounds/animated/aurora/index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -103,10 +113,34 @@ const ComponentsButtonsIndexRoute = ComponentsButtonsIndexRouteImport.update({
   path: '/components/buttons/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ComponentsBackgroundsInteractiveParticlesIndexRoute =
+  ComponentsBackgroundsInteractiveParticlesIndexRouteImport.update({
+    id: '/components/backgrounds/interactive/particles/',
+    path: '/components/backgrounds/interactive/particles/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ComponentsBackgroundsInteractiveParticleFloorIndexRoute =
+  ComponentsBackgroundsInteractiveParticleFloorIndexRouteImport.update({
+    id: '/components/backgrounds/interactive/particle-floor/',
+    path: '/components/backgrounds/interactive/particle-floor/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ComponentsBackgroundsInteractiveParallaxStarsIndexRoute =
   ComponentsBackgroundsInteractiveParallaxStarsIndexRouteImport.update({
     id: '/components/backgrounds/interactive/parallax-stars/',
     path: '/components/backgrounds/interactive/parallax-stars/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ComponentsBackgroundsInteractiveIridescenceIndexRoute =
+  ComponentsBackgroundsInteractiveIridescenceIndexRouteImport.update({
+    id: '/components/backgrounds/interactive/iridescence/',
+    path: '/components/backgrounds/interactive/iridescence/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ComponentsBackgroundsInteractiveHyperspeedIndexRoute =
+  ComponentsBackgroundsInteractiveHyperspeedIndexRouteImport.update({
+    id: '/components/backgrounds/interactive/hyperspeed/',
+    path: '/components/backgrounds/interactive/hyperspeed/',
     getParentRoute: () => rootRouteImport,
   } as any)
 const ComponentsBackgroundsInteractiveDotPatternIndexRoute =
@@ -115,10 +149,46 @@ const ComponentsBackgroundsInteractiveDotPatternIndexRoute =
     path: '/components/backgrounds/interactive/dot-pattern/',
     getParentRoute: () => rootRouteImport,
   } as any)
-const ComponentsBackgroundsInteractiveAuroraGradientIndexRoute =
-  ComponentsBackgroundsInteractiveAuroraGradientIndexRouteImport.update({
-    id: '/components/backgrounds/interactive/aurora-gradient/',
-    path: '/components/backgrounds/interactive/aurora-gradient/',
+const ComponentsBackgroundsInteractiveBallpitIndexRoute =
+  ComponentsBackgroundsInteractiveBallpitIndexRouteImport.update({
+    id: '/components/backgrounds/interactive/ballpit/',
+    path: '/components/backgrounds/interactive/ballpit/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ComponentsBackgroundsAnimatedWavyIndexRoute =
+  ComponentsBackgroundsAnimatedWavyIndexRouteImport.update({
+    id: '/components/backgrounds/animated/wavy/',
+    path: '/components/backgrounds/animated/wavy/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ComponentsBackgroundsAnimatedSilkIndexRoute =
+  ComponentsBackgroundsAnimatedSilkIndexRouteImport.update({
+    id: '/components/backgrounds/animated/silk/',
+    path: '/components/backgrounds/animated/silk/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ComponentsBackgroundsAnimatedLightningIndexRoute =
+  ComponentsBackgroundsAnimatedLightningIndexRouteImport.update({
+    id: '/components/backgrounds/animated/lightning/',
+    path: '/components/backgrounds/animated/lightning/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ComponentsBackgroundsAnimatedGradientIndexRoute =
+  ComponentsBackgroundsAnimatedGradientIndexRouteImport.update({
+    id: '/components/backgrounds/animated/gradient/',
+    path: '/components/backgrounds/animated/gradient/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ComponentsBackgroundsAnimatedBubblesIndexRoute =
+  ComponentsBackgroundsAnimatedBubblesIndexRouteImport.update({
+    id: '/components/backgrounds/animated/bubbles/',
+    path: '/components/backgrounds/animated/bubbles/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ComponentsBackgroundsAnimatedAuroraIndexRoute =
+  ComponentsBackgroundsAnimatedAuroraIndexRouteImport.update({
+    id: '/components/backgrounds/animated/aurora/',
+    path: '/components/backgrounds/animated/aurora/',
     getParentRoute: () => rootRouteImport,
   } as any)
 
@@ -138,9 +208,19 @@ export interface FileRoutesByFullPath {
   '/docs/installation': typeof DocsInstallationIndexRoute
   '/docs/philosophy': typeof DocsPhilosophyIndexRoute
   '/docs/quick-start': typeof DocsQuickStartIndexRoute
-  '/components/backgrounds/interactive/aurora-gradient': typeof ComponentsBackgroundsInteractiveAuroraGradientIndexRoute
+  '/components/backgrounds/animated/aurora': typeof ComponentsBackgroundsAnimatedAuroraIndexRoute
+  '/components/backgrounds/animated/bubbles': typeof ComponentsBackgroundsAnimatedBubblesIndexRoute
+  '/components/backgrounds/animated/gradient': typeof ComponentsBackgroundsAnimatedGradientIndexRoute
+  '/components/backgrounds/animated/lightning': typeof ComponentsBackgroundsAnimatedLightningIndexRoute
+  '/components/backgrounds/animated/silk': typeof ComponentsBackgroundsAnimatedSilkIndexRoute
+  '/components/backgrounds/animated/wavy': typeof ComponentsBackgroundsAnimatedWavyIndexRoute
+  '/components/backgrounds/interactive/ballpit': typeof ComponentsBackgroundsInteractiveBallpitIndexRoute
   '/components/backgrounds/interactive/dot-pattern': typeof ComponentsBackgroundsInteractiveDotPatternIndexRoute
+  '/components/backgrounds/interactive/hyperspeed': typeof ComponentsBackgroundsInteractiveHyperspeedIndexRoute
+  '/components/backgrounds/interactive/iridescence': typeof ComponentsBackgroundsInteractiveIridescenceIndexRoute
   '/components/backgrounds/interactive/parallax-stars': typeof ComponentsBackgroundsInteractiveParallaxStarsIndexRoute
+  '/components/backgrounds/interactive/particle-floor': typeof ComponentsBackgroundsInteractiveParticleFloorIndexRoute
+  '/components/backgrounds/interactive/particles': typeof ComponentsBackgroundsInteractiveParticlesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -158,9 +238,19 @@ export interface FileRoutesByTo {
   '/docs/installation': typeof DocsInstallationIndexRoute
   '/docs/philosophy': typeof DocsPhilosophyIndexRoute
   '/docs/quick-start': typeof DocsQuickStartIndexRoute
-  '/components/backgrounds/interactive/aurora-gradient': typeof ComponentsBackgroundsInteractiveAuroraGradientIndexRoute
+  '/components/backgrounds/animated/aurora': typeof ComponentsBackgroundsAnimatedAuroraIndexRoute
+  '/components/backgrounds/animated/bubbles': typeof ComponentsBackgroundsAnimatedBubblesIndexRoute
+  '/components/backgrounds/animated/gradient': typeof ComponentsBackgroundsAnimatedGradientIndexRoute
+  '/components/backgrounds/animated/lightning': typeof ComponentsBackgroundsAnimatedLightningIndexRoute
+  '/components/backgrounds/animated/silk': typeof ComponentsBackgroundsAnimatedSilkIndexRoute
+  '/components/backgrounds/animated/wavy': typeof ComponentsBackgroundsAnimatedWavyIndexRoute
+  '/components/backgrounds/interactive/ballpit': typeof ComponentsBackgroundsInteractiveBallpitIndexRoute
   '/components/backgrounds/interactive/dot-pattern': typeof ComponentsBackgroundsInteractiveDotPatternIndexRoute
+  '/components/backgrounds/interactive/hyperspeed': typeof ComponentsBackgroundsInteractiveHyperspeedIndexRoute
+  '/components/backgrounds/interactive/iridescence': typeof ComponentsBackgroundsInteractiveIridescenceIndexRoute
   '/components/backgrounds/interactive/parallax-stars': typeof ComponentsBackgroundsInteractiveParallaxStarsIndexRoute
+  '/components/backgrounds/interactive/particle-floor': typeof ComponentsBackgroundsInteractiveParticleFloorIndexRoute
+  '/components/backgrounds/interactive/particles': typeof ComponentsBackgroundsInteractiveParticlesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -179,9 +269,19 @@ export interface FileRoutesById {
   '/docs/installation/': typeof DocsInstallationIndexRoute
   '/docs/philosophy/': typeof DocsPhilosophyIndexRoute
   '/docs/quick-start/': typeof DocsQuickStartIndexRoute
-  '/components/backgrounds/interactive/aurora-gradient/': typeof ComponentsBackgroundsInteractiveAuroraGradientIndexRoute
+  '/components/backgrounds/animated/aurora/': typeof ComponentsBackgroundsAnimatedAuroraIndexRoute
+  '/components/backgrounds/animated/bubbles/': typeof ComponentsBackgroundsAnimatedBubblesIndexRoute
+  '/components/backgrounds/animated/gradient/': typeof ComponentsBackgroundsAnimatedGradientIndexRoute
+  '/components/backgrounds/animated/lightning/': typeof ComponentsBackgroundsAnimatedLightningIndexRoute
+  '/components/backgrounds/animated/silk/': typeof ComponentsBackgroundsAnimatedSilkIndexRoute
+  '/components/backgrounds/animated/wavy/': typeof ComponentsBackgroundsAnimatedWavyIndexRoute
+  '/components/backgrounds/interactive/ballpit/': typeof ComponentsBackgroundsInteractiveBallpitIndexRoute
   '/components/backgrounds/interactive/dot-pattern/': typeof ComponentsBackgroundsInteractiveDotPatternIndexRoute
+  '/components/backgrounds/interactive/hyperspeed/': typeof ComponentsBackgroundsInteractiveHyperspeedIndexRoute
+  '/components/backgrounds/interactive/iridescence/': typeof ComponentsBackgroundsInteractiveIridescenceIndexRoute
   '/components/backgrounds/interactive/parallax-stars/': typeof ComponentsBackgroundsInteractiveParallaxStarsIndexRoute
+  '/components/backgrounds/interactive/particle-floor/': typeof ComponentsBackgroundsInteractiveParticleFloorIndexRoute
+  '/components/backgrounds/interactive/particles/': typeof ComponentsBackgroundsInteractiveParticlesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -201,9 +301,19 @@ export interface FileRouteTypes {
     | '/docs/installation'
     | '/docs/philosophy'
     | '/docs/quick-start'
-    | '/components/backgrounds/interactive/aurora-gradient'
+    | '/components/backgrounds/animated/aurora'
+    | '/components/backgrounds/animated/bubbles'
+    | '/components/backgrounds/animated/gradient'
+    | '/components/backgrounds/animated/lightning'
+    | '/components/backgrounds/animated/silk'
+    | '/components/backgrounds/animated/wavy'
+    | '/components/backgrounds/interactive/ballpit'
     | '/components/backgrounds/interactive/dot-pattern'
+    | '/components/backgrounds/interactive/hyperspeed'
+    | '/components/backgrounds/interactive/iridescence'
     | '/components/backgrounds/interactive/parallax-stars'
+    | '/components/backgrounds/interactive/particle-floor'
+    | '/components/backgrounds/interactive/particles'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -221,9 +331,19 @@ export interface FileRouteTypes {
     | '/docs/installation'
     | '/docs/philosophy'
     | '/docs/quick-start'
-    | '/components/backgrounds/interactive/aurora-gradient'
+    | '/components/backgrounds/animated/aurora'
+    | '/components/backgrounds/animated/bubbles'
+    | '/components/backgrounds/animated/gradient'
+    | '/components/backgrounds/animated/lightning'
+    | '/components/backgrounds/animated/silk'
+    | '/components/backgrounds/animated/wavy'
+    | '/components/backgrounds/interactive/ballpit'
     | '/components/backgrounds/interactive/dot-pattern'
+    | '/components/backgrounds/interactive/hyperspeed'
+    | '/components/backgrounds/interactive/iridescence'
     | '/components/backgrounds/interactive/parallax-stars'
+    | '/components/backgrounds/interactive/particle-floor'
+    | '/components/backgrounds/interactive/particles'
   id:
     | '__root__'
     | '/'
@@ -241,9 +361,19 @@ export interface FileRouteTypes {
     | '/docs/installation/'
     | '/docs/philosophy/'
     | '/docs/quick-start/'
-    | '/components/backgrounds/interactive/aurora-gradient/'
+    | '/components/backgrounds/animated/aurora/'
+    | '/components/backgrounds/animated/bubbles/'
+    | '/components/backgrounds/animated/gradient/'
+    | '/components/backgrounds/animated/lightning/'
+    | '/components/backgrounds/animated/silk/'
+    | '/components/backgrounds/animated/wavy/'
+    | '/components/backgrounds/interactive/ballpit/'
     | '/components/backgrounds/interactive/dot-pattern/'
+    | '/components/backgrounds/interactive/hyperspeed/'
+    | '/components/backgrounds/interactive/iridescence/'
     | '/components/backgrounds/interactive/parallax-stars/'
+    | '/components/backgrounds/interactive/particle-floor/'
+    | '/components/backgrounds/interactive/particles/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -262,9 +392,19 @@ export interface RootRouteChildren {
   DocsInstallationIndexRoute: typeof DocsInstallationIndexRoute
   DocsPhilosophyIndexRoute: typeof DocsPhilosophyIndexRoute
   DocsQuickStartIndexRoute: typeof DocsQuickStartIndexRoute
-  ComponentsBackgroundsInteractiveAuroraGradientIndexRoute: typeof ComponentsBackgroundsInteractiveAuroraGradientIndexRoute
+  ComponentsBackgroundsAnimatedAuroraIndexRoute: typeof ComponentsBackgroundsAnimatedAuroraIndexRoute
+  ComponentsBackgroundsAnimatedBubblesIndexRoute: typeof ComponentsBackgroundsAnimatedBubblesIndexRoute
+  ComponentsBackgroundsAnimatedGradientIndexRoute: typeof ComponentsBackgroundsAnimatedGradientIndexRoute
+  ComponentsBackgroundsAnimatedLightningIndexRoute: typeof ComponentsBackgroundsAnimatedLightningIndexRoute
+  ComponentsBackgroundsAnimatedSilkIndexRoute: typeof ComponentsBackgroundsAnimatedSilkIndexRoute
+  ComponentsBackgroundsAnimatedWavyIndexRoute: typeof ComponentsBackgroundsAnimatedWavyIndexRoute
+  ComponentsBackgroundsInteractiveBallpitIndexRoute: typeof ComponentsBackgroundsInteractiveBallpitIndexRoute
   ComponentsBackgroundsInteractiveDotPatternIndexRoute: typeof ComponentsBackgroundsInteractiveDotPatternIndexRoute
+  ComponentsBackgroundsInteractiveHyperspeedIndexRoute: typeof ComponentsBackgroundsInteractiveHyperspeedIndexRoute
+  ComponentsBackgroundsInteractiveIridescenceIndexRoute: typeof ComponentsBackgroundsInteractiveIridescenceIndexRoute
   ComponentsBackgroundsInteractiveParallaxStarsIndexRoute: typeof ComponentsBackgroundsInteractiveParallaxStarsIndexRoute
+  ComponentsBackgroundsInteractiveParticleFloorIndexRoute: typeof ComponentsBackgroundsInteractiveParticleFloorIndexRoute
+  ComponentsBackgroundsInteractiveParticlesIndexRoute: typeof ComponentsBackgroundsInteractiveParticlesIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -374,11 +514,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ComponentsButtonsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/components/backgrounds/interactive/particles/': {
+      id: '/components/backgrounds/interactive/particles/'
+      path: '/components/backgrounds/interactive/particles'
+      fullPath: '/components/backgrounds/interactive/particles'
+      preLoaderRoute: typeof ComponentsBackgroundsInteractiveParticlesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/components/backgrounds/interactive/particle-floor/': {
+      id: '/components/backgrounds/interactive/particle-floor/'
+      path: '/components/backgrounds/interactive/particle-floor'
+      fullPath: '/components/backgrounds/interactive/particle-floor'
+      preLoaderRoute: typeof ComponentsBackgroundsInteractiveParticleFloorIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/components/backgrounds/interactive/parallax-stars/': {
       id: '/components/backgrounds/interactive/parallax-stars/'
       path: '/components/backgrounds/interactive/parallax-stars'
       fullPath: '/components/backgrounds/interactive/parallax-stars'
       preLoaderRoute: typeof ComponentsBackgroundsInteractiveParallaxStarsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/components/backgrounds/interactive/iridescence/': {
+      id: '/components/backgrounds/interactive/iridescence/'
+      path: '/components/backgrounds/interactive/iridescence'
+      fullPath: '/components/backgrounds/interactive/iridescence'
+      preLoaderRoute: typeof ComponentsBackgroundsInteractiveIridescenceIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/components/backgrounds/interactive/hyperspeed/': {
+      id: '/components/backgrounds/interactive/hyperspeed/'
+      path: '/components/backgrounds/interactive/hyperspeed'
+      fullPath: '/components/backgrounds/interactive/hyperspeed'
+      preLoaderRoute: typeof ComponentsBackgroundsInteractiveHyperspeedIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/components/backgrounds/interactive/dot-pattern/': {
@@ -388,11 +556,53 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ComponentsBackgroundsInteractiveDotPatternIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/components/backgrounds/interactive/aurora-gradient/': {
-      id: '/components/backgrounds/interactive/aurora-gradient/'
-      path: '/components/backgrounds/interactive/aurora-gradient'
-      fullPath: '/components/backgrounds/interactive/aurora-gradient'
-      preLoaderRoute: typeof ComponentsBackgroundsInteractiveAuroraGradientIndexRouteImport
+    '/components/backgrounds/interactive/ballpit/': {
+      id: '/components/backgrounds/interactive/ballpit/'
+      path: '/components/backgrounds/interactive/ballpit'
+      fullPath: '/components/backgrounds/interactive/ballpit'
+      preLoaderRoute: typeof ComponentsBackgroundsInteractiveBallpitIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/components/backgrounds/animated/wavy/': {
+      id: '/components/backgrounds/animated/wavy/'
+      path: '/components/backgrounds/animated/wavy'
+      fullPath: '/components/backgrounds/animated/wavy'
+      preLoaderRoute: typeof ComponentsBackgroundsAnimatedWavyIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/components/backgrounds/animated/silk/': {
+      id: '/components/backgrounds/animated/silk/'
+      path: '/components/backgrounds/animated/silk'
+      fullPath: '/components/backgrounds/animated/silk'
+      preLoaderRoute: typeof ComponentsBackgroundsAnimatedSilkIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/components/backgrounds/animated/lightning/': {
+      id: '/components/backgrounds/animated/lightning/'
+      path: '/components/backgrounds/animated/lightning'
+      fullPath: '/components/backgrounds/animated/lightning'
+      preLoaderRoute: typeof ComponentsBackgroundsAnimatedLightningIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/components/backgrounds/animated/gradient/': {
+      id: '/components/backgrounds/animated/gradient/'
+      path: '/components/backgrounds/animated/gradient'
+      fullPath: '/components/backgrounds/animated/gradient'
+      preLoaderRoute: typeof ComponentsBackgroundsAnimatedGradientIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/components/backgrounds/animated/bubbles/': {
+      id: '/components/backgrounds/animated/bubbles/'
+      path: '/components/backgrounds/animated/bubbles'
+      fullPath: '/components/backgrounds/animated/bubbles'
+      preLoaderRoute: typeof ComponentsBackgroundsAnimatedBubblesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/components/backgrounds/animated/aurora/': {
+      id: '/components/backgrounds/animated/aurora/'
+      path: '/components/backgrounds/animated/aurora'
+      fullPath: '/components/backgrounds/animated/aurora'
+      preLoaderRoute: typeof ComponentsBackgroundsAnimatedAuroraIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -414,12 +624,32 @@ const rootRouteChildren: RootRouteChildren = {
   DocsInstallationIndexRoute: DocsInstallationIndexRoute,
   DocsPhilosophyIndexRoute: DocsPhilosophyIndexRoute,
   DocsQuickStartIndexRoute: DocsQuickStartIndexRoute,
-  ComponentsBackgroundsInteractiveAuroraGradientIndexRoute:
-    ComponentsBackgroundsInteractiveAuroraGradientIndexRoute,
+  ComponentsBackgroundsAnimatedAuroraIndexRoute:
+    ComponentsBackgroundsAnimatedAuroraIndexRoute,
+  ComponentsBackgroundsAnimatedBubblesIndexRoute:
+    ComponentsBackgroundsAnimatedBubblesIndexRoute,
+  ComponentsBackgroundsAnimatedGradientIndexRoute:
+    ComponentsBackgroundsAnimatedGradientIndexRoute,
+  ComponentsBackgroundsAnimatedLightningIndexRoute:
+    ComponentsBackgroundsAnimatedLightningIndexRoute,
+  ComponentsBackgroundsAnimatedSilkIndexRoute:
+    ComponentsBackgroundsAnimatedSilkIndexRoute,
+  ComponentsBackgroundsAnimatedWavyIndexRoute:
+    ComponentsBackgroundsAnimatedWavyIndexRoute,
+  ComponentsBackgroundsInteractiveBallpitIndexRoute:
+    ComponentsBackgroundsInteractiveBallpitIndexRoute,
   ComponentsBackgroundsInteractiveDotPatternIndexRoute:
     ComponentsBackgroundsInteractiveDotPatternIndexRoute,
+  ComponentsBackgroundsInteractiveHyperspeedIndexRoute:
+    ComponentsBackgroundsInteractiveHyperspeedIndexRoute,
+  ComponentsBackgroundsInteractiveIridescenceIndexRoute:
+    ComponentsBackgroundsInteractiveIridescenceIndexRoute,
   ComponentsBackgroundsInteractiveParallaxStarsIndexRoute:
     ComponentsBackgroundsInteractiveParallaxStarsIndexRoute,
+  ComponentsBackgroundsInteractiveParticleFloorIndexRoute:
+    ComponentsBackgroundsInteractiveParticleFloorIndexRoute,
+  ComponentsBackgroundsInteractiveParticlesIndexRoute:
+    ComponentsBackgroundsInteractiveParticlesIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
