@@ -5,6 +5,7 @@ import { Drawer, DrawerContent, DrawerTrigger, DrawerClose } from '../components
 import { cn } from '../lib/utils';
 import LinksSidebar from './links-sidebar';
 import { Link } from '@tanstack/react-router';
+import { GITHUB_URL } from '@/lib/constants';
 
 /**
  * Simplified site header.
@@ -26,7 +27,7 @@ export function Header() {
                 </Link>
             ))}
             <a
-                href="https://github.com/flowscape/flowscape"
+                href={GITHUB_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-1 text-slate-200 hover:text-white"
@@ -76,7 +77,7 @@ export function Header() {
                             </div>
                             <DrawerClose asChild>
                                 <a
-                                    href="https://github.com/flowscape/flowscape"
+                                    href={GITHUB_URL}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="flex items-center gap-2"

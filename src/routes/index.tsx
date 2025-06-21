@@ -1,3 +1,4 @@
+import { GITHUB_URL } from '@/lib/constants';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { motion } from 'framer-motion';
 
@@ -89,7 +90,7 @@ function RouteComponent() {
                         Get Started
                     </Link>
                     <a
-                        href="https://github.com/flowscape/flowscape"
+                        href={GITHUB_URL}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-2 rounded-full border border-slate-700 bg-white/5 px-6 py-3 font-medium transition hover:bg-white/10 focus:ring-2 focus:ring-slate-600 focus:ring-offset-2 focus:ring-offset-black focus:outline-none"
