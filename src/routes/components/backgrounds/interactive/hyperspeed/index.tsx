@@ -1,4 +1,3 @@
-import React from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import { MainLayout } from '@/main-layout';
 import PageTitle from '@/components/ui/page-title';

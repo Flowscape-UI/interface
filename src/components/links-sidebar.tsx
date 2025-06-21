@@ -37,15 +37,32 @@ export const nav: Section[] = [
         section: 'Components',
         children: [
             { href: '/components/buttons', label: 'Buttons' },
-            { href: '/components/cards', label: 'Cards' },
+            {
+                label: 'Cards',
+                children: [
+                    {
+                        href: '/components/cards/letter-glitch-card',
+                        label: 'Letter Glitch',
+                    },
+                    {
+                        href: '/components/cards/magic-card',
+                        label: 'Magic Card',
+                    },
+                    {
+                        href: '/components/cards/card-hover',
+                        label: 'Hover Card',
+                    },
+
+                ],
+            },
             { href: '/components/inputs', label: 'Inputs' },
         ],
     },
     {
         section: 'Patterns',
         children: [
-            { href: '/components/auth', label: 'Auth panels' },
-            { href: '/components/empty-states', label: 'Empty states' },
+            { href: '/patterns/auth', label: 'Auth panels' },
+            { href: '/patterns/payment-form', label: 'Payment Form' },
         ],
     },
     {
@@ -118,7 +135,16 @@ export const nav: Section[] = [
                     },
                 ],
             },
-            { href: '/components/loaders', label: 'Loaders' },
+            { 
+                label: 'Loaders',
+                children: [
+                    { href: '/loaders/squeeze', label: 'Squeeze' },
+                    { href: '/loaders/neon', label: 'Neon' },
+                    { href: '/loaders/preloader', label: 'Preloader' },
+                    { href: '/loaders/gusano', label: 'Gusano' },
+                    { href: '/loaders/fade', label: 'Fade' },
+                ]
+            }
         ],
     },
 ];
@@ -237,7 +263,11 @@ export default function LinksSidebar() {
     const toggle = (key: string) =>
         setHidden((prev) => {
             const next = new Set(prev);
-            next.has(key) ? next.delete(key) : next.add(key);
+            if (next.has(key)) {
+                next.delete(key);
+            } else {
+                next.add(key);
+            }
             return next;
         });
 

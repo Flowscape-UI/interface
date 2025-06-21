@@ -17,9 +17,9 @@ export default function Footer() {
                     />
                     <p className="text-sm leading-relaxed">
                         <span className="font-semibold text-white">Flowscape</span> is an
-                        open‑source UI / UX library that lets you build fluid, animated interfaces
-                        without bloat. Totally
-                        <span className="font-semibold text-white"> free</span> for personal &
+                        open-source UI/UX library that lets you build fluid, animated interfaces
+                        without bloat. Totally{' '}
+                        <span className="font-semibold text-white">free</span> for personal &
                         commercial projects.
                     </p>
                 </div>

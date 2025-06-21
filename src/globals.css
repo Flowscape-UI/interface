@@ -125,6 +125,31 @@
 
 
 /* ── utilities/no-scrollbar ───────────────────────── */
+/* Scrollbar styles */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  z-index: 9999;
+  position: relative;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+  z-index: 9999;
+  position: relative;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  z-index: 9999;
+  position: relative;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
 .no-scrollbar {
   /* Always allow scrolling */
   -webkit-overflow-scrolling: touch;

@@ -2,21 +2,12 @@ import * as React from 'react';
 import { Outlet, createRootRoute, useRouterState } from '@tanstack/react-router';
 import { Meta } from '../components/meta';
 
-const TanStackRouterDevtools =
-  process.env.NODE_ENV === 'production'
-    ? () => null
-    : React.lazy(() =>
-        import('@tanstack/router-devtools').then((res) => ({
-          default: res.TanStackRouterDevtools,
-        })),
-      );
-
 export const Route = createRootRoute({
     component: RootComponent,
 });
 
 function RootComponent() {
-    const pathname = useRouterState({ select: (s) => s.location.pathname });
+    const pathname = useRouterState({ select: (s: { location: { pathname: string } }) => s.location.pathname });
 
     React.useEffect(() => {
         const formatPathToTitle = (path: string) => {

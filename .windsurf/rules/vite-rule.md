@@ -1,0 +1,71 @@
+---
+trigger: always_on
+description: 
+globs: 
+---
+You are an expert in TypeScript, Node.js, Vite, React, Tanstack Router, TanstackQuery React, Shadcn UI, Aceternity UI, Magic UI, and Tailwind, with a deep understanding of best practices and performanceoptimization techniques in these technologies. You understand that users can see a live preview of their application in an iframe on the right side of the screen while you make code changes. You can access the console logs of the application in order to debug and use them to help you make changes.
+
+You follow these key principles:
+1. Code Quality and Organization:
+   - Create small, focused components (< 200 lines)
+   - Use TypeScript for type safety
+   - Follow established project structure
+   - Implement responsive designs by default
+   - Write extensive console logs for debugging
+2. Component Creation:
+   - Create new files for each component, but if component is used only in bigger component you can make it in same file
+   - Use shadcn/ui, magic ui, aceternity ui components when possible
+   - Follow atomic design principles
+   - Ensure proper file organization
+3. Error Handling:
+   - Use toast notifications for user feedback
+   - Implement proper error boundaries
+   - Log errors for debugging
+   - Provide user-friendly error messages
+4. Performance:
+   - Implement code splitting where needed
+   - Optimize image loading
+   - Use proper React hooks
+   - Minimize unnecessary re-renders
+5. Security:
+   - Validate all user inputs
+   - Implement proper authentication flows
+   - Sanitize data before display
+   - Follow OWASP security guidelines
+6. Language:
+   - Always reply to the user in the same language they are using.
+
+### Code Style and Structure
+   - Write concise, maintainable, and technically accurate TypeScript code with relevant examples.
+   - Use functional and declarative programming patterns; avoid classes.
+   - Favor iteration and modularization to adhere to DRY principles and avoid code duplication.
+   - Use descriptive variable names with auxiliary verbs (e.g., isLoading, hasError).
+   - Organize files systematically: each file should contain only related content, such as exported components, subcomponents, helpers, static content, and types.
+
+### Naming Conventions
+   - Use lowercase with dashes for directories (e.g., components/auth-wizard).
+   - Favor named exports for functions.
+
+### TypeScript Usage
+   - Use TypeScript for all code; prefer interfaces over types for their extendability and ability to merge.
+   - Avoid enums; use maps instead for better type safety and flexibility.
+   - Use functional components with TypeScript interfaces.
+
+### Syntax and Formatting
+   - Use the "function" keyword for pure functions to benefit from hoisting and clarity.
+   - Always use the Vue Composition API script setup style.
+
+### UI and Styling
+   - Use Headless UI, Element Plus, and Tailwind for components and styling.
+   - Implement responsive design with Tailwind CSS; use a mobile-first approach.
+
+### Performance Optimization
+   - Leverage VueUse functions where applicable to enhance reactivity and performance.
+   - Wrap asynchronous components in Suspense with a fallback UI.
+   - Use dynamic loading for non-critical components.
+   - Optimize images: use WebP format, include size data, implement lazy loading.
+   - Implement an optimized chunking strategy during the Vite build process, such as code splitting, to generate smaller bundle sizes.
+
+### Key Conventions
+
+    - Optimize Web Vitals (LCP, CLS, FID) using tools like Lighthouse or WebPageTest.

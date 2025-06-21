@@ -5,7 +5,14 @@ import type { ComponentPropsWithoutRef } from "react";
  * A reusable <h1> wrapper with sensible defaults.
  * Extends all native <h1> props, while merging additional classNames.
  */
-export interface PageTitleProps extends ComponentPropsWithoutRef<"h1"> { }
+/**
+ * Props for the PageTitle component.
+ * Extends all native <h1> element props.
+ * 
+ * @example
+ * <PageTitle className="custom-class">Page Title</PageTitle>
+ */
+export interface PageTitleProps extends ComponentPropsWithoutRef<"h1"> {}
 
 export default function PageTitle({ className, children, ...props }: PageTitleProps) {
     return (

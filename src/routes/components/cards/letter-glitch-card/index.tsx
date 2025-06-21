@@ -1,4 +1,68 @@
-import { useRef, useEffect } from "react";
+import { PreviewTabs } from '@/components/preview-tabs';
+import PageTitle from '@/components/ui/page-title';
+import { MainLayout } from '@/main-layout';
+import { createFileRoute } from '@tanstack/react-router';
+import { LetterGlitchCard } from '@/components/ui/letter-glitch-card';
+import { UsageSection } from '@/components/usage-section';
+import { DocsSection } from '@/components/docs-section';
+import type { PropsTableRow } from '@/components/props-table';
+
+export const Route = createFileRoute('/components/cards/letter-glitch-card/')({
+    component: LetterGlitchCardPage,
+});
+
+const defaultCode = `import { LetterGlitchCard } from '@/components/ui/letter-glitch-card';
+
+<LetterGlitchCard
+    title="Hello World"
+    description="This is a card with the default glitch effect."
+/>
+`;
+
+const fastFuriousCode = `import { LetterGlitchCard } from '@/components/ui/letter-glitch-card';
+
+<LetterGlitchCard
+    title="Cyber-Attack"
+    description="A very fast and aggressive glitch effect."
+    glitchColors={['#ff0000', '#ff7f00', '#ffff00']}
+    glitchSpeed={10}
+/>
+`;
+
+const slowSharpCode = `import { LetterGlitchCard } from '@/components/ui/letter-glitch-card';
+
+<LetterGlitchCard
+    title="Old Terminal"
+    description="A slow, non-smooth animation for a retro feel."
+    glitchColors={['#00ff00', '#008f00', '#003f00']}
+    glitchSpeed={400}
+    smooth={false}
+/>
+`;
+
+const withVignetteCode = `import { LetterGlitchCard } from '@/components/ui/letter-glitch-card';
+
+<LetterGlitchCard
+    title="Cinematic"
+    description="This card has center and outer vignettes enabled for a focused look."
+    centerVignette
+    outerVignette
+/>
+`;
+
+const rows: PropsTableRow[] = [
+    { prop: "title", type: "string", required: true, description: "The title of the card." },
+    { prop: "description", type: "string", required: true, description: "The description text of the card." },
+    { prop: "className", type: "string", required: false, defaultValue: '""', description: "Custom classes for the main container." },
+    { prop: "children", type: "React.ReactNode", required: false, defaultValue: "undefined", description: "Content to be displayed inside the card." },
+    { prop: "glitchColors", type: "string[]", required: false, defaultValue: "['#2b4539', ...]", description: "Controls the colors of the letters rendered in the canvas." },
+    { prop: "glitchSpeed", type: "number", required: false, defaultValue: "50", description: "Controls the speed at which letters scramble in the animation." },
+    { prop: "centerVignette", type: "boolean", required: false, defaultValue: "false", description: "When true, renders a radial gradient in the center of the container." },
+    { prop: "outerVignette", type: "boolean", required: false, defaultValue: "true", description: "When true, renders an inner radial gradient around the edges of the container." },
+    { prop: "smooth", type: "boolean", required: false, defaultValue: "true", description: "When true, smoothens the animation of the letters for a more subtle feel." },
+];
+
+const componentCode = `import { useRef, useEffect } from "react";
 import { cn } from "@/lib/utils";
 
 export interface LetterGlitchProps {
@@ -110,12 +174,12 @@ const LetterGlitch = ({
   };
 
   const hexToRgb = (hex: string) => {
-    const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
-    hex = hex.replace(shorthandRegex, (r, g, b) => {
+    const shorthandRegex = /^#?([a-f\\d])([a-f\\d])([a-f\\d])$/i;
+    hex = hex.replace(shorthandRegex, (m, r, g, b) => {
       return r + r + g + g + b + b;
     });
 
-    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    const result = /^#?([a-f\\d]{2})([a-f\\d]{2})([a-f\\d]{2})$/i.exec(hex);
     return result
       ? {
           r: parseInt(result[1], 16),
@@ -135,7 +199,7 @@ const LetterGlitch = ({
       g: Math.round(start.g + (end.g - start.g) * factor),
       b: Math.round(start.b + (end.b - start.b) * factor),
     };
-    return `rgb(${result.r}, ${result.g}, ${result.b})`;
+    return \`rgb(\${result.r}, \${result.g}, \${result.b})\`;
   };
 
   const calculateGrid = (width: number, height: number) => {
@@ -167,8 +231,8 @@ const LetterGlitch = ({
     canvas.width = rect.width * dpr;
     canvas.height = rect.height * dpr;
 
-    canvas.style.width = `${rect.width}px`;
-    canvas.style.height = `${rect.height}px`;
+    canvas.style.width = \`\${rect.width}px\`;
+    canvas.style.height = \`\${rect.height}px\`;
 
     if (context.current) {
       context.current.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -184,7 +248,7 @@ const LetterGlitch = ({
     const ctx = context.current;
     const { width, height } = canvasRef.current!.getBoundingClientRect();
     ctx.clearRect(0, 0, width, height);
-    ctx.font = `${fontSize}px monospace`;
+    ctx.font = \`\${fontSize}px monospace\`;
     ctx.textBaseline = "top";
 
     letters.current.forEach((letter, index) => {
@@ -303,3 +367,68 @@ const LetterGlitch = ({
 };
 
 export default LetterGlitch;
+`;
+
+function LetterGlitchCardPage() {
+    return (
+        <MainLayout>
+            <div className="px-6 py-16 w-full">
+                <PageTitle>Letter Glitch Card</PageTitle>
+                <p className="text-white/60 max-w-xl">
+                    A card component with a canvas-based animated glitch effect background.
+                </p>
+
+                <div className="mt-8 flex flex-col gap-10">
+                    <PreviewTabs title="Default" codeText={defaultCode}>
+                        <LetterGlitchCard
+                            title="Hello World"
+                            description="This is a card with the default glitch effect."
+                        />
+                    </PreviewTabs>
+                    <PreviewTabs title="Fast & Furious" codeText={fastFuriousCode}>
+                        <LetterGlitchCard
+                            title="Cyber-Attack"
+                            description="A very fast and aggressive glitch effect."
+                            glitchColors={['#ff0000', '#ff7f00', '#ffff00']}
+                            glitchSpeed={10}
+                        />
+                    </PreviewTabs>
+                    <PreviewTabs title="Slow & Sharp" codeText={slowSharpCode}>
+                        <LetterGlitchCard
+                            title="Old Terminal"
+                            description="A slow, non-smooth animation for a retro feel."
+                            glitchColors={['#00ff00', '#008f00', '#003f00']}
+                            glitchSpeed={400}
+                            smooth={false}
+                        />
+                    </PreviewTabs>
+                     <PreviewTabs title="With Vignette" codeText={withVignetteCode}>
+                        <LetterGlitchCard
+                            title="Cinematic"
+                            description="This card has center and outer vignettes enabled for a focused look."
+                            centerVignette
+                            outerVignette
+                        />
+                    </PreviewTabs>
+                </div>
+
+                <UsageSection
+                    title="Component Code"
+                    description="A component that creates a glitching text effect using an HTML canvas. It's highly customizable through props."
+                    code={componentCode}
+                />
+
+                <DocsSection
+                    description={
+                        <>
+                            <p className="mb-4">
+                                <strong>Letter Glitch Card</strong> &mdash; a customizable card component with a canvas-based animated glitch effect background.
+                            </p>
+                        </>
+                    }
+                    rows={rows}
+                />
+            </div>
+        </MainLayout>
+    );
+} 

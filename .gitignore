@@ -19,6 +19,7 @@
 
 # production
 /build
+dist
 
 # misc
 .DS_Store
@@ -36,8 +37,8 @@ yarn-error.log*
 # vercel
 .vercel
 
-# cursor
-.cursor
+#tanstack router
+.tanstack
 
 # typescript
 *.tsbuildinfo

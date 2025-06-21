@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState, useCallback } from "react";
+import { useRef, useEffect, useState, useCallback } from "react";
 import PageTitle from "@/components/ui/page-title";
 import { PreviewTabs } from "@/components/preview-tabs";
 import { UsageSection } from "@/components/usage-section";
@@ -367,53 +367,53 @@ function DotPatternInteractive({
 /* --------------------------------------------------
  * 3. ParallaxStarsInteractive — star layer parallax on pointer
  * -------------------------------------------------- */
-function ParallaxStarsInteractive() {
-    const ref = useRef<HTMLDivElement | null>(null);
+// function ParallaxStarsInteractive() {
+//     const ref = useRef<HTMLDivElement | null>(null);
 
-    // generate star positions once
-    const [stars] = useState(() =>
-        Array.from({ length: 60 }).map(() => ({
-            x: Math.random() * 100,
-            y: Math.random() * 100,
-            size: 1 + Math.random() * 2,
-            depth: 0.3 + Math.random() * 0.7,
-        }))
-    );
+//     // generate star positions once
+//     const [stars] = useState(() =>
+//         Array.from({ length: 60 }).map(() => ({
+//             x: Math.random() * 100,
+//             y: Math.random() * 100,
+//             size: 1 + Math.random() * 2,
+//             depth: 0.3 + Math.random() * 0.7,
+//         }))
+//     );
 
-    useEffect(() => {
-        const el = ref.current;
-        if (!el) return;
-        const handle = (e: PointerEvent) => {
-            const rect = el.getBoundingClientRect();
-            const rx = (e.clientX - rect.width / 2) / rect.width;
-            const ry = (e.clientY - rect.height / 2) / rect.height;
-            stars.forEach((s, i) => {
-                const star = el.children[i] as HTMLDivElement;
-                star.style.transform = `translate(${rx * -20 * s.depth}px, ${ry * -20 * s.depth}px)`;
-            });
-        };
-        el.addEventListener("pointermove", handle);
-        return () => el.removeEventListener("pointermove", handle);
-    }, [stars]);
+//     useEffect(() => {
+//         const el = ref.current;
+//         if (!el) return;
+//         const handle = (e: PointerEvent) => {
+//             const rect = el.getBoundingClientRect();
+//             const rx = (e.clientX - rect.width / 2) / rect.width;
+//             const ry = (e.clientY - rect.height / 2) / rect.height;
+//             stars.forEach((s, i) => {
+//                 const star = el.children[i] as HTMLDivElement;
+//                 star.style.transform = `translate(${rx * -20 * s.depth}px, ${ry * -20 * s.depth}px)`;
+//             });
+//         };
+//         el.addEventListener("pointermove", handle);
+//         return () => el.removeEventListener("pointermove", handle);
+//     }, [stars]);
 
-    return (
-        <div ref={ref} className="relative h-64 w-full overflow-hidden rounded-lg bg-slate-900">
-            {stars.map((s, i) => (
-                <div
-                    key={i}
-                    style={{
-                        left: `${s.x}%`,
-                        top: `${s.y}%`,
-                        width: s.size,
-                        height: s.size,
-                        opacity: s.depth,
-                    }}
-                    className="absolute rounded-full bg-white"
-                />
-            ))}
-        </div>
-    );
-}
+//     return (
+//         <div ref={ref} className="relative h-64 w-full overflow-hidden rounded-lg bg-slate-900">
+//             {stars.map((s, i) => (
+//                 <div
+//                     key={i}
+//                     style={{
+//                         left: `${s.x}%`,
+//                         top: `${s.y}%`,
+//                         width: s.size,
+//                         height: s.size,
+//                         opacity: s.depth,
+//                     }}
+//                     className="absolute rounded-full bg-white"
+//                 />
+//             ))}
+//         </div>
+//     );
+// }
 
 /* --------- Code snippets for PreviewTabs (trimmed for brevity) --------- */
 const dotPatternCode =

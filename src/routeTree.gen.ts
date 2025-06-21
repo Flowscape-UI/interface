@@ -15,6 +15,12 @@ import { Route as PricingIndexRouteImport } from './routes/pricing/index'
 import { Route as HireIndexRouteImport } from './routes/hire/index'
 import { Route as ComponentsIndexRouteImport } from './routes/components/index'
 import { Route as ChangelogIndexRouteImport } from './routes/changelog/index'
+import { Route as PatternsPaymentFormIndexRouteImport } from './routes/patterns/payment-form/index'
+import { Route as LoadersSqueezeIndexRouteImport } from './routes/loaders/squeeze/index'
+import { Route as LoadersPreloaderIndexRouteImport } from './routes/loaders/preloader/index'
+import { Route as LoadersNeonIndexRouteImport } from './routes/loaders/neon/index'
+import { Route as LoadersGusanoIndexRouteImport } from './routes/loaders/gusano/index'
+import { Route as LoadersFadeIndexRouteImport } from './routes/loaders/fade/index'
 import { Route as DocsQuickStartIndexRouteImport } from './routes/docs/quick-start/index'
 import { Route as DocsPhilosophyIndexRouteImport } from './routes/docs/philosophy/index'
 import { Route as DocsInstallationIndexRouteImport } from './routes/docs/installation/index'
@@ -22,8 +28,10 @@ import { Route as DocsGettingStartedIndexRouteImport } from './routes/docs/getti
 import { Route as DocsCliIndexRouteImport } from './routes/docs/cli/index'
 import { Route as DocsAboutUsIndexRouteImport } from './routes/docs/about-us/index'
 import { Route as ComponentsInputsIndexRouteImport } from './routes/components/inputs/index'
-import { Route as ComponentsCardsIndexRouteImport } from './routes/components/cards/index'
 import { Route as ComponentsButtonsIndexRouteImport } from './routes/components/buttons/index'
+import { Route as ComponentsCardsMagicCardIndexRouteImport } from './routes/components/cards/magic-card/index'
+import { Route as ComponentsCardsLetterGlitchCardIndexRouteImport } from './routes/components/cards/letter-glitch-card/index'
+import { Route as ComponentsCardsCardHoverIndexRouteImport } from './routes/components/cards/card-hover/index'
 import { Route as ComponentsBackgroundsInteractiveParticlesIndexRouteImport } from './routes/components/backgrounds/interactive/particles/index'
 import { Route as ComponentsBackgroundsInteractiveParticleFloorIndexRouteImport } from './routes/components/backgrounds/interactive/particle-floor/index'
 import { Route as ComponentsBackgroundsInteractiveParallaxStarsIndexRouteImport } from './routes/components/backgrounds/interactive/parallax-stars/index'
@@ -68,6 +76,37 @@ const ChangelogIndexRoute = ChangelogIndexRouteImport.update({
   path: '/changelog/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PatternsPaymentFormIndexRoute =
+  PatternsPaymentFormIndexRouteImport.update({
+    id: '/patterns/payment-form/',
+    path: '/patterns/payment-form/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const LoadersSqueezeIndexRoute = LoadersSqueezeIndexRouteImport.update({
+  id: '/loaders/squeeze/',
+  path: '/loaders/squeeze/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoadersPreloaderIndexRoute = LoadersPreloaderIndexRouteImport.update({
+  id: '/loaders/preloader/',
+  path: '/loaders/preloader/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoadersNeonIndexRoute = LoadersNeonIndexRouteImport.update({
+  id: '/loaders/neon/',
+  path: '/loaders/neon/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoadersGusanoIndexRoute = LoadersGusanoIndexRouteImport.update({
+  id: '/loaders/gusano/',
+  path: '/loaders/gusano/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoadersFadeIndexRoute = LoadersFadeIndexRouteImport.update({
+  id: '/loaders/fade/',
+  path: '/loaders/fade/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DocsQuickStartIndexRoute = DocsQuickStartIndexRouteImport.update({
   id: '/docs/quick-start/',
   path: '/docs/quick-start/',
@@ -103,16 +142,29 @@ const ComponentsInputsIndexRoute = ComponentsInputsIndexRouteImport.update({
   path: '/components/inputs/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ComponentsCardsIndexRoute = ComponentsCardsIndexRouteImport.update({
-  id: '/components/cards/',
-  path: '/components/cards/',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ComponentsButtonsIndexRoute = ComponentsButtonsIndexRouteImport.update({
   id: '/components/buttons/',
   path: '/components/buttons/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ComponentsCardsMagicCardIndexRoute =
+  ComponentsCardsMagicCardIndexRouteImport.update({
+    id: '/components/cards/magic-card/',
+    path: '/components/cards/magic-card/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ComponentsCardsLetterGlitchCardIndexRoute =
+  ComponentsCardsLetterGlitchCardIndexRouteImport.update({
+    id: '/components/cards/letter-glitch-card/',
+    path: '/components/cards/letter-glitch-card/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ComponentsCardsCardHoverIndexRoute =
+  ComponentsCardsCardHoverIndexRouteImport.update({
+    id: '/components/cards/card-hover/',
+    path: '/components/cards/card-hover/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ComponentsBackgroundsInteractiveParticlesIndexRoute =
   ComponentsBackgroundsInteractiveParticlesIndexRouteImport.update({
     id: '/components/backgrounds/interactive/particles/',
@@ -200,7 +252,6 @@ export interface FileRoutesByFullPath {
   '/pricing': typeof PricingIndexRoute
   '/templates': typeof TemplatesIndexRoute
   '/components/buttons': typeof ComponentsButtonsIndexRoute
-  '/components/cards': typeof ComponentsCardsIndexRoute
   '/components/inputs': typeof ComponentsInputsIndexRoute
   '/docs/about-us': typeof DocsAboutUsIndexRoute
   '/docs/cli': typeof DocsCliIndexRoute
@@ -208,6 +259,15 @@ export interface FileRoutesByFullPath {
   '/docs/installation': typeof DocsInstallationIndexRoute
   '/docs/philosophy': typeof DocsPhilosophyIndexRoute
   '/docs/quick-start': typeof DocsQuickStartIndexRoute
+  '/loaders/fade': typeof LoadersFadeIndexRoute
+  '/loaders/gusano': typeof LoadersGusanoIndexRoute
+  '/loaders/neon': typeof LoadersNeonIndexRoute
+  '/loaders/preloader': typeof LoadersPreloaderIndexRoute
+  '/loaders/squeeze': typeof LoadersSqueezeIndexRoute
+  '/patterns/payment-form': typeof PatternsPaymentFormIndexRoute
+  '/components/cards/card-hover': typeof ComponentsCardsCardHoverIndexRoute
+  '/components/cards/letter-glitch-card': typeof ComponentsCardsLetterGlitchCardIndexRoute
+  '/components/cards/magic-card': typeof ComponentsCardsMagicCardIndexRoute
   '/components/backgrounds/animated/aurora': typeof ComponentsBackgroundsAnimatedAuroraIndexRoute
   '/components/backgrounds/animated/bubbles': typeof ComponentsBackgroundsAnimatedBubblesIndexRoute
   '/components/backgrounds/animated/gradient': typeof ComponentsBackgroundsAnimatedGradientIndexRoute
@@ -230,7 +290,6 @@ export interface FileRoutesByTo {
   '/pricing': typeof PricingIndexRoute
   '/templates': typeof TemplatesIndexRoute
   '/components/buttons': typeof ComponentsButtonsIndexRoute
-  '/components/cards': typeof ComponentsCardsIndexRoute
   '/components/inputs': typeof ComponentsInputsIndexRoute
   '/docs/about-us': typeof DocsAboutUsIndexRoute
   '/docs/cli': typeof DocsCliIndexRoute
@@ -238,6 +297,15 @@ export interface FileRoutesByTo {
   '/docs/installation': typeof DocsInstallationIndexRoute
   '/docs/philosophy': typeof DocsPhilosophyIndexRoute
   '/docs/quick-start': typeof DocsQuickStartIndexRoute
+  '/loaders/fade': typeof LoadersFadeIndexRoute
+  '/loaders/gusano': typeof LoadersGusanoIndexRoute
+  '/loaders/neon': typeof LoadersNeonIndexRoute
+  '/loaders/preloader': typeof LoadersPreloaderIndexRoute
+  '/loaders/squeeze': typeof LoadersSqueezeIndexRoute
+  '/patterns/payment-form': typeof PatternsPaymentFormIndexRoute
+  '/components/cards/card-hover': typeof ComponentsCardsCardHoverIndexRoute
+  '/components/cards/letter-glitch-card': typeof ComponentsCardsLetterGlitchCardIndexRoute
+  '/components/cards/magic-card': typeof ComponentsCardsMagicCardIndexRoute
   '/components/backgrounds/animated/aurora': typeof ComponentsBackgroundsAnimatedAuroraIndexRoute
   '/components/backgrounds/animated/bubbles': typeof ComponentsBackgroundsAnimatedBubblesIndexRoute
   '/components/backgrounds/animated/gradient': typeof ComponentsBackgroundsAnimatedGradientIndexRoute
@@ -261,7 +329,6 @@ export interface FileRoutesById {
   '/pricing/': typeof PricingIndexRoute
   '/templates/': typeof TemplatesIndexRoute
   '/components/buttons/': typeof ComponentsButtonsIndexRoute
-  '/components/cards/': typeof ComponentsCardsIndexRoute
   '/components/inputs/': typeof ComponentsInputsIndexRoute
   '/docs/about-us/': typeof DocsAboutUsIndexRoute
   '/docs/cli/': typeof DocsCliIndexRoute
@@ -269,6 +336,15 @@ export interface FileRoutesById {
   '/docs/installation/': typeof DocsInstallationIndexRoute
   '/docs/philosophy/': typeof DocsPhilosophyIndexRoute
   '/docs/quick-start/': typeof DocsQuickStartIndexRoute
+  '/loaders/fade/': typeof LoadersFadeIndexRoute
+  '/loaders/gusano/': typeof LoadersGusanoIndexRoute
+  '/loaders/neon/': typeof LoadersNeonIndexRoute
+  '/loaders/preloader/': typeof LoadersPreloaderIndexRoute
+  '/loaders/squeeze/': typeof LoadersSqueezeIndexRoute
+  '/patterns/payment-form/': typeof PatternsPaymentFormIndexRoute
+  '/components/cards/card-hover/': typeof ComponentsCardsCardHoverIndexRoute
+  '/components/cards/letter-glitch-card/': typeof ComponentsCardsLetterGlitchCardIndexRoute
+  '/components/cards/magic-card/': typeof ComponentsCardsMagicCardIndexRoute
   '/components/backgrounds/animated/aurora/': typeof ComponentsBackgroundsAnimatedAuroraIndexRoute
   '/components/backgrounds/animated/bubbles/': typeof ComponentsBackgroundsAnimatedBubblesIndexRoute
   '/components/backgrounds/animated/gradient/': typeof ComponentsBackgroundsAnimatedGradientIndexRoute
@@ -293,7 +369,6 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/templates'
     | '/components/buttons'
-    | '/components/cards'
     | '/components/inputs'
     | '/docs/about-us'
     | '/docs/cli'
@@ -301,6 +376,15 @@ export interface FileRouteTypes {
     | '/docs/installation'
     | '/docs/philosophy'
     | '/docs/quick-start'
+    | '/loaders/fade'
+    | '/loaders/gusano'
+    | '/loaders/neon'
+    | '/loaders/preloader'
+    | '/loaders/squeeze'
+    | '/patterns/payment-form'
+    | '/components/cards/card-hover'
+    | '/components/cards/letter-glitch-card'
+    | '/components/cards/magic-card'
     | '/components/backgrounds/animated/aurora'
     | '/components/backgrounds/animated/bubbles'
     | '/components/backgrounds/animated/gradient'
@@ -323,7 +407,6 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/templates'
     | '/components/buttons'
-    | '/components/cards'
     | '/components/inputs'
     | '/docs/about-us'
     | '/docs/cli'
@@ -331,6 +414,15 @@ export interface FileRouteTypes {
     | '/docs/installation'
     | '/docs/philosophy'
     | '/docs/quick-start'
+    | '/loaders/fade'
+    | '/loaders/gusano'
+    | '/loaders/neon'
+    | '/loaders/preloader'
+    | '/loaders/squeeze'
+    | '/patterns/payment-form'
+    | '/components/cards/card-hover'
+    | '/components/cards/letter-glitch-card'
+    | '/components/cards/magic-card'
     | '/components/backgrounds/animated/aurora'
     | '/components/backgrounds/animated/bubbles'
     | '/components/backgrounds/animated/gradient'
@@ -353,7 +445,6 @@ export interface FileRouteTypes {
     | '/pricing/'
     | '/templates/'
     | '/components/buttons/'
-    | '/components/cards/'
     | '/components/inputs/'
     | '/docs/about-us/'
     | '/docs/cli/'
@@ -361,6 +452,15 @@ export interface FileRouteTypes {
     | '/docs/installation/'
     | '/docs/philosophy/'
     | '/docs/quick-start/'
+    | '/loaders/fade/'
+    | '/loaders/gusano/'
+    | '/loaders/neon/'
+    | '/loaders/preloader/'
+    | '/loaders/squeeze/'
+    | '/patterns/payment-form/'
+    | '/components/cards/card-hover/'
+    | '/components/cards/letter-glitch-card/'
+    | '/components/cards/magic-card/'
     | '/components/backgrounds/animated/aurora/'
     | '/components/backgrounds/animated/bubbles/'
     | '/components/backgrounds/animated/gradient/'
@@ -384,7 +484,6 @@ export interface RootRouteChildren {
   PricingIndexRoute: typeof PricingIndexRoute
   TemplatesIndexRoute: typeof TemplatesIndexRoute
   ComponentsButtonsIndexRoute: typeof ComponentsButtonsIndexRoute
-  ComponentsCardsIndexRoute: typeof ComponentsCardsIndexRoute
   ComponentsInputsIndexRoute: typeof ComponentsInputsIndexRoute
   DocsAboutUsIndexRoute: typeof DocsAboutUsIndexRoute
   DocsCliIndexRoute: typeof DocsCliIndexRoute
@@ -392,6 +491,15 @@ export interface RootRouteChildren {
   DocsInstallationIndexRoute: typeof DocsInstallationIndexRoute
   DocsPhilosophyIndexRoute: typeof DocsPhilosophyIndexRoute
   DocsQuickStartIndexRoute: typeof DocsQuickStartIndexRoute
+  LoadersFadeIndexRoute: typeof LoadersFadeIndexRoute
+  LoadersGusanoIndexRoute: typeof LoadersGusanoIndexRoute
+  LoadersNeonIndexRoute: typeof LoadersNeonIndexRoute
+  LoadersPreloaderIndexRoute: typeof LoadersPreloaderIndexRoute
+  LoadersSqueezeIndexRoute: typeof LoadersSqueezeIndexRoute
+  PatternsPaymentFormIndexRoute: typeof PatternsPaymentFormIndexRoute
+  ComponentsCardsCardHoverIndexRoute: typeof ComponentsCardsCardHoverIndexRoute
+  ComponentsCardsLetterGlitchCardIndexRoute: typeof ComponentsCardsLetterGlitchCardIndexRoute
+  ComponentsCardsMagicCardIndexRoute: typeof ComponentsCardsMagicCardIndexRoute
   ComponentsBackgroundsAnimatedAuroraIndexRoute: typeof ComponentsBackgroundsAnimatedAuroraIndexRoute
   ComponentsBackgroundsAnimatedBubblesIndexRoute: typeof ComponentsBackgroundsAnimatedBubblesIndexRoute
   ComponentsBackgroundsAnimatedGradientIndexRoute: typeof ComponentsBackgroundsAnimatedGradientIndexRoute
@@ -451,6 +559,48 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ChangelogIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/patterns/payment-form/': {
+      id: '/patterns/payment-form/'
+      path: '/patterns/payment-form'
+      fullPath: '/patterns/payment-form'
+      preLoaderRoute: typeof PatternsPaymentFormIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/loaders/squeeze/': {
+      id: '/loaders/squeeze/'
+      path: '/loaders/squeeze'
+      fullPath: '/loaders/squeeze'
+      preLoaderRoute: typeof LoadersSqueezeIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/loaders/preloader/': {
+      id: '/loaders/preloader/'
+      path: '/loaders/preloader'
+      fullPath: '/loaders/preloader'
+      preLoaderRoute: typeof LoadersPreloaderIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/loaders/neon/': {
+      id: '/loaders/neon/'
+      path: '/loaders/neon'
+      fullPath: '/loaders/neon'
+      preLoaderRoute: typeof LoadersNeonIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/loaders/gusano/': {
+      id: '/loaders/gusano/'
+      path: '/loaders/gusano'
+      fullPath: '/loaders/gusano'
+      preLoaderRoute: typeof LoadersGusanoIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/loaders/fade/': {
+      id: '/loaders/fade/'
+      path: '/loaders/fade'
+      fullPath: '/loaders/fade'
+      preLoaderRoute: typeof LoadersFadeIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/docs/quick-start/': {
       id: '/docs/quick-start/'
       path: '/docs/quick-start'
@@ -500,18 +650,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ComponentsInputsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/components/cards/': {
-      id: '/components/cards/'
-      path: '/components/cards'
-      fullPath: '/components/cards'
-      preLoaderRoute: typeof ComponentsCardsIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/components/buttons/': {
       id: '/components/buttons/'
       path: '/components/buttons'
       fullPath: '/components/buttons'
       preLoaderRoute: typeof ComponentsButtonsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/components/cards/magic-card/': {
+      id: '/components/cards/magic-card/'
+      path: '/components/cards/magic-card'
+      fullPath: '/components/cards/magic-card'
+      preLoaderRoute: typeof ComponentsCardsMagicCardIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/components/cards/letter-glitch-card/': {
+      id: '/components/cards/letter-glitch-card/'
+      path: '/components/cards/letter-glitch-card'
+      fullPath: '/components/cards/letter-glitch-card'
+      preLoaderRoute: typeof ComponentsCardsLetterGlitchCardIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/components/cards/card-hover/': {
+      id: '/components/cards/card-hover/'
+      path: '/components/cards/card-hover'
+      fullPath: '/components/cards/card-hover'
+      preLoaderRoute: typeof ComponentsCardsCardHoverIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/components/backgrounds/interactive/particles/': {
@@ -616,7 +780,6 @@ const rootRouteChildren: RootRouteChildren = {
   PricingIndexRoute: PricingIndexRoute,
   TemplatesIndexRoute: TemplatesIndexRoute,
   ComponentsButtonsIndexRoute: ComponentsButtonsIndexRoute,
-  ComponentsCardsIndexRoute: ComponentsCardsIndexRoute,
   ComponentsInputsIndexRoute: ComponentsInputsIndexRoute,
   DocsAboutUsIndexRoute: DocsAboutUsIndexRoute,
   DocsCliIndexRoute: DocsCliIndexRoute,
@@ -624,6 +787,16 @@ const rootRouteChildren: RootRouteChildren = {
   DocsInstallationIndexRoute: DocsInstallationIndexRoute,
   DocsPhilosophyIndexRoute: DocsPhilosophyIndexRoute,
   DocsQuickStartIndexRoute: DocsQuickStartIndexRoute,
+  LoadersFadeIndexRoute: LoadersFadeIndexRoute,
+  LoadersGusanoIndexRoute: LoadersGusanoIndexRoute,
+  LoadersNeonIndexRoute: LoadersNeonIndexRoute,
+  LoadersPreloaderIndexRoute: LoadersPreloaderIndexRoute,
+  LoadersSqueezeIndexRoute: LoadersSqueezeIndexRoute,
+  PatternsPaymentFormIndexRoute: PatternsPaymentFormIndexRoute,
+  ComponentsCardsCardHoverIndexRoute: ComponentsCardsCardHoverIndexRoute,
+  ComponentsCardsLetterGlitchCardIndexRoute:
+    ComponentsCardsLetterGlitchCardIndexRoute,
+  ComponentsCardsMagicCardIndexRoute: ComponentsCardsMagicCardIndexRoute,
   ComponentsBackgroundsAnimatedAuroraIndexRoute:
     ComponentsBackgroundsAnimatedAuroraIndexRoute,
   ComponentsBackgroundsAnimatedBubblesIndexRoute:

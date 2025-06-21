@@ -48,7 +48,7 @@ function AnimatedBubbles({
     circleSize = '80%',
     blendMode = 'hard-light',
     animations = {},
-    textStyle = {},
+    // textStyle = {},
 }: AnimatedBubblesProps) {
     const uniqueId = useId();
     const containerRef = useRef<HTMLDivElement>(null);
@@ -72,13 +72,13 @@ function AnimatedBubbles({
         ...animations,
     };
 
-    const defaultTextStyle = {
-        fontSize: '96px',
-        color: 'white',
-        opacity: 0.8,
-        fontFamily: "'Dongle', sans-serif",
-        ...textStyle,
-    };
+    // const defaultTextStyle = {
+    //     fontSize: '96px',
+    //     color: 'white',
+    //     opacity: 0.8,
+    //     fontFamily: "'Dongle', sans-serif",
+    //     ...textStyle,
+    // };
 
     const cssVariables = {
         '--color-bg1': defaultColors.bg1,

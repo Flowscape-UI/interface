@@ -2,7 +2,7 @@
 
 import React from "react";
 import { cn } from "@/lib/utils";
-import { PropsTable, PropsTableRow } from "./props-table";
+import { PropsTable, type PropsTableRow } from "./props-table";
 
 interface UsageSectionProps {
     /** Markdown / JSX description placed under the title */

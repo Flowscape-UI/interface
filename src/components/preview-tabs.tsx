@@ -1,5 +1,3 @@
-"use client";
-
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { HiDesktopComputer } from "react-icons/hi";
@@ -8,18 +6,25 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { atomDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import { CopyButton } from "./copy-button";
 
+interface PreviewTabsProps {
+    title?: string;
+    description?: string;
+    codeText?: string;
+    children: React.ReactNode;
+}
+
 export function PreviewTabs({
     codeText = "",
     title,
+    description,
     children
-}: {
-    title?: string,
-    codeText?: string,
-    children: React.ReactNode,
-}) {
+}: PreviewTabsProps) {
     return (
         <Tabs defaultValue="preview" className="mx-auto w-full max-w-[740px] mt-3">
-            <h2 className="text-2xl font-bold" data-toc>{title}</h2>
+            <div className="space-y-1">
+                <h2 className="text-2xl font-bold" data-toc>{title}</h2>
+                {description && <p className="text-sm text-gray-400">{description}</p>}
+            </div>
 
             <TabsList className="grid h-full w-full grid-cols-2 border-2 bg-black">
                 <TabsTrigger value="preview" className="flex items-center gap-2">
