@@ -1,0 +1,11 @@
+import { createFileRoute } from '@tanstack/react-router'
+
+export const Route = createFileRoute('/components/inputs/input-select-number/')(
+  {
+    component: RouteComponent,
+  },
+)
+
+function RouteComponent() {
+  return <div>Hello "/components/inputs/input-select-number/"!</div>
+}

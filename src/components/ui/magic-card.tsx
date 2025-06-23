@@ -36,8 +36,12 @@ interface MagicCardSettings {
     };
 }
 
+type DeepPartial<T> = {
+    [P in keyof T]?: DeepPartial<T[P]>;
+};
+
 interface MagicCardProps {
-    initialSettings?: Partial<MagicCardSettings>;
+    initialSettings?: DeepPartial<MagicCardSettings>;
     className?: string;
     showControls?: boolean;
 }

@@ -55,19 +55,38 @@ export const nav: Section[] = [
 
                 ],
             },
-            { href: '/components/inputs', label: 'Inputs' },
+            {
+                label: 'Inputs',
+                children: [
+                    {
+                        href: '/components/inputs/input-select-number',
+                        label: 'Input Select Number',
+                    },
+                ],
+            },
+            {
+                label: 'Videos',
+                children: [
+                    {
+                        href: '/components/videos/simple-video-component',
+                        label: 'Simple Video',
+                    },
+                ],
+            },
         ],
     },
     {
         section: 'Patterns',
         children: [
-            { href: '/patterns/auth', label: 'Auth panels' },
+            { href: '/patterns/auth-panel', label: 'Auth panel' },
             { href: '/patterns/payment-form', label: 'Payment Form' },
         ],
     },
     {
         section: 'Utilities',
         children: [
+            { href: '/utils/resizable-image', label: 'Resizable Image' },
+            { href: '/utils/pixelate-image', label: 'Pixelate Image' },
             {
                 label: 'Backgrounds',
                 children: [

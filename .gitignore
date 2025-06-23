@@ -38,7 +38,6 @@ yarn-error.log*
 .vercel
 
 #tanstack router
-.tanstack
 
 # typescript
 *.tsbuildinfo

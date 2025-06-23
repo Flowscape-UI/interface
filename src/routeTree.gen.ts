@@ -15,7 +15,10 @@ import { Route as PricingIndexRouteImport } from './routes/pricing/index'
 import { Route as HireIndexRouteImport } from './routes/hire/index'
 import { Route as ComponentsIndexRouteImport } from './routes/components/index'
 import { Route as ChangelogIndexRouteImport } from './routes/changelog/index'
+import { Route as UtilsResizableImageIndexRouteImport } from './routes/utils/resizable-image/index'
+import { Route as UtilsPixelateImageIndexRouteImport } from './routes/utils/pixelate-image/index'
 import { Route as PatternsPaymentFormIndexRouteImport } from './routes/patterns/payment-form/index'
+import { Route as PatternsAuthPanelIndexRouteImport } from './routes/patterns/auth-panel/index'
 import { Route as LoadersSqueezeIndexRouteImport } from './routes/loaders/squeeze/index'
 import { Route as LoadersPreloaderIndexRouteImport } from './routes/loaders/preloader/index'
 import { Route as LoadersNeonIndexRouteImport } from './routes/loaders/neon/index'
@@ -29,6 +32,8 @@ import { Route as DocsCliIndexRouteImport } from './routes/docs/cli/index'
 import { Route as DocsAboutUsIndexRouteImport } from './routes/docs/about-us/index'
 import { Route as ComponentsInputsIndexRouteImport } from './routes/components/inputs/index'
 import { Route as ComponentsButtonsIndexRouteImport } from './routes/components/buttons/index'
+import { Route as ComponentsVideosSimpleVideoComponentIndexRouteImport } from './routes/components/videos/simple-video-component/index'
+import { Route as ComponentsInputsInputSelectNumberIndexRouteImport } from './routes/components/inputs/input-select-number/index'
 import { Route as ComponentsCardsMagicCardIndexRouteImport } from './routes/components/cards/magic-card/index'
 import { Route as ComponentsCardsLetterGlitchCardIndexRouteImport } from './routes/components/cards/letter-glitch-card/index'
 import { Route as ComponentsCardsCardHoverIndexRouteImport } from './routes/components/cards/card-hover/index'
@@ -76,12 +81,28 @@ const ChangelogIndexRoute = ChangelogIndexRouteImport.update({
   path: '/changelog/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const UtilsResizableImageIndexRoute =
+  UtilsResizableImageIndexRouteImport.update({
+    id: '/utils/resizable-image/',
+    path: '/utils/resizable-image/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const UtilsPixelateImageIndexRoute = UtilsPixelateImageIndexRouteImport.update({
+  id: '/utils/pixelate-image/',
+  path: '/utils/pixelate-image/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PatternsPaymentFormIndexRoute =
   PatternsPaymentFormIndexRouteImport.update({
     id: '/patterns/payment-form/',
     path: '/patterns/payment-form/',
     getParentRoute: () => rootRouteImport,
   } as any)
+const PatternsAuthPanelIndexRoute = PatternsAuthPanelIndexRouteImport.update({
+  id: '/patterns/auth-panel/',
+  path: '/patterns/auth-panel/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LoadersSqueezeIndexRoute = LoadersSqueezeIndexRouteImport.update({
   id: '/loaders/squeeze/',
   path: '/loaders/squeeze/',
@@ -147,6 +168,18 @@ const ComponentsButtonsIndexRoute = ComponentsButtonsIndexRouteImport.update({
   path: '/components/buttons/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ComponentsVideosSimpleVideoComponentIndexRoute =
+  ComponentsVideosSimpleVideoComponentIndexRouteImport.update({
+    id: '/components/videos/simple-video-component/',
+    path: '/components/videos/simple-video-component/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ComponentsInputsInputSelectNumberIndexRoute =
+  ComponentsInputsInputSelectNumberIndexRouteImport.update({
+    id: '/components/inputs/input-select-number/',
+    path: '/components/inputs/input-select-number/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ComponentsCardsMagicCardIndexRoute =
   ComponentsCardsMagicCardIndexRouteImport.update({
     id: '/components/cards/magic-card/',
@@ -264,10 +297,15 @@ export interface FileRoutesByFullPath {
   '/loaders/neon': typeof LoadersNeonIndexRoute
   '/loaders/preloader': typeof LoadersPreloaderIndexRoute
   '/loaders/squeeze': typeof LoadersSqueezeIndexRoute
+  '/patterns/auth-panel': typeof PatternsAuthPanelIndexRoute
   '/patterns/payment-form': typeof PatternsPaymentFormIndexRoute
+  '/utils/pixelate-image': typeof UtilsPixelateImageIndexRoute
+  '/utils/resizable-image': typeof UtilsResizableImageIndexRoute
   '/components/cards/card-hover': typeof ComponentsCardsCardHoverIndexRoute
   '/components/cards/letter-glitch-card': typeof ComponentsCardsLetterGlitchCardIndexRoute
   '/components/cards/magic-card': typeof ComponentsCardsMagicCardIndexRoute
+  '/components/inputs/input-select-number': typeof ComponentsInputsInputSelectNumberIndexRoute
+  '/components/videos/simple-video-component': typeof ComponentsVideosSimpleVideoComponentIndexRoute
   '/components/backgrounds/animated/aurora': typeof ComponentsBackgroundsAnimatedAuroraIndexRoute
   '/components/backgrounds/animated/bubbles': typeof ComponentsBackgroundsAnimatedBubblesIndexRoute
   '/components/backgrounds/animated/gradient': typeof ComponentsBackgroundsAnimatedGradientIndexRoute
@@ -302,10 +340,15 @@ export interface FileRoutesByTo {
   '/loaders/neon': typeof LoadersNeonIndexRoute
   '/loaders/preloader': typeof LoadersPreloaderIndexRoute
   '/loaders/squeeze': typeof LoadersSqueezeIndexRoute
+  '/patterns/auth-panel': typeof PatternsAuthPanelIndexRoute
   '/patterns/payment-form': typeof PatternsPaymentFormIndexRoute
+  '/utils/pixelate-image': typeof UtilsPixelateImageIndexRoute
+  '/utils/resizable-image': typeof UtilsResizableImageIndexRoute
   '/components/cards/card-hover': typeof ComponentsCardsCardHoverIndexRoute
   '/components/cards/letter-glitch-card': typeof ComponentsCardsLetterGlitchCardIndexRoute
   '/components/cards/magic-card': typeof ComponentsCardsMagicCardIndexRoute
+  '/components/inputs/input-select-number': typeof ComponentsInputsInputSelectNumberIndexRoute
+  '/components/videos/simple-video-component': typeof ComponentsVideosSimpleVideoComponentIndexRoute
   '/components/backgrounds/animated/aurora': typeof ComponentsBackgroundsAnimatedAuroraIndexRoute
   '/components/backgrounds/animated/bubbles': typeof ComponentsBackgroundsAnimatedBubblesIndexRoute
   '/components/backgrounds/animated/gradient': typeof ComponentsBackgroundsAnimatedGradientIndexRoute
@@ -341,10 +384,15 @@ export interface FileRoutesById {
   '/loaders/neon/': typeof LoadersNeonIndexRoute
   '/loaders/preloader/': typeof LoadersPreloaderIndexRoute
   '/loaders/squeeze/': typeof LoadersSqueezeIndexRoute
+  '/patterns/auth-panel/': typeof PatternsAuthPanelIndexRoute
   '/patterns/payment-form/': typeof PatternsPaymentFormIndexRoute
+  '/utils/pixelate-image/': typeof UtilsPixelateImageIndexRoute
+  '/utils/resizable-image/': typeof UtilsResizableImageIndexRoute
   '/components/cards/card-hover/': typeof ComponentsCardsCardHoverIndexRoute
   '/components/cards/letter-glitch-card/': typeof ComponentsCardsLetterGlitchCardIndexRoute
   '/components/cards/magic-card/': typeof ComponentsCardsMagicCardIndexRoute
+  '/components/inputs/input-select-number/': typeof ComponentsInputsInputSelectNumberIndexRoute
+  '/components/videos/simple-video-component/': typeof ComponentsVideosSimpleVideoComponentIndexRoute
   '/components/backgrounds/animated/aurora/': typeof ComponentsBackgroundsAnimatedAuroraIndexRoute
   '/components/backgrounds/animated/bubbles/': typeof ComponentsBackgroundsAnimatedBubblesIndexRoute
   '/components/backgrounds/animated/gradient/': typeof ComponentsBackgroundsAnimatedGradientIndexRoute
@@ -381,10 +429,15 @@ export interface FileRouteTypes {
     | '/loaders/neon'
     | '/loaders/preloader'
     | '/loaders/squeeze'
+    | '/patterns/auth-panel'
     | '/patterns/payment-form'
+    | '/utils/pixelate-image'
+    | '/utils/resizable-image'
     | '/components/cards/card-hover'
     | '/components/cards/letter-glitch-card'
     | '/components/cards/magic-card'
+    | '/components/inputs/input-select-number'
+    | '/components/videos/simple-video-component'
     | '/components/backgrounds/animated/aurora'
     | '/components/backgrounds/animated/bubbles'
     | '/components/backgrounds/animated/gradient'
@@ -419,10 +472,15 @@ export interface FileRouteTypes {
     | '/loaders/neon'
     | '/loaders/preloader'
     | '/loaders/squeeze'
+    | '/patterns/auth-panel'
     | '/patterns/payment-form'
+    | '/utils/pixelate-image'
+    | '/utils/resizable-image'
     | '/components/cards/card-hover'
     | '/components/cards/letter-glitch-card'
     | '/components/cards/magic-card'
+    | '/components/inputs/input-select-number'
+    | '/components/videos/simple-video-component'
     | '/components/backgrounds/animated/aurora'
     | '/components/backgrounds/animated/bubbles'
     | '/components/backgrounds/animated/gradient'
@@ -457,10 +515,15 @@ export interface FileRouteTypes {
     | '/loaders/neon/'
     | '/loaders/preloader/'
     | '/loaders/squeeze/'
+    | '/patterns/auth-panel/'
     | '/patterns/payment-form/'
+    | '/utils/pixelate-image/'
+    | '/utils/resizable-image/'
     | '/components/cards/card-hover/'
     | '/components/cards/letter-glitch-card/'
     | '/components/cards/magic-card/'
+    | '/components/inputs/input-select-number/'
+    | '/components/videos/simple-video-component/'
     | '/components/backgrounds/animated/aurora/'
     | '/components/backgrounds/animated/bubbles/'
     | '/components/backgrounds/animated/gradient/'
@@ -496,10 +559,15 @@ export interface RootRouteChildren {
   LoadersNeonIndexRoute: typeof LoadersNeonIndexRoute
   LoadersPreloaderIndexRoute: typeof LoadersPreloaderIndexRoute
   LoadersSqueezeIndexRoute: typeof LoadersSqueezeIndexRoute
+  PatternsAuthPanelIndexRoute: typeof PatternsAuthPanelIndexRoute
   PatternsPaymentFormIndexRoute: typeof PatternsPaymentFormIndexRoute
+  UtilsPixelateImageIndexRoute: typeof UtilsPixelateImageIndexRoute
+  UtilsResizableImageIndexRoute: typeof UtilsResizableImageIndexRoute
   ComponentsCardsCardHoverIndexRoute: typeof ComponentsCardsCardHoverIndexRoute
   ComponentsCardsLetterGlitchCardIndexRoute: typeof ComponentsCardsLetterGlitchCardIndexRoute
   ComponentsCardsMagicCardIndexRoute: typeof ComponentsCardsMagicCardIndexRoute
+  ComponentsInputsInputSelectNumberIndexRoute: typeof ComponentsInputsInputSelectNumberIndexRoute
+  ComponentsVideosSimpleVideoComponentIndexRoute: typeof ComponentsVideosSimpleVideoComponentIndexRoute
   ComponentsBackgroundsAnimatedAuroraIndexRoute: typeof ComponentsBackgroundsAnimatedAuroraIndexRoute
   ComponentsBackgroundsAnimatedBubblesIndexRoute: typeof ComponentsBackgroundsAnimatedBubblesIndexRoute
   ComponentsBackgroundsAnimatedGradientIndexRoute: typeof ComponentsBackgroundsAnimatedGradientIndexRoute
@@ -559,11 +627,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ChangelogIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/utils/resizable-image/': {
+      id: '/utils/resizable-image/'
+      path: '/utils/resizable-image'
+      fullPath: '/utils/resizable-image'
+      preLoaderRoute: typeof UtilsResizableImageIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/utils/pixelate-image/': {
+      id: '/utils/pixelate-image/'
+      path: '/utils/pixelate-image'
+      fullPath: '/utils/pixelate-image'
+      preLoaderRoute: typeof UtilsPixelateImageIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/patterns/payment-form/': {
       id: '/patterns/payment-form/'
       path: '/patterns/payment-form'
       fullPath: '/patterns/payment-form'
       preLoaderRoute: typeof PatternsPaymentFormIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/patterns/auth-panel/': {
+      id: '/patterns/auth-panel/'
+      path: '/patterns/auth-panel'
+      fullPath: '/patterns/auth-panel'
+      preLoaderRoute: typeof PatternsAuthPanelIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/loaders/squeeze/': {
@@ -655,6 +744,20 @@ declare module '@tanstack/react-router' {
       path: '/components/buttons'
       fullPath: '/components/buttons'
       preLoaderRoute: typeof ComponentsButtonsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/components/videos/simple-video-component/': {
+      id: '/components/videos/simple-video-component/'
+      path: '/components/videos/simple-video-component'
+      fullPath: '/components/videos/simple-video-component'
+      preLoaderRoute: typeof ComponentsVideosSimpleVideoComponentIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/components/inputs/input-select-number/': {
+      id: '/components/inputs/input-select-number/'
+      path: '/components/inputs/input-select-number'
+      fullPath: '/components/inputs/input-select-number'
+      preLoaderRoute: typeof ComponentsInputsInputSelectNumberIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/components/cards/magic-card/': {
@@ -792,11 +895,18 @@ const rootRouteChildren: RootRouteChildren = {
   LoadersNeonIndexRoute: LoadersNeonIndexRoute,
   LoadersPreloaderIndexRoute: LoadersPreloaderIndexRoute,
   LoadersSqueezeIndexRoute: LoadersSqueezeIndexRoute,
+  PatternsAuthPanelIndexRoute: PatternsAuthPanelIndexRoute,
   PatternsPaymentFormIndexRoute: PatternsPaymentFormIndexRoute,
+  UtilsPixelateImageIndexRoute: UtilsPixelateImageIndexRoute,
+  UtilsResizableImageIndexRoute: UtilsResizableImageIndexRoute,
   ComponentsCardsCardHoverIndexRoute: ComponentsCardsCardHoverIndexRoute,
   ComponentsCardsLetterGlitchCardIndexRoute:
     ComponentsCardsLetterGlitchCardIndexRoute,
   ComponentsCardsMagicCardIndexRoute: ComponentsCardsMagicCardIndexRoute,
+  ComponentsInputsInputSelectNumberIndexRoute:
+    ComponentsInputsInputSelectNumberIndexRoute,
+  ComponentsVideosSimpleVideoComponentIndexRoute:
+    ComponentsVideosSimpleVideoComponentIndexRoute,
   ComponentsBackgroundsAnimatedAuroraIndexRoute:
     ComponentsBackgroundsAnimatedAuroraIndexRoute,
   ComponentsBackgroundsAnimatedBubblesIndexRoute:

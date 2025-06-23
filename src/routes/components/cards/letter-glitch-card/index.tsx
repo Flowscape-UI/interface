@@ -379,13 +379,22 @@ function LetterGlitchCardPage() {
                 </p>
 
                 <div className="mt-8 flex flex-col gap-10">
-                    <PreviewTabs title="Default" codeText={defaultCode}>
+                    <PreviewTabs
+                        title="Default"
+                        description="The default settings for the letter glitch card."
+                        codeText={defaultCode}
+                        reactBitsUrl="https://www.reactbits.dev/backgrounds/letter-glitch"
+                    >
                         <LetterGlitchCard
                             title="Hello World"
                             description="This is a card with the default glitch effect."
                         />
                     </PreviewTabs>
-                    <PreviewTabs title="Fast & Furious" codeText={fastFuriousCode}>
+                    <PreviewTabs
+                        title="Fast & Furious"
+                        description="A very fast and aggressive glitch effect."
+                        codeText={fastFuriousCode}
+                    >
                         <LetterGlitchCard
                             title="Cyber-Attack"
                             description="A very fast and aggressive glitch effect."
@@ -393,7 +402,11 @@ function LetterGlitchCardPage() {
                             glitchSpeed={10}
                         />
                     </PreviewTabs>
-                    <PreviewTabs title="Slow & Sharp" codeText={slowSharpCode}>
+                    <PreviewTabs
+                        title="Slow & Sharp"
+                        description="A slow, non-smooth animation for a retro feel."
+                        codeText={slowSharpCode}
+                    >
                         <LetterGlitchCard
                             title="Old Terminal"
                             description="A slow, non-smooth animation for a retro feel."
@@ -402,7 +415,11 @@ function LetterGlitchCardPage() {
                             smooth={false}
                         />
                     </PreviewTabs>
-                     <PreviewTabs title="With Vignette" codeText={withVignetteCode}>
+                     <PreviewTabs
+                        title="With Vignette"
+                        description="This card has center and outer vignettes enabled for a focused look."
+                        codeText={withVignetteCode}
+                    >
                         <LetterGlitchCard
                             title="Cinematic"
                             description="This card has center and outer vignettes enabled for a focused look."

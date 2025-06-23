@@ -32,6 +32,9 @@ const customGlowCode = `import { MagicCard } from '@/components/ui/magic-card';
             maxSpeed: 0.8,
             minOpacity: 0.3,
             maxOpacity: 0.8
+        },
+        lines: {
+            count: 0 // Disable lines for this example
         }
     }}
     showControls
@@ -66,13 +69,147 @@ const minimalCode = `import { MagicCard } from '@/components/ui/magic-card';
 />
 `;
 
+const fullComponentCode = `import { useRef, useEffect, useState, useCallback, useMemo } from 'react';
+import { cn } from '@/lib/utils';
+import { Button } from './button';
+import { Label } from './label';
+import { Slider } from './slider';
+
+/* --------------------------------------------------
+ * Types and Settings
+ * -------------------------------------------------- */
+
+interface MagicCardSettings {
+    card: {
+        width: number;
+        height: number;
+        glowIntensity: number;
+        glowMax: number;
+    };
+    particles: {
+        count: number;
+        minSize: number;
+        maxSize: number;
+        minSpeed: number;
+        maxSpeed: number;
+        minOpacity: number;
+        maxOpacity: number;
+    };
+    lines: {
+        count: number;
+        minWidth: number;
+        maxWidth: number;
+        minSpeed: number;
+        maxSpeed: number;
+        minOpacity: number;
+        maxOpacity: number;
+        waveHeight: number;
+    };
+}
+
+type DeepPartial<T> = {
+    [P in keyof T]?: DeepPartial<T[P]>;
+};
+
+interface MagicCardProps {
+    initialSettings?: DeepPartial<MagicCardSettings>;
+    className?: string;
+    showControls?: boolean;
+}
+
+const defaultSettings: MagicCardSettings = {
+    card: {
+        width: 284,
+        height: 410,
+        glowIntensity: 15,
+        glowMax: 25,
+    },
+    particles: {
+        count: 100,
+        minSize: 1,
+        maxSize: 4,
+        minSpeed: 0.25,
+        maxSpeed: 0.5,
+        minOpacity: 0.1,
+        maxOpacity: 0.6,
+    },
+    lines: {
+        count: 15,
+        minWidth: 0.5,
+        maxWidth: 2,
+        minSpeed: 0.01,
+        maxSpeed: 0.03,
+        minOpacity: 0.05,
+        maxOpacity: 0.2,
+        waveHeight: 10,
+    },
+};
+
+/* --------------------------------------------------
+ * Controls Panel Component
+ * -------------------------------------------------- */
+
+// ... (Controls component code)
+
+/* --------------------------------------------------
+ * Main Component
+ * -------------------------------------------------- */
+export function MagicCard({ initialSettings, className, showControls = false }: MagicCardProps) {
+    const canvasRef = useRef<HTMLCanvasElement>(null);
+    const [isControlsVisible, setIsControlsVisible] = useState(false);
+
+    const mergedSettings = useMemo(() => {
+        const deepMerge = (target: any, source: any): any => {
+            for (const key in source) {
+                if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key])) {
+                    target[key] = deepMerge(target[key] ? target[key] : {}, source[key]);
+                } else if (source[key] !== undefined) {
+                    target[key] = source[key];
+                }
+            }
+            return target;
+        };
+        return deepMerge(
+            JSON.parse(JSON.stringify(defaultSettings)),
+            initialSettings || {},
+        ) as MagicCardSettings;
+    }, [initialSettings]);
+
+    const [settings, setSettings] = useState<MagicCardSettings>(mergedSettings);
+    const settingsRef = useRef(settings);
+
+    useEffect(() => {
+        settingsRef.current = settings;
+    }, [settings]);
+
+    // ... (rest of the animation logic)
+
+    return (
+        <div className={cn('relative w-full h-full', className)}>
+            {showControls && (
+                <Controls
+                    settings={settings}
+                    onSettingsChange={setSettings}
+                    onRandomize={handleRandomize}
+                    isVisible={isControlsVisible}
+                    onToggle={() => setIsControlsVisible((v) => !v)}
+                />
+            )}
+            <canvas
+                ref={canvasRef}
+                className="absolute inset-0 w-full h-full bg-transparent"
+            />
+        </div>
+    );
+}`;
+
 const rows: PropsTableRow[] = [
     { 
         prop: "initialSettings", 
-        type: "MagicCardSettings", 
+        type: "DeepPartial<MagicCardSettings>", 
         required: false, 
-        defaultValue: "See below", 
-        description: "Initial configuration for the card's appearance and behavior." 
+        defaultValue: "See default settings", 
+        description: "Configuration for the card's appearance. Allows partial updates to nested properties." 
     },
     { 
         prop: "className", 
@@ -92,29 +229,29 @@ const rows: PropsTableRow[] = [
 
 const settingsInterface = `interface MagicCardSettings {
     card: {
-        width: number;          // Width of the card in pixels
-        height: number;         // Height of the card in pixels
-        glowIntensity: number;  // Base intensity of the glow effect
-        glowMax: number;        // Maximum glow intensity
+        width: number;
+        height: number;
+        glowIntensity: number;
+        glowMax: number;
     };
     particles: {
-        count: number;          // Number of particles
-        minSize: number;        // Minimum particle size
-        maxSize: number;        // Maximum particle size
-        minSpeed: number;       // Minimum particle speed
-        maxSpeed: number;       // Maximum particle speed
-        minOpacity: number;     // Minimum particle opacity (0-1)
-        maxOpacity: number;     // Maximum particle opacity (0-1)
+        count: number;
+        minSize: number;
+        maxSize: number;
+        minSpeed: number;
+        maxSpeed: number;
+        minOpacity: number;
+        maxOpacity: number;
     };
     lines: {
-        count: number;          // Number of animated lines
-        minWidth: number;       // Minimum line width
-        maxWidth: number;       // Maximum line width
-        minSpeed: number;       // Minimum line animation speed
-        maxSpeed: number;       // Maximum line animation speed
-        minOpacity: number;     // Minimum line opacity (0-1)
-        maxOpacity: number;     // Maximum line opacity (0-1)
-        waveHeight: number;     // Height of the wave effect on lines
+        count: number;
+        minWidth: number;
+        maxWidth: number;
+        minSpeed: number;
+        maxSpeed: number;
+        minOpacity: number;
+        maxOpacity: number;
+        waveHeight: number;
     };
 }`;
 
@@ -141,8 +278,6 @@ function MagicCardPage() {
                                     card: {
                                         glowIntensity: 25,
                                         glowMax: 40,
-                                        width: 0,
-                                        height: 0
                                     },
                                     particles: {
                                         count: 200,
@@ -152,6 +287,9 @@ function MagicCardPage() {
                                         maxSpeed: 0.8,
                                         minOpacity: 0.3,
                                         maxOpacity: 0.8
+                                    },
+                                    lines: {
+                                        count: 0
                                     }
                                 }}
                                 showControls
@@ -191,43 +329,19 @@ function MagicCardPage() {
 
                 <UsageSection
                     title="Component Code"
-                    description="A highly customizable card component with dynamic particle and line animations using HTML Canvas. The component is interactive and responds to mouse movements."
-                    code={`import { MagicCard } from '@/components/ui/magic-card';
-
-// Basic usage
-<MagicCard />
-
-// With custom settings
-<MagicCard 
-    initialSettings={{
-        card: {
-            width: 300,
-            height: 400,
-            glowIntensity: 15,
-            glowMax: 25,
-        },
-        // ... other settings
-    }}
-    showControls={false}
-    className="custom-class"
-/>`}
+                    description="The complete source code for the MagicCard component, including all animations, controls, and settings management. Use this as a reference for understanding its internal workings."
+                    code={fullComponentCode}
                 />
 
                 <DocsSection
                     description={
                         <>
                             <p className="mb-4">
-                                <strong>Magic Card</strong> &mdash; An interactive card component featuring dynamic particle effects, animated lines, and customizable glow effects, all rendered with HTML Canvas for smooth performance.
+                                <strong>Magic Card</strong> is a stunning, interactive component that brings a dynamic, engaging experience to your UI. It uses HTML Canvas to render smooth particle animations, glowing effects, and waving lines that respond to user interaction.
                             </p>
                             <p className="mb-4">
-                                The component is highly configurable through the <code>initialSettings</code> prop, allowing you to control every aspect of the visual effects.
+                                The component is highly configurable through the <code>initialSettings</code> prop. You can also enable <code>showControls</code> to get a real-time control panel for tweaking every visual parameter.
                             </p>
-                            <div className="mt-6 p-4 bg-white/5 rounded-lg">
-                                <h3 className="text-lg font-medium mb-2">Settings Interface</h3>
-                                <pre className="text-sm text-gray-300 overflow-x-auto">
-                                    <code>{settingsInterface}</code>
-                                </pre>
-                            </div>
                         </>
                     }
                     rows={rows}
