@@ -13,21 +13,6 @@ export const Route = createFileRoute(
   component: SimpleVideoPageComponent,
 });
 
-// function CodeComponentSection({ title, code }: { title: string; code: string }) {
-//     return (
-//         <div className="mt-10">
-//             <h2 className="text-2xl font-bold tracking-tight text-white">{title}</h2>
-//             <div className="mt-4">
-//                 <div className="rounded-lg bg-zinc-900 p-4">
-//                     <pre className="text-sm text-white/80 overflow-x-auto">
-//                         <code>{code}</code>
-//                     </pre>
-//                 </div>
-//             </div>
-//         </div>
-//     );
-// }
-
 function SimpleVideoPageComponent() {
     return (
         <MainLayout>
@@ -39,13 +24,13 @@ function SimpleVideoPageComponent() {
 
                 <div className="mt-8 flex flex-col gap-10">
                     <PreviewTabs title="Default Player" codeText={videoPlayerCodeDefault}>
-                        <SimpleVideo className='w-full h-full' src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"  />
+                        <SimpleVideo className='w-full h-full' src="https://archive.org/download/apple-september-2017-key-note-at-the-steve-jobs-theater-full-1080p-720p-30fps-h-264-128kbit-aac/Apple%20September%2C%202017%20Key%20Note%20at%20the%20Steve%20Jobs%20Theater%20Full%2C%201080p%20%28720p_30fps_H264-128kbit_AAC%29.mp4"  />
                     </PreviewTabs>
 
                     <PreviewTabs title="Player with Blue Controls" codeText={videoPlayerCodeBlue}>
                         <SimpleVideo 
                             className='w-full h-full' 
-                            src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" 
+                            src="https://archive.org/download/apple-september-2017-key-note-at-the-steve-jobs-theater-full-1080p-720p-30fps-h-264-128kbit-aac/Apple%20September%2C%202017%20Key%20Note%20at%20the%20Steve%20Jobs%20Theater%20Full%2C%201080p%20%28720p_30fps_H264-128kbit_AAC%29.mp4" 
                             controlsColor="from-blue-900/70"
                         />
                     </PreviewTabs>
@@ -53,7 +38,7 @@ function SimpleVideoPageComponent() {
                      <PreviewTabs title="Player with Green Controls" codeText={videoPlayerCodeGreen}>
                         <SimpleVideo 
                             className='w-full h-full' 
-                            src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" 
+                            src="https://archive.org/download/apple-september-2017-key-note-at-the-steve-jobs-theater-full-1080p-720p-30fps-h-264-128kbit-aac/Apple%20September%2C%202017%20Key%20Note%20at%20the%20Steve%20Jobs%20Theater%20Full%2C%201080p%20%28720p_30fps_H264-128kbit_AAC%29.mp4" 
                             controlsColor="from-green-900/70"
                         />
                     </PreviewTabs>
@@ -106,7 +91,7 @@ const videoPlayerCodeDefault = `import { SimpleVideo } from '@/components/ui/sim
 
 export default function VideoExample() {
     return (
-       <SimpleVideo className='w-full h-full' src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" />
+       <SimpleVideo className='w-full h-full' src="https://archive.org/download/apple-september-2017-key-note-at-the-steve-jobs-theater-full-1080p-720p-30fps-h-264-128kbit-aac/Apple%20September%2C%202017%20Key%20Note%20at%20the%20Steve%20Jobs%20Theater%20Full%2C%201080p%20%28720p_30fps_H264-128kbit_AAC%29.mp4" />
     );
 }`;
 
@@ -116,7 +101,7 @@ export default function VideoExample() {
     return (
        <SimpleVideo 
             className='w-full h-full' 
-            src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+            src="https://archive.org/download/apple-september-2017-key-note-at-the-steve-jobs-theater-full-1080p-720p-30fps-h-264-128kbit-aac/Apple%20September%2C%202017%20Key%20Note%20at%20the%20Steve%20Jobs%20Theater%20Full%2C%201080p%20%28720p_30fps_H264-128kbit_AAC%29.mp4"
             controlsColor="from-blue-900/70"
        />
     );
@@ -128,7 +113,7 @@ export default function VideoExample() {
     return (
        <SimpleVideo 
             className='w-full h-full' 
-            src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+            src="https://archive.org/download/apple-september-2017-key-note-at-the-steve-jobs-theater-full-1080p-720p-30fps-h-264-128kbit-aac/Apple%20September%2C%202017%20Key%20Note%20at%20the%20Steve%20Jobs%20Theater%20Full%2C%201080p%20%28720p_30fps_H264-128kbit_AAC%29.mp4"
             controlsColor="from-green-900/70"
        />
     );

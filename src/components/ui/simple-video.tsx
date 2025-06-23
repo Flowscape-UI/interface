@@ -149,7 +149,7 @@ export function SimpleVideo({
             <video
                 ref={videoRef}
                 src={src}
-                className="w-full h-full hover:cursor-pointer"
+                className="w-full h-full hover:cursor-pointer object-cover"
                 onTimeUpdate={handleTimeUpdate}
                 onLoadedData={() => setDuration(videoRef.current?.duration || 0)}
                 onEnded={handleVideoEnd}

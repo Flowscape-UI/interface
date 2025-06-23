@@ -1,4 +1,4 @@
-import { type PropsWithChildren, useState, useEffect } from 'react';
+import { type PropsWithChildren, useState } from 'react';
 import { ResizableBox } from 'react-resizable';
 import { Header } from './components/header';
 import LinksSidebar from './components/links-sidebar';
@@ -7,28 +7,6 @@ import Footer from './components/footer';
 
 export const MainLayout = ({ children }: PropsWithChildren<unknown>) => {
     const [sidebarWidth, setSidebarWidth] = useState(250);
-    const [mainStyles, setMainStyles] = useState({});
-
-    useEffect(() => {
-        const updateMargins = () => {
-            const styles = {
-                marginLeft: '0px',
-                marginRight: '0px',
-            };
-            if (window.innerWidth >= 1024) { // lg
-                styles.marginLeft = `${sidebarWidth}px`;
-                styles.marginRight = '256px'; // 16rem
-            } else if (window.innerWidth >= 768) { // md
-                styles.marginLeft = `${sidebarWidth}px`;
-            }
-            setMainStyles(styles);
-        };
-
-        updateMargins();
-        window.addEventListener('resize', updateMargins);
-
-        return () => window.removeEventListener('resize', updateMargins);
-    }, [sidebarWidth]);
 
     return (
         <div className="mx-auto flex min-h-screen w-full flex-col">
@@ -52,7 +30,7 @@ export const MainLayout = ({ children }: PropsWithChildren<unknown>) => {
                 </ResizableBox>
 
                 {/* Main Content (Scrollable) */}
-                <main className="flex flex-1 flex-col" style={mainStyles}>
+                <main className="flex flex-1 flex-col">
                     <div className="mx-auto w-full max-w-3xl flex-1 p-4">
                         {children}
                     </div>
