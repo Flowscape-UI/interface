@@ -39,13 +39,13 @@ function SimpleVideoPageComponent() {
 
                 <div className="mt-8 flex flex-col gap-10">
                     <PreviewTabs title="Default Player" codeText={videoPlayerCodeDefault}>
-                        <SimpleVideo className='w-full h-full' src="/videos/example.mp4" />
+                        <SimpleVideo className='w-full h-full' src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"  />
                     </PreviewTabs>
 
                     <PreviewTabs title="Player with Blue Controls" codeText={videoPlayerCodeBlue}>
                         <SimpleVideo 
                             className='w-full h-full' 
-                            src="/videos/example.mp4" 
+                            src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" 
                             controlsColor="from-blue-900/70"
                         />
                     </PreviewTabs>
@@ -53,7 +53,7 @@ function SimpleVideoPageComponent() {
                      <PreviewTabs title="Player with Green Controls" codeText={videoPlayerCodeGreen}>
                         <SimpleVideo 
                             className='w-full h-full' 
-                            src="/videos/example.mp4" 
+                            src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" 
                             controlsColor="from-green-900/70"
                         />
                     </PreviewTabs>
@@ -106,7 +106,7 @@ const videoPlayerCodeDefault = `import { SimpleVideo } from '@/components/ui/sim
 
 export default function VideoExample() {
     return (
-       <SimpleVideo className='w-full h-full' src="/videos/example.mp4" />
+       <SimpleVideo className='w-full h-full' src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" />
     );
 }`;
 
@@ -116,7 +116,7 @@ export default function VideoExample() {
     return (
        <SimpleVideo 
             className='w-full h-full' 
-            src="/videos/example.mp4"
+            src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
             controlsColor="from-blue-900/70"
        />
     );
@@ -128,7 +128,7 @@ export default function VideoExample() {
     return (
        <SimpleVideo 
             className='w-full h-full' 
-            src="/videos/example.mp4"
+            src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
             controlsColor="from-green-900/70"
        />
     );
