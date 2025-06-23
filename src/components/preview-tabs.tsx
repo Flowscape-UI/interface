@@ -5,7 +5,7 @@ import { IoTerminal } from "react-icons/io5";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { atomDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import { CopyButton } from "./copy-button";
-import { SiCodesandbox, SiReact, SiVercel } from "react-icons/si";
+import { SiCodesandbox, SiReact } from "react-icons/si";
 
 interface PreviewTabsProps {
     title?: string;

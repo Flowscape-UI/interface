@@ -227,34 +227,6 @@ const rows: PropsTableRow[] = [
     },
 ];
 
-const settingsInterface = `interface MagicCardSettings {
-    card: {
-        width: number;
-        height: number;
-        glowIntensity: number;
-        glowMax: number;
-    };
-    particles: {
-        count: number;
-        minSize: number;
-        maxSize: number;
-        minSpeed: number;
-        maxSpeed: number;
-        minOpacity: number;
-        maxOpacity: number;
-    };
-    lines: {
-        count: number;
-        minWidth: number;
-        maxWidth: number;
-        minSpeed: number;
-        maxSpeed: number;
-        minOpacity: number;
-        maxOpacity: number;
-        waveHeight: number;
-    };
-}`;
-
 function MagicCardPage() {
     return (
         <MainLayout>

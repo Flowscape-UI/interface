@@ -13,20 +13,20 @@ export const Route = createFileRoute(
   component: SimpleVideoPageComponent,
 });
 
-function CodeComponentSection({ title, code }: { title: string; code: string }) {
-    return (
-        <div className="mt-10">
-            <h2 className="text-2xl font-bold tracking-tight text-white">{title}</h2>
-            <div className="mt-4">
-                <div className="rounded-lg bg-zinc-900 p-4">
-                    <pre className="text-sm text-white/80 overflow-x-auto">
-                        <code>{code}</code>
-                    </pre>
-                </div>
-            </div>
-        </div>
-    );
-}
+// function CodeComponentSection({ title, code }: { title: string; code: string }) {
+//     return (
+//         <div className="mt-10">
+//             <h2 className="text-2xl font-bold tracking-tight text-white">{title}</h2>
+//             <div className="mt-4">
+//                 <div className="rounded-lg bg-zinc-900 p-4">
+//                     <pre className="text-sm text-white/80 overflow-x-auto">
+//                         <code>{code}</code>
+//                     </pre>
+//                 </div>
+//             </div>
+//         </div>
+//     );
+// }
 
 function SimpleVideoPageComponent() {
     return (
