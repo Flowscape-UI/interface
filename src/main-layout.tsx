@@ -74,7 +74,7 @@ export const MainLayout = ({ children }: PropsWithChildren<unknown>) => {
                     <ResizableBox
                         width={sidebarWidth}
                         onResize={(_e, { size }) => setSidebarWidth(size.width)}
-                        minConstraints={[220, Infinity]}
+                        minConstraints={[250, Infinity]}
                         maxConstraints={[450, Infinity]}
                         axis="x"
                         resizeHandles={['e']}

@@ -8,7 +8,7 @@ export type Progression = 'linear' | 'arithmetic' | 'geometric' | 'paraboloid' |
 export interface InputSelectNumberProps
     extends Omit<React.ComponentProps<'input'>, 'defaultValue' | 'onChange'> {
     icon?: React.JSX.Element | string;
-    orientation?: 'horizontal' | 'vertical';
+    orientation?: 'horizontal' | 'vertical' | 'diagonal';
     step?: number;
     precision?: number;
     progression?: Progression;
@@ -39,13 +39,11 @@ export const InputSelectNumber = React.forwardRef<HTMLInputElement, InputSelectN
         const { disabled } = props;
         const dragRef = useRef(null);
         const startValueRef = useRef<number>(value === '' ? 0 : Number(value));
-        const startMousePosRef = useRef({ x: 0, y: 0 });
 
-        const handleMouseDown = (event: React.MouseEvent<HTMLDivElement>) => {
+        const handleMouseDown = (_event: React.MouseEvent<HTMLDivElement>) => {
             if (disabled) return;
 
             startValueRef.current = value === '' ? 0 : Number(value);
-            startMousePosRef.current = { x: event.clientX, y: event.clientY };
 
             document.addEventListener('mousemove', handleMouseMove);
             document.addEventListener('mouseup', handleMouseUp);
@@ -57,10 +55,14 @@ export const InputSelectNumber = React.forwardRef<HTMLInputElement, InputSelectN
         };
 
         const handleMouseMove = (event: MouseEvent) => {
-            const deltaMouse =
-                orientation === 'vertical'
-                    ? startMousePosRef.current.y - event.clientY
-                    : event.clientX - startMousePosRef.current.x;
+            let deltaMouse;
+            if (orientation === 'vertical') {
+                deltaMouse = -event.movementY;
+            } else if (orientation === 'horizontal') {
+                deltaMouse = event.movementX;
+            } else {
+                deltaMouse = event.movementX - event.movementY;
+            }
 
             const deltaValue = deltaMouse * (step || 1);
 
@@ -70,6 +72,8 @@ export const InputSelectNumber = React.forwardRef<HTMLInputElement, InputSelectN
             if (max !== undefined && newValue > +max) newValue = +max;
 
             fieldOnChange(removeTrailingZeros(newValue, precision));
+            // Update startValueRef to allow continuous dragging without releasing mouse
+            startValueRef.current = newValue;
         };
 
         const calculateByProgression = (
@@ -102,7 +106,6 @@ export const InputSelectNumber = React.forwardRef<HTMLInputElement, InputSelectN
 
         const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
             const rawValue = e.target.value;
-            // Allow typing numbers, a single minus sign, or an empty string.
             if (rawValue === '' || rawValue === '-' || !isNaN(+rawValue)) {
                 fieldOnChange(rawValue);
             }
@@ -123,7 +126,6 @@ export const InputSelectNumber = React.forwardRef<HTMLInputElement, InputSelectN
                 return;
             }
 
-            // Clamp the value to the min/max range.
             if (min !== undefined && numericValue < +min) {
                 numericValue = +min;
             }
@@ -131,18 +133,13 @@ export const InputSelectNumber = React.forwardRef<HTMLInputElement, InputSelectN
                 numericValue = +max;
             }
 
-            // Format to the correct precision and update the state.
             fieldOnChange(removeTrailingZeros(numericValue, precision));
         };
 
         return (
             <div
                 className={cn(
-                    'inline-flex items-center overflow-hidden rounded-lg border-2 border-gray-400 focus-within:ring-1 focus-within:ring-ring bg-transparent dark:bg-input/30',
-                    {
-                        'flex-col w-12 h-full': orientation === 'vertical',
-                        'h-8': orientation === 'horizontal',
-                    },
+                    'inline-flex h-8 items-center overflow-hidden rounded-lg border-2 border-gray-400 bg-transparent focus-within:ring-1 focus-within:ring-ring dark:bg-input/30',
                     className,
                 )}
             >
@@ -150,17 +147,17 @@ export const InputSelectNumber = React.forwardRef<HTMLInputElement, InputSelectN
                     ref={dragRef}
                     onMouseDown={handleMouseDown}
                     className={cn(
-                        'flex items-center justify-center',
+                        'flex h-full aspect-square items-center justify-center',
                         {
-                            'aspect-square h-full cursor-ew-resize':
-                                orientation === 'horizontal',
-                            'w-full h-8 cursor-ns-resize': orientation === 'vertical',
+                            'cursor-ew-resize': orientation === 'horizontal',
+                            'cursor-ns-resize': orientation === 'vertical',
+                            'cursor-nwse-resize': orientation === 'diagonal',
                         },
                         disabled && 'cursor-not-allowed opacity-50',
                     )}
                 >
                     {typeof icon === 'string' && icon.length > 0 ? (
-                        <span className="text-sm font-medium select-none">{icon.charAt(0)}</span>
+                        <span className="select-none text-sm font-medium">{icon.charAt(0)}</span>
                     ) : React.isValidElement(icon) ? (
                         icon
                     ) : (
@@ -171,11 +168,7 @@ export const InputSelectNumber = React.forwardRef<HTMLInputElement, InputSelectN
                 <Input
                     type="number"
                     className={cn(
-                        'w-full rounded-none border-none bg-transparent dark:bg-transparent px-2 py-0 focus-visible:ring-0 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none',
-                        {
-                            'w-full text-center': orientation === 'vertical',
-                            'h-full': orientation === 'horizontal',
-                        },
+                        'h-full w-full rounded-none border-none bg-transparent px-2 py-0 focus-visible:ring-0 [appearance:textfield] dark:bg-transparent [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none',
                         classNameInput,
                     )}
                     value={value}
