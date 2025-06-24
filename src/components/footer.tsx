@@ -38,7 +38,7 @@ export default function Footer() {
                             Pro templates <Badge>soon</Badge>
                         </Link>
                         <Link to="/hire" className="transition hover:text-white">
-                            Make an order <Badge>soon</Badge>
+                            Make an order
                         </Link>
                     </div>
 
@@ -47,14 +47,14 @@ export default function Footer() {
                         <h3 className="text-sm font-semibold tracking-wide text-white uppercase">
                             Docs
                         </h3>
-                        <Link to="/docs/getting-started" className="transition hover:text-white">
+                        <Link to="/docs/installation" className="transition hover:text-white">
                             Getting started
                         </Link>
                         <Link to="/docs/cli" className="transition hover:text-white">
                             CLI <Badge>soon</Badge>
                         </Link>
                         <Link to="/changelog" className="transition hover:text-white">
-                            Changelog
+                            Changelog <Badge>soon</Badge>
                         </Link>
                     </div>
 

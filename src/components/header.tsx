@@ -74,7 +74,10 @@ export function Header() {
                 <div className="flex items-center gap-4">
                     {/* desktop nav */}
                     <NavLinks className="hidden md:flex" />
-                    <GithubLink stars={stars} className="hidden md:flex" />
+                                        <GithubLink stars={stars} className="hidden md:flex" />
+                    <Link to="/auth" className="text-sm font-medium text-slate-200 hover:text-white hidden md:inline-flex items-center justify-center px-3 py-1.5 rounded-md border border-slate-700 hover:bg-slate-800">
+                        Sign In
+                    </Link>
 
                     {/* mobile burger + drawer */}
                     <div className="flex items-center gap-4 md:hidden">
@@ -95,6 +98,11 @@ export function Header() {
                                                 </Link>
                                             </DrawerClose>
                                         ))}
+                                        <DrawerClose asChild>
+                                            <Link to="/auth" className="w-full text-left py-2">
+                                                Sign In
+                                            </Link>
+                                        </DrawerClose>
                                     </nav>
                                     <hr className="border-white/10" />
                                     <div className="flex-1 overflow-y-auto">

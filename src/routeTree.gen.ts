@@ -15,6 +15,7 @@ import { Route as PricingIndexRouteImport } from './routes/pricing/index'
 import { Route as HireIndexRouteImport } from './routes/hire/index'
 import { Route as ComponentsIndexRouteImport } from './routes/components/index'
 import { Route as ChangelogIndexRouteImport } from './routes/changelog/index'
+import { Route as AuthIndexRouteImport } from './routes/auth/index'
 import { Route as UtilsResizableImageIndexRouteImport } from './routes/utils/resizable-image/index'
 import { Route as UtilsPixelateImageIndexRouteImport } from './routes/utils/pixelate-image/index'
 import { Route as PatternsPaymentFormIndexRouteImport } from './routes/patterns/payment-form/index'
@@ -79,6 +80,11 @@ const ComponentsIndexRoute = ComponentsIndexRouteImport.update({
 const ChangelogIndexRoute = ChangelogIndexRouteImport.update({
   id: '/changelog/',
   path: '/changelog/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthIndexRoute = AuthIndexRouteImport.update({
+  id: '/auth/',
+  path: '/auth/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const UtilsResizableImageIndexRoute =
@@ -279,6 +285,7 @@ const ComponentsBackgroundsAnimatedAuroraIndexRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthIndexRoute
   '/changelog': typeof ChangelogIndexRoute
   '/components': typeof ComponentsIndexRoute
   '/hire': typeof HireIndexRoute
@@ -322,6 +329,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthIndexRoute
   '/changelog': typeof ChangelogIndexRoute
   '/components': typeof ComponentsIndexRoute
   '/hire': typeof HireIndexRoute
@@ -366,6 +374,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/auth/': typeof AuthIndexRoute
   '/changelog/': typeof ChangelogIndexRoute
   '/components/': typeof ComponentsIndexRoute
   '/hire/': typeof HireIndexRoute
@@ -411,6 +420,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/auth'
     | '/changelog'
     | '/components'
     | '/hire'
@@ -454,6 +464,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/auth'
     | '/changelog'
     | '/components'
     | '/hire'
@@ -497,6 +508,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/auth/'
     | '/changelog/'
     | '/components/'
     | '/hire/'
@@ -541,6 +553,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthIndexRoute: typeof AuthIndexRoute
   ChangelogIndexRoute: typeof ChangelogIndexRoute
   ComponentsIndexRoute: typeof ComponentsIndexRoute
   HireIndexRoute: typeof HireIndexRoute
@@ -625,6 +638,13 @@ declare module '@tanstack/react-router' {
       path: '/changelog'
       fullPath: '/changelog'
       preLoaderRoute: typeof ChangelogIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/': {
+      id: '/auth/'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/utils/resizable-image/': {
@@ -877,6 +897,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthIndexRoute: AuthIndexRoute,
   ChangelogIndexRoute: ChangelogIndexRoute,
   ComponentsIndexRoute: ComponentsIndexRoute,
   HireIndexRoute: HireIndexRoute,

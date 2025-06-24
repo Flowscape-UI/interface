@@ -262,12 +262,16 @@ export function SimpleVideo({
     return (
         <div
             ref={containerRef}
-            className={cn('relative w-full aspect-video bg-black group', className)}
+            className={cn(
+                'relative w-full aspect-video bg-black group',
+                !(isMouseOver || isBuffering || isVideoEnded) && 'cursor-none',
+                className
+            )}
         >
             <video
                 ref={videoRef}
                 src={src}
-                className="w-full h-full hover:cursor-pointer object-cover"
+                className="w-full h-full object-cover"
                 onTimeUpdate={handleTimeUpdate}
                 onLoadedData={() => setDuration(videoRef.current?.duration || 0)}
                 onEnded={handleVideoEnd}
@@ -317,7 +321,7 @@ export function SimpleVideo({
             <div
                 className={cn(
                     'absolute bottom-0 left-0 right-0 p-2 sm:p-4 transition-opacity duration-300',
-                    (isMouseOver || isBuffering || isVideoEnded) ? 'opacity-100' : 'opacity-0'
+                    (isMouseOver || isBuffering || isVideoEnded) ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
                 )}
             >
                 <div 
@@ -337,7 +341,7 @@ export function SimpleVideo({
                     )}
                     <div className="absolute top-0 left-0 w-full h-full bg-gray-500/50 rounded-full">
                         <div 
-                            className="h-full bg-gray-200/50 rounded-full" 
+                            className="h-full bg-gray-200/50 rounded-full"
                             style={{ width: `${(buffered / duration) * 100}%` }}
                         ></div>
                     </div>
@@ -353,13 +357,13 @@ export function SimpleVideo({
                 </div>
                 <div className="flex items-center justify-between text-white mt-2 text-xs sm:text-sm">
                     <div className="flex items-center gap-2 sm:gap-3">
-                        <button onClick={togglePlayPause} className="focus:outline-none">
+                        <button onClick={togglePlayPause} className="focus:outline-none cursor-pointer">
                             {isVideoEnded ? (
-                                <RotateCcw className='hover:cursor-pointer h-5 w-5 sm:h-6 sm:w-6'/>
+                                <RotateCcw className='h-5 w-5 sm:h-6 sm:w-6'/>
                             ) : isPlaying ? (
-                                <Pause className='hover:cursor-pointer h-5 w-5 sm:h-6 sm:w-6'/>
+                                <Pause className='h-5 w-5 sm:h-6 sm:w-6'/>
                             ) : (
-                                <Play className='hover:cursor-pointer h-5 w-5 sm:h-6 sm:w-6'/>
+                                <Play className='h-5 w-5 sm:h-6 sm:w-6'/>
                             )}
                         </button>
                         <div className="flex items-center gap-1 sm:gap-2 group/volume">
@@ -386,8 +390,8 @@ export function SimpleVideo({
                             {formatTime(progress)} / {formatTime(duration)}
                         </span>
                     </div>
-                    <button onClick={toggleFullScreen} className="focus:outline-none">
-                        <Maximize className='hover:cursor-pointer h-5 w-5 sm:h-6 sm:w-6'/>
+                    <button onClick={toggleFullScreen} className="focus:outline-none cursor-pointer">
+                        <Maximize className='h-5 w-5 sm:h-6 sm:w-6'/>
                     </button>
                 </div>
             </div>

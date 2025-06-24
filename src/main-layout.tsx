@@ -90,7 +90,7 @@ export const MainLayout = ({ children }: PropsWithChildren<unknown>) => {
                 {/* Left Sidebar */}
                 <div
                     className={cn(
-                        'fixed top-[57px] bottom-0 left-0 z-1000 hidden md:block transition-transform duration-300 ease-in-out',
+                        'fixed top-[59px] bottom-0 left-0 z-1000 hidden md:block transition-transform duration-300 ease-in-out',
                         {
                             'translate-x-0': isSidebarOpen,
                             '-translate-x-full': !isSidebarOpen,
@@ -123,7 +123,7 @@ export const MainLayout = ({ children }: PropsWithChildren<unknown>) => {
                 <aside
                     id="table-of-contents-wrapper"
                     className={cn(
-                        '!fixed top-[57px] bottom-0 right-0 z-1000 hidden h-full w-64 shrink-0 overflow-y-auto border-l bg-white/5 p-4 backdrop-blur-lg supports-backdrop-blur:bg-background/90 lg:block transition-transform duration-300 ease-in-out',
+                        '!fixed top-[59px] bottom-0 right-0 z-1000 hidden h-full w-64 shrink-0 overflow-y-auto border-l bg-white/5 p-4 backdrop-blur-lg supports-backdrop-blur:bg-background/90 lg:block transition-transform duration-300 ease-in-out',
                         {
                             'translate-x-0': isRightSidebarOpen,
                             'translate-x-full': !isRightSidebarOpen,
