@@ -18,7 +18,7 @@ export const Route = createFileRoute('/components/buttons/')({
 function ButtonsPage() {
     return (
         <MainLayout>
-            <div className="px-6 py-16">
+            <div className="px-4 sm:px-6 py-16">
                 <PageTitle>Buttons</PageTitle>
                 <p className="text-white/60">
                     Buttons are used to trigger actions or events. They can be styled in different

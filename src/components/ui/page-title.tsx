@@ -16,7 +16,7 @@ export interface PageTitleProps extends ComponentPropsWithoutRef<"h1"> {}
 
 export default function PageTitle({ className, children, ...props }: PageTitleProps) {
     return (
-        <h1 className={cn("mb-3 text-3xl font-bold", className)} {...props}>
+        <h1 className={cn("mb-3 text-2xl sm:text-3xl font-bold", className)} {...props}>
             {children}
         </h1>
     );

@@ -52,8 +52,8 @@ export const usePaymentForm = () => {
   const getDisplayData = useCallback(
     () => ({
       number: formatDisplayCardNumber(cardData.number.replace(/\s/g, "")),
-      holder: cardData.holder.toUpperCase() || "ПОЛНОЕ ИМЯ",
-      expiry: cardData.expiry || "ММ/ГГ",
+      holder: cardData.holder.toUpperCase() || "FULL NAME",
+      expiry: cardData.expiry || "MM/YY",
       cvv: cardData.cvv.replace(/./g, "•"),
     }),
     [cardData],

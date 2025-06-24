@@ -5,20 +5,20 @@ import type { PaymentFormProps } from "./types/payment-form"
 import { cn } from "@/lib/utils"
 
 const defaultLabels = {
-  cardNumber: "Номер карты",
-  cardHolder: "Держатель карты",
-  expiryDate: "Срок действия",
+  cardNumber: "CARD NUMBER",
+  cardHolder: "CARD HOLDER",
+  expiryDate: "EXPIRY DATE",
   cvv: "CVV",
-  submitButton: "Подтвердить оплату",
-  enterCardNumber: "Введите номер карты",
-  fullName: "ПОЛНОЕ ИМЯ",
-  monthYear: "ММ/ГГ",
+  submitButton: "Submit Payment",
+  enterCardNumber: "Enter card number",
+  fullName: "FULL NAME",
+  monthYear: "MM/YY",
 }
 
 const defaultPlaceholders = {
   cardNumber: "1234 5678 9012 3456",
-  cardHolder: "Полное имя",
-  expiryDate: "ММ/ГГ",
+  cardHolder: "FULL NAME",
+  expiryDate: "MM/YY",
   cvv: "•••",
 }
 
@@ -148,7 +148,7 @@ export default function PaymentForm({
               {mergedLabels.cvv}
             </label>
             <input
-              type="text"
+              type="password"
               id="card-cvv"
               className={inputStyles}
               value={cardData.cvv}

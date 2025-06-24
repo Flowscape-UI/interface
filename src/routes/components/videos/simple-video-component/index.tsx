@@ -31,7 +31,6 @@ function SimpleVideoPageComponent() {
                         <SimpleVideo 
                             className='w-full h-full' 
                             src="https://archive.org/download/apple-september-2017-key-note-at-the-steve-jobs-theater-full-1080p-720p-30fps-h-264-128kbit-aac/Apple%20September%2C%202017%20Key%20Note%20at%20the%20Steve%20Jobs%20Theater%20Full%2C%201080p%20%28720p_30fps_H264-128kbit_AAC%29.mp4" 
-                            controlsColor="from-blue-900/70"
                         />
                     </PreviewTabs>
 
@@ -39,7 +38,6 @@ function SimpleVideoPageComponent() {
                         <SimpleVideo 
                             className='w-full h-full' 
                             src="https://archive.org/download/apple-september-2017-key-note-at-the-steve-jobs-theater-full-1080p-720p-30fps-h-264-128kbit-aac/Apple%20September%2C%202017%20Key%20Note%20at%20the%20Steve%20Jobs%20Theater%20Full%2C%201080p%20%28720p_30fps_H264-128kbit_AAC%29.mp4" 
-                            controlsColor="from-green-900/70"
                         />
                     </PreviewTabs>
                 </div>
@@ -79,12 +77,6 @@ const rows: PropsTableRow[] = [
         required: false,
         description: 'Custom class for the video container.',
     },
-    {
-        prop: 'controlsColor',
-        type: 'string',
-        required: false,
-        description: "Custom Tailwind CSS class for the control panel's background gradient. Defaults to 'from-black/70'.",
-    },
 ];
 
 const videoPlayerCodeDefault = `import { SimpleVideo } from '@/components/ui/simple-video';
@@ -102,7 +94,6 @@ export default function VideoExample() {
        <SimpleVideo 
             className='w-full h-full' 
             src="https://archive.org/download/apple-september-2017-key-note-at-the-steve-jobs-theater-full-1080p-720p-30fps-h-264-128kbit-aac/Apple%20September%2C%202017%20Key%20Note%20at%20the%20Steve%20Jobs%20Theater%20Full%2C%201080p%20%28720p_30fps_H264-128kbit_AAC%29.mp4"
-            controlsColor="from-blue-900/70"
        />
     );
 }`;
@@ -114,7 +105,6 @@ export default function VideoExample() {
        <SimpleVideo 
             className='w-full h-full' 
             src="https://archive.org/download/apple-september-2017-key-note-at-the-steve-jobs-theater-full-1080p-720p-30fps-h-264-128kbit-aac/Apple%20September%2C%202017%20Key%20Note%20at%20the%20Steve%20Jobs%20Theater%20Full%2C%201080p%20%28720p_30fps_H264-128kbit_AAC%29.mp4"
-            controlsColor="from-green-900/70"
        />
     );
 }`;
@@ -127,14 +117,12 @@ interface SimpleVideoProps {
     src: string;
     isPaused?: boolean;
     className?: string;
-    controlsColor?: string;
 }
 
 export function SimpleVideo({ 
     src, 
     isPaused, 
     className, 
-    controlsColor = 'from-black/70'
 }: SimpleVideoProps) {
     const videoRef = useRef<HTMLVideoElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);

@@ -52,13 +52,13 @@ export const CreditCard: React.FC<CreditCardProps> = ({ displayData, cardType, i
                 <div>
                   <div className="flex justify-between">
                     <div className="flex flex-col">
-                      <span className="text-xs opacity-80 mb-1 uppercase tracking-wider">Держатель карты</span>
+                      <span className="text-xs opacity-80 mb-1 uppercase tracking-wider">CARD HOLDER</span>
                       <span className="text-sm font-medium tracking-wider transition-all duration-300 ease-in-out h-6">
                         {displayData.holder}
                       </span>
                     </div>
                     <div className="flex flex-col">
-                      <span className="text-xs opacity-80 mb-1 uppercase tracking-wider">Срок действия</span>
+                      <span className="text-xs opacity-80 mb-1 uppercase tracking-wider">EXPIRY DATE</span>
                       <span className="text-sm font-medium tracking-wider transition-all duration-300 ease-in-out h-6">
                         {displayData.expiry}
                       </span>

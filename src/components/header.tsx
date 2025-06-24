@@ -39,14 +39,14 @@ export function Header() {
 
     return (
         <header className="supports-backdrop-blur:bg-background/90 border-border sticky top-0 z-[1000] w-full border-b bg-white/5 backdrop-blur-lg">
-            <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-3">
+            <div className="flex w-full items-center justify-between px-4 sm:px-6 py-3">
                 {/* brand */}
                 <Link
                     to="/"
-                    className="inline-flex items-center gap-2 text-lg font-bold tracking-tight text-white"
+                    className="inline-flex items-center gap-2 text-base sm:text-lg font-bold tracking-tight text-white"
                 >
-                    <img src="/brand/logo.svg" alt="Flowscape" width={32} height={24} />
-                    Flowscape
+                    <img src="/brand/logo.svg" alt="Flowscape" className="h-6 w-auto sm:h-8" />
+                    <span className="hidden sm:inline">Flowscape</span>
                 </Link>
 
                 {/* desktop nav */}
@@ -60,27 +60,27 @@ export function Header() {
                         </button>
                     </DrawerTrigger>
                     <DrawerContent className="py-6">
-                        <div className="mt-6 flex flex-col items-center gap-6 text-lg">
-                            {nav.map((n) => (
-                                <DrawerClose asChild key={n.href}>
-                                    <Link to={n.href} className="w-full text-center">
-                                        {n.label}
-                                    </Link>
-                                </DrawerClose>
-                            ))}
-                            <div className="size-full overflow-y-auto">
-                                <h2 className="mx-4 my-2 text-2xl">Navigation</h2>
-                                <hr />
-                                <div className="h-60 px-4">
-                                    <LinksSidebar />
-                                </div>
+                        <div className="flex flex-col gap-6 text-lg px-4">
+                            <nav className="flex flex-col gap-4">
+                                {nav.map((n) => (
+                                    <DrawerClose asChild key={n.href}>
+                                        <Link to={n.href} className="w-full text-left py-2">
+                                            {n.label}
+                                        </Link>
+                                    </DrawerClose>
+                                ))}
+                            </nav>
+                            <hr />
+                            <div className="flex-1 overflow-y-auto">
+                                <LinksSidebar />
                             </div>
+                            <hr />
                             <DrawerClose asChild>
                                 <a
                                     href={GITHUB_URL}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="flex items-center gap-2"
+                                    className="flex items-center gap-2 py-2"
                                 >
                                     <FaGithub className="h-5 w-5" /> GitHub
                                 </a>

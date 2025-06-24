@@ -8,7 +8,7 @@ export const Route = createFileRoute('/')({
 
 function RouteComponent() {
     return (
-        <main className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-black px-6 py-24 text-white sm:px-16">
+        <main className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-black px-4 sm:px-6 py-24 text-white">
             {/* Subtle star-like noise overlay */}
             <div className="pointer-events-none absolute inset-0 bg-[url('/noise.png')] opacity-10 mix-blend-screen" />
 
@@ -44,15 +44,14 @@ function RouteComponent() {
             <div className="relative z-10 flex max-w-2xl flex-col items-center gap-6 text-center">
                 <img
                     src="/brand/logo.svg"
-                    width={260}
-                    height={75}
                     alt="Flowscape logo"
                     loading="eager"
+                    className="h-auto w-48 sm:w-64"
                 />
-                <h1 className="bg-gradient-to-r from-sky-400 to-cyan-300 bg-clip-text text-4xl leading-tight font-extrabold text-transparent drop-shadow-[0_4px_12px_rgba(0,255,255,0.25)] sm:text-5xl">
+                <h1 className="bg-gradient-to-r from-sky-400 to-cyan-300 bg-clip-text text-3xl sm:text-5xl leading-tight font-extrabold text-transparent drop-shadow-[0_4px_12px_rgba(0,255,255,0.25)]">
                     Craft fluid UI & seamless UX
                 </h1>
-                <p className="mt-2 max-w-lg text-base text-slate-300 sm:text-lg">
+                <p className="mt-2 max-w-lg text-sm sm:text-lg text-slate-300">
                     Import <span className="font-semibold text-white">exactly</span> what you need —
                     animated buttons, auth panels, interactive backgrounds, dashboard widgets &
                     more. No bloat. Pure control.
