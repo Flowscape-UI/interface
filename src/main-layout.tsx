@@ -13,6 +13,7 @@ export const MainLayout = ({ children }: PropsWithChildren<unknown>) => {
     const [sidebarWidth, setSidebarWidth] = useState(250);
     const [isSidebarOpen, setSidebarOpen] = useState(true);
     const [isRightSidebarOpen, setRightSidebarOpen] = useState(true);
+    const [hasToc, setHasToc] = useState(false);
 
     const isDesktop = useMediaQuery('(min-width: 1675px)');
     const showToggleButton = useMediaQuery(
@@ -29,6 +30,28 @@ export const MainLayout = ({ children }: PropsWithChildren<unknown>) => {
             setRightSidebarOpen(false);
         }
     }, [isLargeScreen]);
+
+    useEffect(() => {
+        const tocWrapper = document.getElementById('table-of-contents-wrapper');
+
+        const observer = new MutationObserver((mutations) => {
+            for (const mutation of mutations) {
+                if (
+                    mutation.type === 'attributes' &&
+                    mutation.attributeName === 'data-toc-rendered'
+                ) {
+                    const hasTocNow = (mutation.target as HTMLElement).dataset.tocRendered === 'true';
+                    setHasToc(hasTocNow);
+                }
+            }
+        });
+
+        if (tocWrapper) {
+            observer.observe(tocWrapper, { attributes: true });
+        }
+
+        return () => observer.disconnect();
+    }, []);
 
     return (
         <div className="mx-auto flex min-h-screen w-full flex-col">
@@ -54,7 +77,10 @@ export const MainLayout = ({ children }: PropsWithChildren<unknown>) => {
                     onClick={() => setRightSidebarOpen(!isRightSidebarOpen)}
                     variant="ghost"
                     size="icon"
-                    className="fixed top-[60px] right-4 z-1001 h-8 w-8"
+                    className={cn(
+                        'fixed top-[60px] right-4 z-1001 h-8 w-8',
+                        !hasToc && 'hidden',
+                    )}
                 >
                     {isRightSidebarOpen ? <PanelRight /> : <PanelLeft />}
                 </Button>
@@ -102,6 +128,7 @@ export const MainLayout = ({ children }: PropsWithChildren<unknown>) => {
                             'translate-x-0': isRightSidebarOpen,
                             'translate-x-full': !isRightSidebarOpen,
                         },
+                        !hasToc && 'hidden',
                     )}
                 >
                     <TableOfContents />
