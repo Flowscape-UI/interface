@@ -1,5 +1,9 @@
-import { type PropsWithChildren, useState } from 'react';
+import { type PropsWithChildren, useState, useEffect } from 'react';
 import { ResizableBox } from 'react-resizable';
+import { ChevronLeft, ChevronRight, PanelLeft, PanelRight } from 'lucide-react';
+import { useMediaQuery } from 'usehooks-ts';
+import { cn } from './lib/utils';
+import { Button } from './components/ui/button';
 import { Header } from './components/header';
 import LinksSidebar from './components/links-sidebar';
 import TableOfContents from './components/table-of-contents';
@@ -7,28 +11,82 @@ import Footer from './components/footer';
 
 export const MainLayout = ({ children }: PropsWithChildren<unknown>) => {
     const [sidebarWidth, setSidebarWidth] = useState(250);
+    const [isSidebarOpen, setSidebarOpen] = useState(true);
+    const [isRightSidebarOpen, setRightSidebarOpen] = useState(true);
+
+    const isDesktop = useMediaQuery('(min-width: 1675px)');
+    const showToggleButton = useMediaQuery(
+        '(min-width: 768px) and (max-width: 1674px)',
+    );
+    const isLargeScreen = useMediaQuery('(min-width: 1024px)');
+
+    useEffect(() => {
+        setSidebarOpen(isDesktop);
+    }, [isDesktop]);
+
+    useEffect(() => {
+        if (!isLargeScreen) {
+            setRightSidebarOpen(false);
+        }
+    }, [isLargeScreen]);
 
     return (
-        <div className="mx-auto flex min-h-screen w-full flex-col block">
+        <div className="mx-auto flex min-h-screen w-full flex-col">
             <Header />
+            {/* Left sidebar toggle button */}
+            {showToggleButton && (
+                <Button
+                    onClick={() => setSidebarOpen(!isSidebarOpen)}
+                    variant="outline"
+                    size="icon"
+                    className="fixed top-1/2 z-1001 h-8 w-8 -translate-y-1/2 rounded-full bg-background transition-all duration-300 ease-in-out"
+                    style={{
+                        left: isSidebarOpen ? `${sidebarWidth - 16}px` : '1rem',
+                    }}
+                >
+                    {isSidebarOpen ? <ChevronLeft /> : <ChevronRight />}
+                </Button>
+            )}
+
+            {/* Right sidebar toggle button */}
+            {isLargeScreen && (
+                <Button
+                    onClick={() => setRightSidebarOpen(!isRightSidebarOpen)}
+                    variant="ghost"
+                    size="icon"
+                    className="fixed top-[60px] right-4 z-1001 h-8 w-8"
+                >
+                    {isRightSidebarOpen ? <PanelRight /> : <PanelLeft />}
+                </Button>
+            )}
+
             <div className="flex flex-1">
                 {/* Left Sidebar */}
-                <ResizableBox
-                    width={sidebarWidth}
-                    onResize={(_e, { size }) => setSidebarWidth(size.width)}
-                    minConstraints={[220, Infinity]} // Slightly smaller min
-                    maxConstraints={[450, Infinity]}
-                    axis="x"
-                    resizeHandles={['e']}
-                    className="!fixed top-[53px] bottom-0 left-0 z-1000 hidden md:block"
+                <div
+                    className={cn(
+                        'fixed top-[57px] bottom-0 left-0 z-1000 hidden md:block transition-transform duration-300 ease-in-out',
+                        {
+                            'translate-x-0': isSidebarOpen,
+                            '-translate-x-full': !isSidebarOpen,
+                        },
+                    )}
                 >
-                    <aside className="supports-backdrop-blur:bg-background/90 custom-scrollbar h-full w-full overflow-y-auto border-r bg-white/5 p-4 backdrop-blur-lg">
-                        <LinksSidebar />
-                    </aside>
-                </ResizableBox>
+                    <ResizableBox
+                        width={sidebarWidth}
+                        onResize={(_e, { size }) => setSidebarWidth(size.width)}
+                        minConstraints={[220, Infinity]}
+                        maxConstraints={[450, Infinity]}
+                        axis="x"
+                        resizeHandles={['e']}
+                        className="h-full"
+                    >
+                        <aside className="supports-backdrop-blur:bg-background/90 custom-scrollbar h-full w-full overflow-y-auto border-r bg-white/5 p-4 backdrop-blur-lg">
+                            <LinksSidebar />
+                        </aside>
+                    </ResizableBox>
+                </div>
 
-                {/* Main Content (Scrollable) */}
-                <main className="flex flex-1 flex-col">
+                <main className="flex w-full flex-1 flex-col">
                     <div className="mx-auto w-full max-w-3xl flex-1 p-4">
                         {children}
                     </div>
@@ -38,7 +96,13 @@ export const MainLayout = ({ children }: PropsWithChildren<unknown>) => {
                 {/* Right Sidebar */}
                 <aside
                     id="table-of-contents-wrapper"
-                    className="!fixed top-[53px] bottom-0 right-0 z-1000 supports-backdrop-blur:bg-background/90 custom-scrollbar hidden h-full w-64 shrink-0 overflow-y-auto border-l bg-white/5 p-4 backdrop-blur-lg lg:block"
+                    className={cn(
+                        '!fixed top-[57px] bottom-0 right-0 z-1000 hidden h-full w-64 shrink-0 overflow-y-auto border-l bg-white/5 p-4 backdrop-blur-lg supports-backdrop-blur:bg-background/90 lg:block transition-transform duration-300 ease-in-out',
+                        {
+                            'translate-x-0': isRightSidebarOpen,
+                            'translate-x-full': !isRightSidebarOpen,
+                        },
+                    )}
                 >
                     <TableOfContents />
                 </aside>
