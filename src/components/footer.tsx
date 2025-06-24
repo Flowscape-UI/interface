@@ -1,4 +1,4 @@
-import { FaGithub, FaXTwitter, FaDiscord } from 'react-icons/fa6';
+import { FaGithub } from 'react-icons/fa6';
 import { Badge } from './ui/badge';
 import { Link } from '@tanstack/react-router';
 
@@ -34,11 +34,11 @@ export default function Footer() {
                         <Link to="/components" className="transition hover:text-white">
                             Components
                         </Link>
-                        <Link to="/templates" className="transition hover:text-white">
+                        <Link disabled to="/templates" className="transition hover:text-white">
                             Pro templates <Badge>soon</Badge>
                         </Link>
-                        <Link to="/hire" className="transition hover:text-white">
-                            Make an order
+                        <Link disabled to="/hire" className="transition hover:text-white">
+                            Make an order <Badge>soon</Badge>
                         </Link>
                     </div>
 
@@ -50,10 +50,10 @@ export default function Footer() {
                         <Link to="/docs/installation" className="transition hover:text-white">
                             Getting started
                         </Link>
-                        <Link to="/docs/cli" className="transition hover:text-white">
+                        <Link disabled to="/docs/cli" className="transition hover:text-white">
                             CLI <Badge>soon</Badge>
                         </Link>
-                        <Link to="/changelog" className="transition hover:text-white">
+                        <Link disabled to="/changelog" className="transition hover:text-white">
                             Changelog <Badge>soon</Badge>
                         </Link>
                     </div>
@@ -70,22 +70,6 @@ export default function Footer() {
                             className="flex items-center gap-2 transition hover:text-white"
                         >
                             <FaGithub className="h-4 w-4" /> GitHub
-                        </a>
-                        <a
-                            href="#"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-2 transition hover:text-white"
-                        >
-                            <FaXTwitter className="h-4 w-4" /> Twitter
-                        </a>
-                        <a
-                            href="#"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-2 transition hover:text-white"
-                        >
-                            <FaDiscord className="h-4 w-4" /> Discord
                         </a>
                     </div>
                 </div>

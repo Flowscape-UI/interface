@@ -9,7 +9,11 @@ import LinksSidebar from './components/links-sidebar';
 import TableOfContents from './components/table-of-contents';
 import Footer from './components/footer';
 
-export const MainLayout = ({ children }: PropsWithChildren<unknown>) => {
+interface MainLayoutProps extends PropsWithChildren {
+    maxWidth?: string;
+}
+
+export const MainLayout = ({ children, maxWidth = 'max-w-3xl' }: MainLayoutProps) => {
     const [sidebarWidth, setSidebarWidth] = useState(250);
     const [isSidebarOpen, setSidebarOpen] = useState(true);
     const [isRightSidebarOpen, setRightSidebarOpen] = useState(true);
@@ -113,7 +117,7 @@ export const MainLayout = ({ children }: PropsWithChildren<unknown>) => {
                 </div>
 
                 <main className="flex w-full flex-1 flex-col">
-                    <div className="mx-auto w-full max-w-3xl flex-1 p-4">
+                    <div className={cn('mx-auto w-full flex-1 p-4', maxWidth)}>
                         {children}
                     </div>
                     <Footer />

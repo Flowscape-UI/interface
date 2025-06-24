@@ -53,7 +53,7 @@ export function Header() {
     const NavLinks = ({ className }: { className?: string }) => (
         <nav className={cn('flex items-center gap-6', className)}>
             {nav.map((n) => (
-                <Link key={n.href} to={n.href} className="text-slate-200 hover:text-white">
+                <Link disabled={n.label === 'Make an order'} key={n.href} to={n.href} className="text-slate-200 hover:text-white">
                     {n.label}
                 </Link>
             ))}
@@ -75,7 +75,7 @@ export function Header() {
                     {/* desktop nav */}
                     <NavLinks className="hidden md:flex" />
                                         <GithubLink stars={stars} className="hidden md:flex" />
-                    <Link to="/auth" className="text-sm font-medium text-slate-200 hover:text-white hidden md:inline-flex items-center justify-center px-3 py-1.5 rounded-md border border-slate-700 hover:bg-slate-800">
+                    <Link disabled to="/auth" className="text-sm font-medium text-slate-200 hover:text-white hidden md:inline-flex items-center justify-center px-3 py-1.5 rounded-md border border-slate-700 hover:bg-slate-800">
                         Sign In
                     </Link>
 
@@ -99,7 +99,7 @@ export function Header() {
                                             </DrawerClose>
                                         ))}
                                         <DrawerClose asChild>
-                                            <Link to="/auth" className="w-full text-left py-2">
+                                            <Link disabled to="/auth" className="w-full text-left py-2">
                                                 Sign In
                                             </Link>
                                         </DrawerClose>
