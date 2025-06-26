@@ -89,7 +89,7 @@ export function Header() {
                         <SelectTrigger className="w-[120px] h-[36px] flex text-slate-200 border-slate-700 hover:bg-slate-800">
                             <SelectValue placeholder="Language" />
                         </SelectTrigger>
-                        <SelectContent className="bg-slate-900 text-slate-200 border-slate-700">
+                        <SelectContent sideOffset={4} className="z-[2000] bg-slate-900 text-slate-200 border-slate-700">
                             {isLoadingLanguages ? (
                                 <SelectItem value="loading" disabled>Loading...</SelectItem>
                             ) : (
