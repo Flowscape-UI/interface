@@ -7,6 +7,7 @@ import type { PropsTableRow } from '@/components/props-table';
 import { createFileRoute } from '@tanstack/react-router';
 import { MainLayout } from '@/main-layout';
 import { InputSelectNumber } from '@/components/ui/input-select-number';
+import { useTranslation } from '@/hooks/use-translation';
 
 export const Route = createFileRoute('/components/inputs/input-select-number/')({
     component: InputSelectNumberPage,
@@ -294,17 +295,18 @@ function InputSelectNumberPage() {
     const [value2, setValue2] = useState<number | string>(10.5);
     const [value3, setValue3] = useState<number | string>(100);
     const [value4, setValue4] = useState<number | string>(50);
+    const {t} = useTranslation();
 
     return (
         <MainLayout>
             <div className="w-full px-6 py-16">
                 <PageTitle data-toc>Input Select Number</PageTitle>
                 <p className="max-w-xl text-white/60">
-                    A numeric input component that allows value changes by dragging the mouse horizontally or vertically.
+                    {t('A numeric input component that allows value changes by dragging the mouse horizontally or vertically')}.
                 </p>
 
                 <div className="mt-8 flex flex-col gap-10">
-                    <PreviewTabs title="Basic Usage" description="A simple input with linear progression." codeText={example1Code}>
+                    <PreviewTabs title="Basic Usage" description={t('A simple input with linear progression.')} codeText={example1Code}>
                         <div className="relative flex h-full items-center justify-center">
                             <InputSelectNumber
                                 value={value1}
@@ -316,7 +318,7 @@ function InputSelectNumberPage() {
                         </div>
                     </PreviewTabs>
 
-                    <PreviewTabs title="With Precision" description="An input that handles decimal values." codeText={example2Code}>
+                    <PreviewTabs title="With Precision" description={t('An input that handles decimal values.')} codeText={example2Code}>
                         <div className="relative flex h-full items-center justify-center">
                             <InputSelectNumber
                                 value={value2}
@@ -329,7 +331,7 @@ function InputSelectNumberPage() {
                         </div>
                     </PreviewTabs>
 
-                    <PreviewTabs title="Geometric Progression" description="An input with non-linear value change." codeText={example3Code}>
+                    <PreviewTabs title="Geometric Progression" description={t('An input with non-linear value change.')} codeText={example3Code}>
                         <div className="relative flex h-full items-center justify-center">
                             <InputSelectNumber
                                 value={value3}
@@ -342,7 +344,7 @@ function InputSelectNumberPage() {
                         </div>
                     </PreviewTabs>
 
-                    <PreviewTabs title="Vertical Orientation" description="An input that changes value on vertical drag." codeText={example4Code}>
+                    <PreviewTabs title="Vertical Orientation" description={t('An input that changes value on vertical drag.')} codeText={example4Code}>
                         <div className="relative flex h-48 items-center justify-center">
                             <InputSelectNumber
                                 value={value4}
@@ -359,7 +361,7 @@ function InputSelectNumberPage() {
 
                 <UsageSection
                     title="Component Code"
-                    description="The source code for the InputSelectNumber component."
+                    description={`${t('The source code for the')} InputSelectNumber ${t('component')}.`}
                     code={componentCode}
                 />
 
@@ -367,7 +369,7 @@ function InputSelectNumberPage() {
                     description={
                         <>
                             <p className="mb-4">
-                                <strong>Input Select Number</strong> &mdash; a highly customizable numeric input component.
+                                <strong>Input Select Number</strong> &mdash; {t('a highly customizable numeric input component')}.
                             </p>
                         </>
                     }

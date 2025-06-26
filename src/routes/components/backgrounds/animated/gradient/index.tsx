@@ -8,6 +8,7 @@ import { PreviewTabs } from '@/components/preview-tabs';
 import { UsageSection } from '@/components/usage-section';
 import { DocsSection } from '@/components/docs-section';
 import type { PropsTableRow } from '@/components/props-table';
+import { useTranslation } from '@/hooks/use-translation';
 
 export const Route = createFileRoute('/components/backgrounds/animated/gradient/')({
     component: GradientPage,
@@ -97,13 +98,14 @@ function GradientBackground({
  * -------------------------------------------------- */
 
 function GradientPage() {
+    const {t} = useTranslation()
     return (
         <MainLayout>
             <div className="w-full px-6 py-16">
                 <PageTitle>Gradient Background</PageTitle>
                 <p className="max-w-xl text-white/60">
-                    A simple, animated gradient background created with CSS. Fully customizable
-                    through props.
+                    {t(`A simple, animated gradient background created with CSS. Fully customizable
+                    through props.`)}
                 </p>
 
                 <div className="mt-8 flex flex-col gap-10">
@@ -135,15 +137,15 @@ function GradientPage() {
                 </div>
 
                 <UsageSection
-                    description="This component creates an animated gradient background. It is highly configurable through props."
+                    description={t("This component creates an animated gradient background. It is highly configurable through props.")}
                     code={defaultCode}
                 />
 
                 <DocsSection
                     description={
                         <p>
-                            The animation is a pure CSS keyframe animation on the
-                            `background-position` property of a linear gradient.
+                            {t('The animation is a pure CSS keyframe animation on the')}{' '}
+                            `background-position` {t('property of a linear gradient.')}
                         </p>
                     }
                     rows={rows}

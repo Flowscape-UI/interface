@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // Component inspired by Kevin Levron:
 // https://x.com/soju22/status/1858925191671271801
 import React, { useRef, useEffect } from "react";
@@ -35,6 +37,7 @@ import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment
 import { Observer } from "gsap/Observer";
 import { gsap } from "gsap";
 import { cn } from "@/lib/utils";
+import { useTranslation } from "@/hooks/use-translation";
 
 gsap.registerPlugin(Observer);
 
@@ -45,12 +48,13 @@ export const Route = createFileRoute(
 });
 
 function BallpitPage() {
+  const {t} = useTranslation();
     return (
         <MainLayout>
         <div className="px-6 py-16 w-full">
             <PageTitle data-toc>Ballpit</PageTitle>
             <p className="text-white/60 max-w-xl">
-                A fun, interactive ball pit simulation using Three.js. The balls react to gravity and mouse movement.
+                {t('A fun, interactive ball pit simulation using')} Three.js. {t('The balls react to gravity and mouse movement.')}
             </p>
 
             <div className="mt-8 flex flex-col gap-10">
@@ -78,14 +82,14 @@ function BallpitPage() {
 
             <UsageSection
                 description={
-                    "Add the component to any container. Make sure the container has a defined height."
+                    t("Add the component to any container. Make sure the container has a defined height.")
                 }
                 code={ballpitCode}
             />
 
             <DocsSection
                 description={
-                    "The Ballpit component is a highly customizable Three.js animation. You can control physics, appearance, and interactivity through props."
+                    `${t('The Ballpit component is a highly customizable')} Three.js ${t('animation. You can control physics, appearance, and interactivity through props.')}`
                 }
                 rows={rows}
             />

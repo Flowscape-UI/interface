@@ -6,6 +6,7 @@ import { MagicCard } from '@/components/ui/magic-card';
 import { UsageSection } from '@/components/usage-section';
 import { DocsSection } from '@/components/docs-section';
 import type { PropsTableRow } from '@/components/props-table';
+import { useTranslation } from '@/hooks/use-translation';
 
 export const Route = createFileRoute('/components/cards/magic-card/')({
     component: MagicCardPage,
@@ -228,12 +229,13 @@ const rows: PropsTableRow[] = [
 ];
 
 function MagicCardPage() {
+    const {t} = useTranslation();
     return (
         <MainLayout>
             <div className="px-6 py-16 w-full">
                 <PageTitle>Magic Card</PageTitle>
                 <p className="text-white/60 max-w-xl">
-                    A fully interactive card component with glow, particle, and line effects powered by HTML Canvas.
+                    {t('A fully interactive card component with glow, particle, and line effects powered by')} HTML Canvas.
                 </p>
 
                 <div className="mt-8 flex flex-col gap-10">
@@ -301,7 +303,7 @@ function MagicCardPage() {
 
                 <UsageSection
                     title="Component Code"
-                    description="The complete source code for the MagicCard component, including all animations, controls, and settings management. Use this as a reference for understanding its internal workings."
+                    description={`${t('The complete source code for the')} MagicCard ${t('component, including all animations, controls, and settings management. Use this as a reference for understanding its internal workings.')}`}
                     code={fullComponentCode}
                 />
 
@@ -309,10 +311,10 @@ function MagicCardPage() {
                     description={
                         <>
                             <p className="mb-4">
-                                <strong>Magic Card</strong> is a stunning, interactive component that brings a dynamic, engaging experience to your UI. It uses HTML Canvas to render smooth particle animations, glowing effects, and waving lines that respond to user interaction.
+                                <strong>Magic Card</strong> {t('is a stunning, interactive component that brings a dynamic, engaging experience to your')} UI. {t('It uses')} HTML Canvas {t('to render smooth particle animations, glowing effects, and waving lines that respond to user interaction')}.
                             </p>
                             <p className="mb-4">
-                                The component is highly configurable through the <code>initialSettings</code> prop. You can also enable <code>showControls</code> to get a real-time control panel for tweaking every visual parameter.
+                                {t('The component is highly configurable through the')}{' '}<code>initialSettings</code> {t('prop. You can also enable')} <code>showControls</code> {t('to get a real-time control panel for tweaking every visual parameter')}.
                             </p>
                         </>
                     }

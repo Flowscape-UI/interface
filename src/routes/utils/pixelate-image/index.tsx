@@ -9,6 +9,7 @@ import {
 import { DocsSection } from '@/components/docs-section';
 import type { PropsTableRow } from '@/components/props-table';
 import { MainLayout } from '@/main-layout';
+import { useTranslation } from '@/hooks/use-translation';
 
 const defaultCode = `import { useState } from 'react';
 import { PixelateImage, ControlsPanel } from "@/components/ui/pixelate-image";
@@ -55,14 +56,15 @@ const pixelateImageRows: PropsTableRow[] = [
 function PixelateImagePage() {
   const [pixelSize, setPixelSize] = useState(10);
   const [size, setSize] = useState(400);
+  const {t} = useTranslation();
 
   return (
     <MainLayout>
       <div className="w-full px-6 py-16">
         <PageTitle>Pixelate Image</PageTitle>
         <p className="max-w-xl text-white/60">
-          A component to render a pixelated version of an image using HTML Canvas. Customize the
-          pixel size, dimensions, and background with interactive controls.
+          {t(`A component to render a pixelated version of an image using HTML Canvas. Customize the
+          pixel size, dimensions, and background with interactive controls.`)}
         </p>
 
         <div className="mt-8 flex flex-col gap-10">
@@ -95,13 +97,13 @@ function PixelateImagePage() {
               <>
                 <h2 className="mb-4 text-2xl font-bold">PixelateImage</h2>
                 <p className="mb-4">
-                  <strong>Pixelate Image</strong> is a fun visual component that renders an image
+                  <strong>Pixelate Image</strong>{' '}{t(`is a fun visual component that renders an image
                   with a pixelated effect. It's perfect for placeholders, loading effects, or just
-                  for stylistic purposes. Use it with the{' '}
-                  <code>ControlsPanel</code> component for real-time adjustments.
+                  for stylistic purposes. Use it with the`)}{' '}
+                  <code>ControlsPanel</code>{' '}{t('component for real-time adjustments.')}
                 </p>
               </>
-            }
+            } 
           />
         </div>
       </div>

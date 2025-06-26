@@ -13,7 +13,9 @@ export function CopyButton({ copyText }: { copyText: string }) {
             await navigator.clipboard.writeText(copyText);
             setCopied(true);
             setTimeout(() => setCopied(false), 2000);
-        } catch (_) { }
+        } catch (e) {
+            console.error(e);
+        }
     };
 
     return (

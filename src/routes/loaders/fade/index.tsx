@@ -6,6 +6,7 @@ import { FadeLoader } from '@/components/ui/fade-loader';
 import { UsageSection } from '@/components/usage-section';
 import { DocsSection } from '@/components/docs-section';
 import type { PropsTableRow } from '@/components/props-table';
+import { useTranslation } from '@/hooks/use-translation';
 
 export const Route = createFileRoute('/loaders/fade/')({
     component: FadeLoaderPage,
@@ -155,7 +156,7 @@ export const FadeLoader = forwardRef<HTMLDivElement, FadeLoaderProps>(
           
           .fade-loader:before,
           .fade-loader:after {
-            content: \"\";
+            content: "";
             position: absolute;
             border-radius: 50%;
             animation-duration: \${duration}s;
@@ -220,12 +221,13 @@ function hexToRgb(hex: string): string {
 `;
 
 function FadeLoaderPage() {
+  const {t} = useTranslation()
     return (
         <MainLayout>
             <div className="px-6 py-16 w-full">
                 <PageTitle>Fade Loader</PageTitle>
                 <p className="text-white/60 max-w-xl">
-                    A smooth, pulsing loading animation with a fade effect. The loader features two concentric circles that pulse in and out of view.
+                    {t('A smooth, pulsing loading animation with a fade effect. The loader features two concentric circles that pulse in and out of view.')}
                 </p>
 
                 <div className="mt-8 flex flex-col gap-10">
@@ -267,7 +269,7 @@ function FadeLoaderPage() {
                             shadow={true}
                             className="mx-auto mb-4"
                           />
-                          <p className="text-gray-300 font-medium">Loading your content...</p>
+                          <p className="text-gray-300 font-medium">{t('Loading your content...')}</p>
                         </div>
                       </div>
                     </PreviewTabs>
@@ -275,7 +277,7 @@ function FadeLoaderPage() {
 
                 <UsageSection
                     title="Component Code"
-                    description="A smooth, pulsing loading animation with a fade effect. The loader features two concentric circles that pulse in and out of view, creating a modern and elegant loading experience. The component is highly customizable and works well in both light and dark themes."
+                    description={t("A smooth, pulsing loading animation with a fade effect. The loader features two concentric circles that pulse in and out of view, creating a modern and elegant loading experience. The component is highly customizable and works well in both light and dark themes.")}
                     code={componentCode}
                 />
 
@@ -283,10 +285,10 @@ function FadeLoaderPage() {
                     description={
                         <>
                             <p className="mb-4">
-                                <strong>Fade Loader</strong> &mdash; A visually appealing loading indicator that creates a smooth pulsing effect. The loader consists of two concentric circles that fade in and out in an alternating pattern, creating a sense of depth and movement.
+                                <strong>Fade Loader</strong> &mdash; {t('A visually appealing loading indicator that creates a smooth pulsing effect. The loader consists of two concentric circles that fade in and out in an alternating pattern, creating a sense of depth and movement.')}
                             </p>
                             <p className="mb-4">
-                                The animation is lightweight and performs well across different devices and browsers. The component is highly customizable, allowing you to adjust the size, colors, animation speed, and more to match your application's design system.
+                                {t('The animation is lightweight and performs well across different devices and browsers. The component is highly customizable, allowing you to adjust the size, colors, animation speed, and more to match your application\'s design system.')}
                             </p>
                         </>
                     }

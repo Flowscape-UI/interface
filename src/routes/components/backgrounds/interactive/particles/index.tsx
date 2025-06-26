@@ -7,6 +7,7 @@ import { PreviewTabs } from '@/components/preview-tabs';
 import { UsageSection } from '@/components/usage-section';
 import { DocsSection } from '@/components/docs-section';
 import type { PropsTableRow } from '@/components/props-table';
+import { useTranslation } from '@/hooks/use-translation';
 
 export const Route = createFileRoute('/components/backgrounds/interactive/particles/')({
     component: ParticlesPage,
@@ -17,6 +18,7 @@ export const Route = createFileRoute('/components/backgrounds/interactive/partic
  * -------------------------------------------------- */
 declare global {
     interface Window {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         particlesJS: any;
     }
 }
@@ -313,13 +315,13 @@ function ParticlesBackground({
  * -------------------------------------------------- */
 
 function ParticlesPage() {
+    const {t} = useTranslation()
     return (
         <MainLayout>
             <div className="w-full px-6 py-16">
                 <PageTitle>Particles Background</PageTitle>
                 <p className="max-w-xl text-white/60">
-                    An interactive particle background powered by particles.js. Fully customizable
-                    and easy to integrate.
+                    {t('An interactive particle background powered by particles.js. Fully customizable and easy to integrate.')}
                 </p>
 
                 <div className="mt-8 flex flex-col gap-10">
@@ -363,15 +365,15 @@ function ParticlesPage() {
                 </div>
 
                 <UsageSection
-                    description="This component wraps the particles.js library to create interactive backgrounds. It dynamically loads the library script."
+                    description={`${t('This component wraps the particles.js library to create interactive backgrounds. It dynamically loads the library script.')}`}
                     code={defaultCode}
                 />
 
                 <DocsSection
                     description={
                         <p>
-                            Customize the particle system through a wide range of props, or provide
-                            a complete custom configuration object for full control.
+                            {t(`Customize the particle system through a wide range of props, or provide
+                            a complete custom configuration object for full control.`)}
                         </p>
                     }
                     rows={rows}

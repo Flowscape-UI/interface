@@ -7,6 +7,7 @@ import { PreviewTabs } from '@/components/preview-tabs';
 import { UsageSection } from '@/components/usage-section';
 import { DocsSection } from '@/components/docs-section';
 import type { PropsTableRow } from '@/components/props-table';
+import { useTranslation } from '@/hooks/use-translation';
 
 export const Route = createFileRoute('/components/backgrounds/animated/lightning/')({
     component: LightningPage,
@@ -213,12 +214,13 @@ const Lightning: React.FC<LightningProps> = ({
  * -------------------------------------------------- */
 
 function LightningPage() {
+    const {t} = useTranslation()
     return (
         <MainLayout>
             <div className="w-full px-6 py-16">
                 <PageTitle>Lightning Background</PageTitle>
                 <p className="max-w-xl text-white/60">
-                    A procedural lightning effect created with WebGL shaders.
+                    {t('A procedural lightning effect created with WebGL shaders.')}
                 </p>
 
                 <div className="mt-8 flex flex-col gap-10">
@@ -242,15 +244,15 @@ function LightningPage() {
                 </div>
 
                 <UsageSection
-                    description="This component uses a WebGL shader to render a procedural lightning animation."
+                    description={t("This component uses a WebGL shader to render a procedural lightning animation.")}
                     code={defaultCode}
                 />
 
                 <DocsSection
                     description={
                         <p>
-                            The effect is generated in a fragment shader, with properties passed as
-                            uniforms to control its appearance and behavior.
+                            {t(`The effect is generated in a fragment shader, with properties passed as
+                            uniforms to control its appearance and behavior.`)}
                         </p>
                     }
                     rows={rows}

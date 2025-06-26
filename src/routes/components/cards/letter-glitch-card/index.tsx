@@ -6,6 +6,7 @@ import { LetterGlitchCard } from '@/components/ui/letter-glitch-card';
 import { UsageSection } from '@/components/usage-section';
 import { DocsSection } from '@/components/docs-section';
 import type { PropsTableRow } from '@/components/props-table';
+import { useTranslation } from '@/hooks/use-translation';
 
 export const Route = createFileRoute('/components/cards/letter-glitch-card/')({
     component: LetterGlitchCardPage,
@@ -370,18 +371,19 @@ export default LetterGlitch;
 `;
 
 function LetterGlitchCardPage() {
+  const {t} = useTranslation();
     return (
         <MainLayout>
             <div className="px-6 py-16 w-full">
                 <PageTitle>Letter Glitch Card</PageTitle>
                 <p className="text-white/60 max-w-xl">
-                    A card component with a canvas-based animated glitch effect background.
+                    {t('A card component with a canvas-based animated glitch effect background')}.
                 </p>
 
                 <div className="mt-8 flex flex-col gap-10">
                     <PreviewTabs
                         title="Default"
-                        description="The default settings for the letter glitch card."
+                        description={`${t('The default settings for the letter glitch card')}.`}
                         codeText={defaultCode}
                         reactBitsUrl="https://www.reactbits.dev/backgrounds/letter-glitch"
                     >
@@ -392,7 +394,7 @@ function LetterGlitchCardPage() {
                     </PreviewTabs>
                     <PreviewTabs
                         title="Fast & Furious"
-                        description="A very fast and aggressive glitch effect."
+                        description={`${t('A very fast and aggressive glitch effect')}.`}
                         codeText={fastFuriousCode}
                     >
                         <LetterGlitchCard
@@ -404,7 +406,7 @@ function LetterGlitchCardPage() {
                     </PreviewTabs>
                     <PreviewTabs
                         title="Slow & Sharp"
-                        description="A slow, non-smooth animation for a retro feel."
+                        description={`${t('A slow, non-smooth animation for a retro feel')}.`}
                         codeText={slowSharpCode}
                     >
                         <LetterGlitchCard
@@ -417,7 +419,7 @@ function LetterGlitchCardPage() {
                     </PreviewTabs>
                      <PreviewTabs
                         title="With Vignette"
-                        description="This card has center and outer vignettes enabled for a focused look."
+                        description={`${t('This card has center and outer vignettes enabled for a focused look')}.`}
                         codeText={withVignetteCode}
                     >
                         <LetterGlitchCard
@@ -431,7 +433,7 @@ function LetterGlitchCardPage() {
 
                 <UsageSection
                     title="Component Code"
-                    description="A component that creates a glitching text effect using an HTML canvas. It's highly customizable through props."
+                    description={`${t('A component that creates a glitching text effect using an')} HTML canvas. ${t(`It's highly customizable through props`)}.`}
                     code={componentCode}
                 />
 
@@ -439,7 +441,7 @@ function LetterGlitchCardPage() {
                     description={
                         <>
                             <p className="mb-4">
-                                <strong>Letter Glitch Card</strong> &mdash; a customizable card component with a canvas-based animated glitch effect background.
+                                <strong>Letter Glitch Card</strong> &mdash; {t('a customizable card component with a canvas-based animated glitch effect background')}.
                             </p>
                         </>
                     }

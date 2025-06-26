@@ -3,21 +3,23 @@ import { MainLayout } from '../../../main-layout'
 import { FaReact } from 'react-icons/fa6'
 import { RiTailwindCssFill } from 'react-icons/ri'
 import { TbBrandFramerMotion } from 'react-icons/tb'
+import { useTranslation } from '@/hooks/use-translation'
 
 export const Route = createFileRoute('/docs/quick-start/')({
   component: QuickStartPage,
 })
 
 function QuickStartPage() {
+    const {t} = useTranslation();
   return <MainLayout>
     <section className="mx-auto flex max-w-4xl flex-col gap-10 px-6 py-20 text-slate-200 sm:py-28">
             {/* Heading */}
             <header className="text-center sm:text-left">
                 <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl">
-                    Get started — <span className="bg-gradient-to-r from-sky-400 to-cyan-300 bg-clip-text text-transparent">why Flowscape?</span>
+                    {t('Get started')} — <span className="bg-gradient-to-r from-sky-400 to-cyan-300 bg-clip-text text-transparent">{t('why')} Flowscape?</span>
                 </h1>
                 <p className="mx-auto mt-4 max-w-2xl text-lg leading-relaxed sm:mt-6 sm:text-xl">
-                    Every component on Flowscape is <span className="font-semibold text-white">100% free</span> and production-ready. No paywalls, just copy, paste and ship.
+                    {t('Every component on')} Flowscape {t('is')} <span className="font-semibold text-white">100% {t('free')}</span>{' '}{t('and production-ready. No paywalls, just copy, paste and ship.')}
                 </p>
             </header>
 
@@ -62,19 +64,19 @@ function QuickStartPage() {
 
             {/* Quick start */}
             <div className="rounded-lg bg-white/5 p-6 ring-1 ring-white/10">
-                <p className="mb-4 text-base font-semibold text-white sm:text-lg">Quick start</p>
+                <p className="mb-4 text-base font-semibold text-white sm:text-lg">{t('Quick start')}</p>
                 <ol className="space-y-3 text-sm leading-relaxed sm:text-base">
                     <li className="flex items-baseline gap-2">
                         <span className="rounded bg-sky-500 px-2 py-0.5 text-xs font-semibold text-black">1</span>
-                        Search for a component and copy its code.
+                        {t('Search for a component and copy its code.')}
                     </li>
                     <li className="flex items-baseline gap-2">
                         <span className="rounded bg-sky-500 px-2 py-0.5 text-xs font-semibold text-black">2</span>
-                        Paste it into your project. Dependencies? Already installed!
+                        {t('Paste it into your project. Dependencies? Already installed!')}
                     </li>
                     <li className="flex items-baseline gap-2">
                         <span className="rounded bg-sky-500 px-2 py-0.5 text-xs font-semibold text-black">3</span>
-                        Tweak Tailwind classes, motion props or React logic as you wish.
+                        Tweak Tailwind classes, motion props or React logic {t('as you wish')}.
                     </li>
                 </ol>
             </div>

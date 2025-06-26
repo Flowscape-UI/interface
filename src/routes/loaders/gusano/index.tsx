@@ -6,6 +6,7 @@ import { GusanoLoader } from '@/components/ui/gusano-loader';
 import { UsageSection } from '@/components/usage-section';
 import { DocsSection } from '@/components/docs-section';
 import type { PropsTableRow } from '@/components/props-table';
+import { useTranslation } from '@/hooks/use-translation';
 
 export const Route = createFileRoute('/loaders/gusano/')({
     component: GusanoLoaderPage,
@@ -264,12 +265,13 @@ export const GusanoLoader = forwardRef<HTMLDivElement, GusanoLoaderProps>(
 GusanoLoader.displayName = 'GusanoLoader';`;
 
 function GusanoLoaderPage() {
+  const {t} = useTranslation()
     return (
         <MainLayout>
             <div className="px-6 py-16 w-full">
                 <PageTitle>Gusano Loader</PageTitle>
                 <p className="text-white/60 max-w-xl">
-                    A unique loading animation with boxes that move in a worm-like pattern with smooth color transitions.
+                    {t('A unique loading animation with boxes that move in a worm-like pattern with smooth color transitions.')}
                 </p>
 
                 <div className="mt-8 flex flex-col gap-10">
@@ -317,7 +319,7 @@ function GusanoLoaderPage() {
 
                 <UsageSection
                     title="Component Code"
-                    description="A versatile loading animation with configurable boxes that move in a worm-like pattern. The component supports both static and animated colors, with customizable sizes, timings, and colors."
+                    description={t("A versatile loading animation with configurable boxes that move in a worm-like pattern. The component supports both static and animated colors, with customizable sizes, timings, and colors.")}
                     code={componentCode}
                 />
 
@@ -325,10 +327,10 @@ function GusanoLoaderPage() {
                     description={
                         <>
                             <p className="mb-4">
-                                <strong>Gusano Loader</strong> &mdash; A unique loading animation that creates a worm-like movement with a series of connected boxes. The loader can be customized in size, speed, and color scheme to match your application's design system.
+                                <strong>Gusano Loader</strong> &mdash; {t(`A unique loading animation that creates a worm-like movement with a series of connected boxes. The loader can be customized in size, speed, and color scheme to match your application's design system.`)}
                             </p>
                             <p className="mb-4">
-                                The animation features smooth transitions and can be configured to cycle through a custom color palette. The component is lightweight and performs well even with complex animations.
+                                {t(`The animation features smooth transitions and can be configured to cycle through a custom color palette. The component is lightweight and performs well even with complex animations.`)}
                             </p>
                         </>
                     }

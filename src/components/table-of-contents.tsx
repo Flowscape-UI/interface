@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { cn } from '../lib/utils';
 import { Link, useRouter } from '@tanstack/react-router';
+import { useTranslation } from '@/hooks/use-translation';
 
 /**
  * **TableOfContents** — автоматическая динамическая навигация по заголовкам.
@@ -44,6 +45,7 @@ export default function TableOfContents() {
     const pathname = useRouter().state.location.pathname;
     const [items, setItems] = useState<{ id: string; text: string; level: number }[]>([]);
     const [active, setActive] = useState<string | null>(null);
+    const {t} = useTranslation();
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -108,7 +110,7 @@ export default function TableOfContents() {
                                 active === id && 'text-sky-400',
                             )}
                         >
-                            {text}
+                            {t(`${text}`)}
                         </Link>
                     </li>
                 ))}

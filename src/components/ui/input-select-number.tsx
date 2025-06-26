@@ -40,6 +40,7 @@ export const InputSelectNumber = React.forwardRef<HTMLInputElement, InputSelectN
         const dragRef = useRef(null);
         const startValueRef = useRef<number>(value === '' ? 0 : Number(value));
 
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const handleMouseDown = (_event: React.MouseEvent<HTMLDivElement>) => {
             if (disabled) return;
 
@@ -91,6 +92,7 @@ export const InputSelectNumber = React.forwardRef<HTMLInputElement, InputSelectN
                 case 'exponential':
                     return value * (1 + delta * 0.01);
                 case 'geometric':
+                    // eslint-disable-next-line no-case-declarations
                     const factor = 1.05;
                     if (delta > 0) {
                         return (value + delta) * factor;

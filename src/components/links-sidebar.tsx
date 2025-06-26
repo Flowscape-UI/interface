@@ -3,6 +3,7 @@ import { useState, useEffect, Fragment } from 'react';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { Link, useRouter } from '@tanstack/react-router';
+import { useTranslation } from '@/hooks/use-translation';
 
 /* --------------------------------------------------
  * Types -------------------------------------------------- */
@@ -195,14 +196,19 @@ function SidebarNode({
     hidden,
     toggle,
     pathname,
+    shouldTranslate,
 }: {
-    item: NavItem;
-    path: string; // e.g. "0-1-2"
+    item: LeafItem | BranchItem;
+    path: string;
     depth: number;
     hidden: Set<string>;
     toggle: (key: string) => void;
     pathname: string;
+    shouldTranslate: boolean;
 }) {
+    const { t } = useTranslation();
+    const label = shouldTranslate ? t(item.label) : item.label;
+
     const indent = depth * 1; // em units for nested padding
 
     // Leaf node ---------------------------------------
@@ -216,7 +222,7 @@ function SidebarNode({
                         pathname.startsWith(item.href) && 'bg-sky-600',
                     )}
                 >
-                    {item.label}
+                    {label}
                 </Link>
             </li>
         );
@@ -238,7 +244,7 @@ function SidebarNode({
                         'hover:text-sky-300',
                     )}
                 >
-                    {item.label}
+                    {label}
                     {isOpen ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
                 </button>
             </li>
@@ -253,6 +259,7 @@ function SidebarNode({
                             hidden={hidden}
                             toggle={toggle}
                             pathname={pathname}
+                            shouldTranslate={shouldTranslate}
                         />
                     ))}
                 </ul>
@@ -273,7 +280,7 @@ function branchContainsPath(branch: BranchItem, pathname: string): boolean {
 export default function LinksSidebar() {
     // const pathname = usePathname();
     const pathname = useRouter().state.location.pathname;
-    console.log('pathname', pathname);
+    const {t} = useTranslation();
     const [hidden, setHidden] = useState<Set<string>>(readHidden);
 
     // persist on change
@@ -309,7 +316,7 @@ export default function LinksSidebar() {
                                 'hover:text-sky-300',
                             )}
                         >
-                            {sec.section}
+                            {t(sec.section)}
                             {openSection ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
                         </button>
 
@@ -324,6 +331,7 @@ export default function LinksSidebar() {
                                         hidden={hidden}
                                         toggle={toggle}
                                         pathname={pathname}
+                                        shouldTranslate={sec.section === 'Getting Started'}
                                     />
                                 ))}
                             </ul>

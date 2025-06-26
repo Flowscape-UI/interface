@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useRef, useEffect, useState, useCallback, useMemo } from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from './button';

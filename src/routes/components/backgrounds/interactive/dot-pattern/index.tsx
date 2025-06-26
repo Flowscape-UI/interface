@@ -7,6 +7,7 @@ import { DocsSection } from "@/components/docs-section";
 import type { PropsTableRow } from "@/components/props-table";
 import { createFileRoute } from "@tanstack/react-router";
 import { MainLayout } from "@/main-layout";
+import { useTranslation } from "@/hooks/use-translation";
 
 export const Route = createFileRoute(
   "/components/backgrounds/interactive/dot-pattern/"
@@ -15,13 +16,13 @@ export const Route = createFileRoute(
 });
 
 function DotPatternPage() {
+    const {t} = useTranslation();
     return (
         <MainLayout>
         <div className="px-6 py-16 w-full">
             <PageTitle data-toc>Interactive backgrounds</PageTitle>
             <p className="text-white/60 max-w-xl">
-                Sprinkle life behind your content. Below are three lightweight, pointer-aware
-                backgrounds you can drop into any section — no heavy WebGL required.
+                {t('Sprinkle life behind your content. Below are three lightweight, pointer-aware backgrounds you can drop into any section — no heavy WebGL required.')}
             </p>
 
             <div className="mt-8 flex flex-col gap-10">
@@ -82,8 +83,8 @@ function DotPatternPage() {
             <UsageSection
                 description={
                     <>
-                        A CSS radial gradient that follows the pointer. The gradient is
-                        configurable, and you can use it as a background for any element.
+                        {t(`A CSS radial gradient that follows the pointer. The gradient is
+                        configurable, and you can use it as a background for any element.`)}
                     </>
                 }
                 code={dotPatternCode}
@@ -93,28 +94,9 @@ function DotPatternPage() {
                 description={
                     <>
                         <p className="mb-4">
-                            <strong>Interactive dot-grid background</strong> &mdash; a
-                            lightweight&nbsp;<code>&lt;canvas&gt;</code> effect with zero external
-                            dependencies.
-                        </p>
-
-                        <ul className="list-disc space-y-1 pl-5 text-slate-300">
-                            <li>
-                                <span className="text-white font-medium">Idle&nbsp;state:</span> static
-                                dots&nbsp;• optional <em>fish-eye</em> warp towards the centre.
-                            </li>
-                            <li>
-                                <span className="text-white font-medium">Pointer&nbsp;state:</span> nearby
-                                dots expand &amp; change colour while the cursor leaves a smooth,
-                                tapering trail.
-                            </li>
-                        </ul>
-
-                        <p className="mt-4">
-                            Tune every detail&nbsp;&mdash;&nbsp;
-                            <code>gap</code>, <code>baseRadius</code>, <code>maxRadius</code>,
-                            <code>blur</code>, colours, interaction radius, trail length&nbsp;&amp;
-                            lifetime&nbsp;&mdash; through simple props.
+                            <strong>Interactive dot-grid background</strong> &mdash; {t(`a
+                            lightweight `)}<code>&lt;canvas&gt;</code> {t(`effect with zero external
+                            dependencies.`)}
                         </p>
                     </>
                 }

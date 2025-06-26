@@ -1,6 +1,9 @@
 import * as React from 'react';
 import { Outlet, createRootRoute, useRouterState } from '@tanstack/react-router';
 import { Meta } from '../components/meta';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+const queryClient = new QueryClient();
 
 export const Route = createRootRoute({
     component: RootComponent,
@@ -33,10 +36,10 @@ function RootComponent() {
     }, [pathname]);
 
     return (
-        <>
+        <QueryClientProvider client={queryClient}>
             <Meta />
             <Outlet />
             {/* <TanStackRouterDevtools /> */}
-        </>
+        </QueryClientProvider>
     );
 }

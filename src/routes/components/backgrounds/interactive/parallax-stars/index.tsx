@@ -26,6 +26,7 @@ import { UsageSection } from "@/components/usage-section";
 import { DocsSection } from "@/components/docs-section";
 import { createFileRoute } from "@tanstack/react-router";
 import { MainLayout } from "@/main-layout";
+import { useTranslation } from "@/hooks/use-translation";
 
 export const Route = createFileRoute(
   "/components/backgrounds/interactive/parallax-stars/"
@@ -53,7 +54,6 @@ interface ParallaxStarsProps {
 }
 
 /**
- * Lightweight parallax star‑field. Default star is a 1–3 px white dot, but you
  * can pass `renderStar` to supply emoji / SVG / IMG.
  */
 function ParallaxStarsInteractive({
@@ -135,12 +135,13 @@ const rows: PropsTableRow[] = [
  * Page component
  * --------------------------------------------------------------------------*/
 function ParallaxStarsPage() {
+    const {t} = useTranslation();
     return (
         <MainLayout>
             <div className="w-full px-6 py-16">
             <PageTitle data-toc>Interactive backgrounds</PageTitle>
             <p className="max-w-xl text-white/60">
-                Sprinkle life behind your content. Below are three lightweight, pointer‑aware backgrounds — no heavy WebGL needed.
+                {t('Sprinkle life behind your content. Below are three lightweight, pointer‑aware backgrounds — no heavy WebGL needed.')}
             </p>
 
             {/* Live previews */}
@@ -160,13 +161,13 @@ function ParallaxStarsPage() {
 
             {/* Usage snippet */}
             <UsageSection
-                description="Drop the component into any hero / header section. Tweak star count, parallax strength or pass an emoji renderer for a playful look."
+                description={t("Drop the component into any hero / header section. Tweak star count, parallax strength or pass an emoji renderer for a playful look.")}
                 code={demoCode}
             />
 
             {/* Detailed props */}
             <DocsSection
-                description="Below is every prop you can tune — all optional, safe defaults provided."
+                description={t("Below is every prop you can tune — all optional, safe defaults provided.")}
                 rows={rows}
             />
         </div>

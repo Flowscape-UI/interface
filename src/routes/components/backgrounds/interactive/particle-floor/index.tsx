@@ -12,6 +12,7 @@ import { DocsSection } from '@/components/docs-section';
 import type { PropsTableRow } from '@/components/props-table';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Slider } from '../../../../../components/ui/slider';
+import { useTranslation } from '@/hooks/use-translation';
 
 export const Route = createFileRoute(
     '/components/backgrounds/interactive/particle-floor/',
@@ -131,13 +132,13 @@ function ParticleFloorDemo({
 }
 
 function ParticleFloorPage() {
+    const {t} = useTranslation();
     return (
         <MainLayout>
             <div className="w-full px-6 py-16">
                 <PageTitle>Particle Floor Wave Animation</PageTitle>
                 <p className="max-w-xl text-white/60">
-                    A 3D particle floor with a wave animation. Control the intensity of the wave
-                    with a slider. Based on a component from{' '}
+                    {t('A 3D particle floor with a wave animation. Control the intensity of the wave with a slider. Based on a component from')}{' '}
                     <a
                         href="https://v0.dev/"
                         target="_blank"
@@ -165,7 +166,7 @@ function ParticleFloorPage() {
 
                 <UsageSection
                     description={
-                        'The component is rendered within a @react-three/fiber Canvas. You can control the wave intensity, particle color, size, and density through props.'
+                        t('The component is rendered within a @react-three/fiber Canvas. You can control the wave intensity, particle color, size, and density through props.')
                     }
                     code={particleFloorCode}
                 />
@@ -173,9 +174,9 @@ function ParticleFloorPage() {
                 <DocsSection
                     description={
                         <p>
-                            This component uses <code>three.js</code> and{' '}
-                            <code>@react-three/fiber</code> to create a dynamic grid of particles
-                            that animate in a wave-like motion.
+                            {t('This component uses')} <code>three.js</code> &{' '}
+                            <code>@react-three/fiber</code> {t(`to create a dynamic grid of particles
+                            that animate in a wave-like motion.`)}
                         </p>
                     }
                     rows={rows}

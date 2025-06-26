@@ -6,6 +6,7 @@ import { HoverCard } from '@/components/ui/hover-card';
 import { UsageSection } from '@/components/usage-section';
 import { DocsSection } from '@/components/docs-section';
 import type { PropsTableRow } from '@/components/props-table';
+import { useTranslation } from '@/hooks/use-translation';
 
 export const Route = createFileRoute('/components/cards/card-hover/')({
     component: HoverCardPage,
@@ -276,12 +277,13 @@ export const HoverCard = forwardRef<HTMLDivElement, HoverCardProps>(({
 HoverCard.displayName = 'HoverCard';`;
 
 function HoverCardPage() {
+  const {t} = useTranslation();
   return (
     <MainLayout>
       <div className="px-6 py-16 w-full">
         <PageTitle data-toc>Hover Card</PageTitle>
         <p className="text-white/60 max-w-xl">
-          A stylish card with a hover effect that reveals additional content. Perfect for showcasing products, features, or articles.
+          {t('A stylish card with a hover effect that reveals additional content. Perfect for showcasing products, features, or articles')}.
         </p>
 
         <div className="mt-8 flex flex-col gap-10">
@@ -330,7 +332,7 @@ function HoverCardPage() {
 
         <UsageSection
           title="Component Code"
-          description="A customizable card with a hover effect that reveals additional content. The component is built with CSS transitions for smooth animations and is fully responsive."
+          description={`${t('A customizable card with a hover effect that reveals additional content. The component is built with')} CSS ${t('transitions for smooth animations and is fully responsive')}.`}
           code={componentCode}
         />
 
@@ -338,13 +340,13 @@ function HoverCardPage() {
           description={
             <>
               <p className="mb-4">
-                <strong>Hover Card</strong> — A visually appealing card component that reveals additional content on hover. The card features a smooth slide animation that moves the image to the right while sliding in the content panel from the left.
+                <strong>Hover Card</strong> — {t('A visually appealing card component that reveals additional content on hover. The card features a smooth slide animation that moves the image to the right while sliding in the content panel from the left')}.
               </p>
               <p className="mb-4">
-                The component is highly customizable with props for colors, text, and transition timing. It's built with accessibility in mind and works well on both desktop and mobile devices.
+                {t(`The component is highly customizable with props for colors, text, and transition timing. It's built with accessibility in mind and works well on both desktop and mobile devices`)}.
               </p>
               <p className="mb-4">
-                On mobile devices, the hover effect is replaced with a tap interaction, making it fully functional on touch screens.
+                {t('On mobile devices, the hover effect is replaced with a tap interaction, making it fully functional on touch screens')}.
               </p>
             </>
           }

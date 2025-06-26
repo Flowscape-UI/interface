@@ -7,6 +7,7 @@ import { PreviewTabs } from '@/components/preview-tabs';
 import { UsageSection } from '@/components/usage-section';
 import { DocsSection } from '@/components/docs-section';
 import type { PropsTableRow } from '@/components/props-table';
+import { useTranslation } from '@/hooks/use-translation';
 
 export const Route = createFileRoute('/components/backgrounds/animated/wavy/')({
     component: WavyPage,
@@ -97,13 +98,14 @@ function WavyBackground({
  * -------------------------------------------------- */
 
 function WavyPage() {
+    const {t} = useTranslation()
     return (
         <MainLayout>
             <div className="w-full px-6 py-16">
                 <PageTitle>Wavy Background</PageTitle>
                 <p className="max-w-xl text-white/60">
-                    A simple and lightweight animated wavy background effect created with a PNG
-                    image and CSS animations.
+                    {t(`A simple and lightweight animated wavy background effect created with a PNG
+                    image and CSS animations.`)}
                 </p>
 
                 <div className="mt-8 flex flex-col gap-10">
@@ -199,16 +201,16 @@ function WavyPage() {
                 </div>
 
                 <UsageSection
-                    description="This component creates an animated wavy background. It's self-contained and customizable through props."
+                    description={t("This component creates an animated wavy background. It's self-contained and customizable through props.")}
                     code={defaultCode}
                 />
 
                 <DocsSection
                     description={
                         <p>
-                            The component uses a repeating PNG image and CSS keyframe animations to
+                            {t(`The component uses a repeating PNG image and CSS keyframe animations to
                             create the layered wave effect. You can customize colors, animation
-                            speeds, and layers.
+                            speeds, and layers.`)}
                         </p>
                     }
                     rows={rows}

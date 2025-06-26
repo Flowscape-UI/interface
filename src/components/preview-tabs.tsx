@@ -6,6 +6,7 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { atomDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import { CopyButton } from "./copy-button";
 import { SiCodesandbox, SiReact } from "react-icons/si";
+import { useTranslation } from "@/hooks/use-translation";
 
 interface PreviewTabsProps {
     title?: string;
@@ -26,19 +27,20 @@ export function PreviewTabs({
     v0Url,
     reactBitsUrl,
 }: PreviewTabsProps) {
+    const {t} = useTranslation();
     return (
         <Tabs defaultValue="preview" className="mx-auto w-full max-w-[740px] mt-3">
             <div className="space-y-1">
-                <h2 className="text-2xl font-bold" data-toc>{title}</h2>
-                {description && <p className="text-sm text-gray-400">{description}</p>}
+                <h2 className="text-2xl font-bold" data-toc>{t(String(title))}</h2>
+                {description && <p className="text-sm text-gray-400">{t(description)}</p>}
             </div>
 
             <TabsList className="grid h-full w-full grid-cols-2 border-2 bg-black">
                 <TabsTrigger value="preview" className="flex items-center gap-2">
-                    <HiDesktopComputer /> Preview
+                    <HiDesktopComputer />{' '}{t('Preview')}
                 </TabsTrigger>
                 <TabsTrigger value="code" className="flex items-center gap-2">
-                    <IoTerminal /> Code
+                    <IoTerminal />{' '}{t('Code')}
                 </TabsTrigger>
             </TabsList>
 

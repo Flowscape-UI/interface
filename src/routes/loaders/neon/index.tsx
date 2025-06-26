@@ -6,6 +6,7 @@ import { NeonLoader } from '@/components/ui/neon-loader';
 import { UsageSection } from '@/components/usage-section';
 import { DocsSection } from '@/components/docs-section';
 import type { PropsTableRow } from '@/components/props-table';
+import { useTranslation } from '@/hooks/use-translation';
 
 export const Route = createFileRoute('/loaders/neon/')({
     component: NeonLoaderPage,
@@ -211,12 +212,13 @@ export const NeonLoader = forwardRef<HTMLDivElement, NeonLoaderProps>(
 NeonLoader.displayName = 'NeonLoader';`;
 
 function NeonLoaderPage() {
+  const {t} = useTranslation();
     return (
         <MainLayout>
             <div className="px-6 py-16 w-full">
                 <PageTitle>Neon Loader</PageTitle>
                 <p className="text-white/60 max-w-xl">
-                    A stylish neon loading spinner with a glowing effect.
+                    {t('A stylish neon loading spinner with a glowing effect.')}
                 </p>
 
                 <div className="mt-8 flex flex-col gap-10">
@@ -253,7 +255,7 @@ function NeonLoaderPage() {
 
                 <UsageSection
                     title="Component Code"
-                    description="A customizable neon loading spinner with a glowing effect. The component is built with CSS animations for optimal performance."
+                    description={t("A customizable neon loading spinner with a glowing effect. The component is built with CSS animations for optimal performance.")}
                     code={componentCode}
                 />
 
@@ -261,10 +263,10 @@ function NeonLoaderPage() {
                     description={
                         <>
                             <p className="mb-4">
-                                <strong>Neon Loader</strong> &mdash; A visually striking loading indicator that features a neon glow effect with a rotating animation. The component is highly customizable and can be easily integrated into any React application.
+                                <strong>Neon Loader</strong> &mdash; {t('A visually striking loading indicator that features a neon glow effect with a rotating animation. The component is highly customizable and can be easily integrated into any React application.')}
                             </p>
                             <p className="mb-4">
-                                The animation consists of two rotating arcs with a glowing dot that creates an engaging loading experience. The component uses CSS custom properties for easy theming and customization.
+                                {t('The animation consists of two rotating arcs with a glowing dot that creates an engaging loading experience. The component uses CSS custom properties for easy theming and customization.')}
                             </p>
                         </>
                     }

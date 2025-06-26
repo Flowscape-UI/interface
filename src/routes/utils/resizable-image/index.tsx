@@ -6,6 +6,7 @@ import { ResizableImage } from '@/components/ui/resizable-image';
 import { UsageSection } from '@/components/usage-section';
 import { DocsSection } from '@/components/docs-section';
 import type { PropsTableRow } from '@/components/props-table';
+import { useTranslation } from '@/hooks/use-translation';
 
 export const Route = createFileRoute('/utils/resizable-image/')({
   component: ResizableImagePage,
@@ -120,12 +121,13 @@ const rows: PropsTableRow[] = [
 ];
 
 function ResizableImagePage() {
+  const {t} = useTranslation();
   return (
     <MainLayout>
       <div className="px-6 py-16 w-full">
         <PageTitle>Resizable Image</PageTitle>
         <p className="text-white/60 max-w-xl">
-          An interactive component that allows users to resize an image by dragging a handle. It's highly customizable and easy to integrate.
+          {t(`An interactive component that allows users to resize an image by dragging a handle. It's highly customizable and easy to integrate.`)}
         </p>
 
         <div className="mt-8 flex flex-col gap-10">
@@ -160,7 +162,7 @@ function ResizableImagePage() {
 
         <UsageSection
           title="Component Code"
-          description="The complete source code for the ResizableImage component."
+          description={`${t("The complete source code for the")} ResizableImage ${t('component')}.`}
           code={fullComponentCode}
         />
 
@@ -168,7 +170,7 @@ function ResizableImagePage() {
           description={
             <>
               <p className="mb-4">
-                <strong>Resizable Image</strong> provides a user-friendly way to dynamically resize images within a web page. It features a clean handle for resizing and displays the current dimensions in real-time.
+                <strong>Resizable Image</strong> {t('provides a user-friendly way to dynamically resize images within a web page. It features a clean handle for resizing and displays the current dimensions in real-time.')}
               </p>
             </>
           }

@@ -8,6 +8,7 @@ import { PreviewTabs } from '@/components/preview-tabs';
 import { UsageSection } from '@/components/usage-section';
 import { DocsSection } from '@/components/docs-section';
 import type { PropsTableRow } from '@/components/props-table';
+import { useTranslation } from '@/hooks/use-translation';
 
 export const Route = createFileRoute('/components/backgrounds/animated/aurora/')({
     component: AuroraPage,
@@ -157,6 +158,7 @@ function Aurora(props: AuroraProps) {
         gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
         gl.canvas.style.backgroundColor = 'transparent';
 
+        // eslint-disable-next-line prefer-const
         let program: Program | undefined;
 
         function resize() {
@@ -172,6 +174,7 @@ function Aurora(props: AuroraProps) {
 
         const geometry = new Triangle(gl);
         if (geometry.attributes.uv) {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             delete (geometry.attributes as any).uv;
         }
 
@@ -233,12 +236,13 @@ function Aurora(props: AuroraProps) {
  * -------------------------------------------------- */
 
 function AuroraPage() {
+    const {t} = useTranslation();
     return (
         <MainLayout>
             <div className="w-full px-6 py-16">
                 <PageTitle>Aurora Background</PageTitle>
                 <p className="max-w-xl text-white/60">
-                    A beautiful, animated aurora effect created with OGL and shaders.
+                    {t('A beautiful, animated aurora effect created with OGL and shaders.')}
                 </p>
 
                 <div className="mt-8 flex flex-col gap-10">
@@ -267,15 +271,15 @@ function AuroraPage() {
                 </div>
 
                 <UsageSection
-                    description="This component uses OGL to render a WebGL canvas with an aurora-like shader animation."
+                    description={t("This component uses OGL to render a WebGL canvas with an aurora-like shader animation.")}
                     code={defaultCode}
                 />
 
                 <DocsSection
                     description={
                         <p>
-                            The effect is highly customizable through props that control the color,
-                            speed, and shape of the aurora.
+                            {t(`The effect is highly customizable through props that control the color,
+                            speed, and shape of the aurora.`)}
                         </p>
                     }
                     rows={rows}

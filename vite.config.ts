@@ -13,4 +13,16 @@ export default defineConfig({
         }),
         react(),
     ],
+    server: {
+        proxy: {
+            '/translate': {
+                target: 'http://localhost:8000',
+                changeOrigin: true,
+            },
+            '/languages': {
+                target: 'http://localhost:8000',
+                changeOrigin: true,
+            },
+        },
+    },
 });

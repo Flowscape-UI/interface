@@ -1,8 +1,12 @@
 import { FaGithub } from 'react-icons/fa6';
 import { Badge } from './ui/badge';
 import { Link } from '@tanstack/react-router';
+import { useTranslation } from '@/hooks/use-translation';
 
 export default function Footer() {
+    const {t} = useTranslation();
+    const soon = () => t('soon');
+
     return (
         <footer className="supports-backdrop-blur:bg-background/90 border-t border-white/10 bg-white/5 px-6 py-12 text-slate-300 backdrop-blur-lg sm:px-10">
             <div className="mx-auto flex max-w-6xl flex-col gap-12 sm:flex-row sm:justify-between sm:gap-8">
@@ -16,11 +20,11 @@ export default function Footer() {
                         loading="eager"
                     />
                     <p className="text-sm leading-relaxed">
-                        <span className="font-semibold text-white">Flowscape</span> is an
-                        open-source UI/UX library that lets you build fluid, animated interfaces
-                        without bloat. Totally{' '}
-                        <span className="font-semibold text-white">free</span> for personal &
-                        commercial projects.
+                        <span className="font-semibold text-white">Flowscape</span> {t(`is an
+                        open-source`)} UI/UX {t(`library that lets you build fluid, animated interfaces
+                        without bloat. Totally
+                        free for personal &
+                        commercial projects.`)}
                     </p>
                 </div>
 
@@ -29,39 +33,39 @@ export default function Footer() {
                     {/* Explore */}
                     <div className="flex flex-col gap-3">
                         <h3 className="text-sm font-semibold tracking-wide text-white uppercase">
-                            Explore
+                            {t('Explore')}
                         </h3>
                         <Link to="/components" className="transition hover:text-white">
-                            Components
+                            {t('Components')}
                         </Link>
                         <Link disabled to="/templates" className="transition hover:text-white">
-                            Pro templates <Badge>soon</Badge>
+                            {t('Pro templates')} <Badge>{soon()}</Badge>
                         </Link>
                         <Link disabled to="/hire" className="transition hover:text-white">
-                            Make an order <Badge>soon</Badge>
+                            {t('Make an order')} <Badge>{soon()}</Badge>
                         </Link>
                     </div>
 
                     {/* Docs */}
                     <div className="flex flex-col gap-3">
                         <h3 className="text-sm font-semibold tracking-wide text-white uppercase">
-                            Docs
+                            {t('Docs')}
                         </h3>
                         <Link to="/docs/installation" className="transition hover:text-white">
-                            Getting started
+                            {t('Getting started')}
                         </Link>
                         <Link disabled to="/docs/cli" className="transition hover:text-white">
-                            CLI <Badge>soon</Badge>
+                            CLI <Badge>{soon()}</Badge>
                         </Link>
                         <Link disabled to="/changelog" className="transition hover:text-white">
-                            Changelog <Badge>soon</Badge>
+                            {t('Changelog')} <Badge>{soon()}</Badge>
                         </Link>
                     </div>
 
                     {/* Socials */}
                     <div className="flex flex-col gap-3">
                         <h3 className="text-sm font-semibold tracking-wide text-white uppercase">
-                            Social
+                            {t('Social')}
                         </h3>
                         <a
                             href="#"
@@ -78,7 +82,7 @@ export default function Footer() {
             {/* Bottom note */}
             <div className="mt-12 text-center text-base text-slate-500">
                 &copy; <time dateTime={new Date().toISOString()}>{new Date().getFullYear()}</time>{' '}
-                Flowscape. Crafted with ❤️ and open‑sourced under MIT.
+                Flowscape. {t('Crafted with')} ❤️ {t('and open‑sourced under')} MIT.
             </div>
         </footer>
     );

@@ -3,6 +3,7 @@
 import React from "react";
 import { cn } from "@/lib/utils";
 import { PropsTable, type PropsTableRow } from "./props-table";
+import { useTranslation } from "@/hooks/use-translation";
 
 interface UsageSectionProps {
     /** Markdown / JSX description placed under the title */
@@ -35,6 +36,7 @@ export function DocsSection({
     rows,
     className,
 }: UsageSectionProps) {
+    const {t} = useTranslation();
     return (
         <section className={cn("mt-20 scroll-m-14", className)}>
             {/* Heading */}
@@ -42,7 +44,7 @@ export function DocsSection({
                 data-toc
                 className="mb-4 text-3xl font-bold tracking-tight text-white sm:text-4xl"
             >
-                Docs
+                {t('Docs')}
             </h1>
 
             {/* Description */}

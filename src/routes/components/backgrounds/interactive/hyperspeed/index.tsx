@@ -7,6 +7,7 @@ import { DocsSection } from '@/components/docs-section';
 import type { PropsTableRow } from '@/components/props-table';
 import Hyperspeed from './Hyperspeed';
 import type { HyperspeedOptions } from './Hyperspeed';
+import { useTranslation } from '@/hooks/use-translation';
 
 export const Route = createFileRoute('/components/backgrounds/interactive/hyperspeed/')({
     component: HyperspeedPage,
@@ -122,12 +123,13 @@ const hyperspeedPresets: Record<string, Partial<HyperspeedOptions>> = {
 };
 
 function HyperspeedPage() {
+  const {t} = useTranslation()
     return (
         <MainLayout>
             <div className="w-full px-6 py-16">
                 <PageTitle>Hyperspeed Background</PageTitle>
                 <p className="max-w-xl text-white/60">
-                    A highly customizable hyperspeed travel effect using Three.js.
+                    {t('A highly customizable hyperspeed travel effect using')} Three.js.
                 </p>
 
                 <div className="mt-8 flex flex-col gap-10">
@@ -157,15 +159,15 @@ function HyperspeedPage() {
                 </div>
 
                 <UsageSection
-                    description="This component uses Three.js to create an interactive hyperspeed effect."
+                    description={`${t('This component uses')} Three.js ${t('to create an interactive hyperspeed effect.')}`}
                     code={defaultCode}
                 />
 
                 <DocsSection
                     description={
                         <p>
-                            The main prop is `effectOptions`, an object that allows for deep
-                            customization of the animation.
+                            {t(`The main prop is 'effectOptions', an object that allows for deep
+                            customization of the animation.`)}
                         </p>
                     }
                     rows={rows}

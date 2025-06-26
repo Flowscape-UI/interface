@@ -7,6 +7,7 @@ import { DocsSection } from "@/components/docs-section";
 import type { PropsTableRow } from "@/components/props-table";
 import PaymentForm from "@/components/ui/payment-form/payment-form";
 import { toast } from 'sonner';
+import { useTranslation } from '@/hooks/use-translation';
 
 export const Route = createFileRoute('/patterns/payment-form/')({
   component: PaymentFormPage,
@@ -117,6 +118,7 @@ export default function Page() {
 `;
 
 export function PaymentFormPage() {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleSubmit = (data: any) => {
     console.log("Payment Data:", data);
     toast.success("Payment submitted!", {
@@ -139,22 +141,24 @@ export function PaymentFormPage() {
     cvv: "123",
   };
 
+  const {t} = useTranslation();
+
   return (
     <MainLayout>
       <div className="px-6 py-16 w-full">
         <PageTitle>Payment Form</PageTitle>
         <p className="text-white/60 max-w-xl mt-2">
-          A fully interactive and animated payment form component. It includes card type detection, a flipping card effect on CVV focus, and customizable labels and placeholders.
+          {t('A fully interactive and animated payment form component. It includes card type detection, a flipping card effect on CVV focus, and customizable labels and placeholders.')}
         </p>
 
         <div className="mt-8 flex flex-col gap-10">
-          <PreviewTabs title="Default" codeText={defaultUsageCode}>
+          <PreviewTabs title='Default' codeText={defaultUsageCode}>
             <div className="w-full max-w-md mx-auto flex items-center justify-center p-4 h-full">
                 <PaymentForm onSubmit={handleSubmit} />
             </div>
           </PreviewTabs>
 
-          <PreviewTabs title="Customized" codeText={customizedUsageCode}>
+          <PreviewTabs title='Customized' codeText={customizedUsageCode}>
             <div className="w-full max-w-md mx-auto flex items-center justify-center p-4 h-full">
                 <PaymentForm
                     onSubmit={handleSubmit}
@@ -164,7 +168,7 @@ export function PaymentFormPage() {
             </div>
           </PreviewTabs>
 
-          <PreviewTabs title="Disabled" codeText={disabledUsageCode}>
+          <PreviewTabs title='Disabled' codeText={disabledUsageCode}>
             <div className="w-full max-w-md mx-auto flex items-center justify-center p-4 h-full">
                 <PaymentForm disabled />
             </div>
@@ -172,12 +176,12 @@ export function PaymentFormPage() {
         </div>
 
         <UsageSection
-          description="Import the component and use it within your page. You can provide an onSubmit callback to handle the form data."
+          description={t('Import the component and use it within your page. You can provide callback to handle the form data.')}
           code={defaultUsageCode}
         />
 
         <DocsSection
-          description="The PaymentForm component accepts the following props to customize its appearance and behavior."
+          description={t('The PaymentForm component accepts the following props to customize its appearance and behavior.')}
           rows={rows}
         />
       </div>

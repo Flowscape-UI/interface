@@ -3,31 +3,33 @@ import { FaReact } from 'react-icons/fa6';
 import { TbBrandFramerMotion } from 'react-icons/tb';
 import { RiTailwindCssFill } from 'react-icons/ri';
 import { MainLayout } from '../../../main-layout';
+import { useTranslation } from '@/hooks/use-translation';
 
 export const Route = createFileRoute('/docs/installation/')({
     component: InstallationPage,
 });
 
 function InstallationPage() {
+    const {t} = useTranslation();
     return (
         <MainLayout>
         <section className="mx-auto flex max-w-4xl flex-col gap-10 px-6 py-20 text-slate-200 sm:py-28">
             {/* Heading */}
             <header className="text-center sm:text-left">
                 <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl">
-                    Installation —{' '}
+                    {t('Installation')} —{' '}
                     <span className="bg-gradient-to-r from-sky-400 to-cyan-300 bg-clip-text text-transparent">
-                        zero-setup today
+                        {t('zero-setup today')}
                     </span>
                 </h1>
                 <p className="mx-auto mt-4 max-w-2xl text-lg leading-relaxed sm:mt-6 sm:text-xl">
-                    Right now&nbsp;
+                    {t('Right now')}{' '}
                     <span className="font-semibold text-white">
-                        you don’t need to install anything
+                        {t('you don’t need to install anything')}
                     </span>
                     . <br className="hidden sm:inline" />
-                    Find a component, copy the snippet, paste it into your
-                    React&nbsp;+&nbsp;Tailwind project — that’s it.
+                    {t('Find a component, copy the snippet, paste it into your')}{' '}
+                    React + Tailwind {t('project')} {t('— that’s it.')}
                 </p>
             </header>
 
@@ -40,9 +42,9 @@ function InstallationPage() {
                     <div className="text-sm leading-relaxed">
                         Built for{' '}
                         <span className="font-semibold text-white">
-                            React&nbsp;18, Tailwind&nbsp;CSS&nbsp;v3+
+                            React 18, Tailwind CSS v3+
                         </span>{' '}
-                        &amp; <span className="font-semibold text-white">Framer&nbsp;Motion</span> —
+                        &amp; <span className="font-semibold text-white">Framer Motion</span> —
                         modern stack, instant familiarity.
                     </div>
                 </li>
@@ -60,7 +62,7 @@ function InstallationPage() {
                         <TbBrandFramerMotion className="h-5 w-5 text-violet-300" />
                     </div>
                     <div className="text-sm leading-relaxed">
-                        Inspired by&nbsp;
+                        Inspired by{' '}
                         <a
                             href="https://ui.shadcn.com"
                             target="_blank"
@@ -97,26 +99,25 @@ function InstallationPage() {
 
             {/* Quick start */}
             <div className="rounded-lg bg-white/5 p-6 ring-1 ring-white/10">
-                <p className="mb-4 text-base font-semibold text-white sm:text-lg">Quick start</p>
+                <p className="mb-4 text-base font-semibold text-white sm:text-lg">{t('Quick start')}</p>
                 <ol className="space-y-3 text-sm leading-relaxed sm:text-base">
                     <li className="flex items-baseline gap-2">
                         <span className="rounded bg-sky-500 px-2 py-0.5 text-xs font-semibold text-black">
                             1
                         </span>
-                        Find a component on Flowscape and copy its code.
+                        {t('Find a component on Flowscape and copy its code.')}
                     </li>
                     <li className="flex items-baseline gap-2">
                         <span className="rounded bg-sky-500 px-2 py-0.5 text-xs font-semibold text-black">
                             2
                         </span>
-                        Paste it into your project — Tailwind &amp; Framer Motion are probably
-                        already there.
+                        {t('Paste it into your project')} — Tailwind Framer Motion {t('are probably already there')}.
                     </li>
                     <li className="flex items-baseline gap-2">
                         <span className="rounded bg-sky-500 px-2 py-0.5 text-xs font-semibold text-black">
                             3
                         </span>
-                        Adjust classes, motion props, or React logic to fit your design language.
+                        Adjust classes, motion props, or React logic {t('to fit your design language')}.
                     </li>
                 </ol>
                 </div>
@@ -124,14 +125,13 @@ function InstallationPage() {
             {/* Coming soon */}
                 <div className="rounded-lg bg-yellow-500/10 p-6 ring-1 ring-yellow-500/30">
                 <p className="mb-2 text-base font-semibold text-yellow-300 sm:text-lg">
-                    What’s next?
+                    {t('What’s next?')}
                 </p>
                 <p className="text-sm leading-relaxed sm:text-base">
-                    We’re working on an{' '}
-                    <span className="font-semibold text-white">npm&nbsp;package</span> so you can{' '}
-                    <code>npm&nbsp;install&nbsp;flowscape</code> and pick only the pieces you need.
-                    &nbsp;Expect&nbsp;tree-shakable ESM bundles, shadcn-style extraction and CLI
-                    scaffolding for lightning-fast DX.
+                    {t('We’re working on an')}{' '}
+                    <span className="font-semibold text-white">npm package</span>{' '}{t('so you can')}{' '}
+                    <code>npm install flowscape</code> {t('and pick only the pieces you need')}. {t('Expect')} tree-shakable ESM bundles, shadcn-style extraction and CLI
+                    {t('scaffolding for lightning-fast')} DX.
                 </p>
             </div>
         </section>

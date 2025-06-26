@@ -6,6 +6,7 @@ import { SqueezeLoader } from '@/components/ui/squeeze-loader';
 import { UsageSection } from '@/components/usage-section';
 import { DocsSection } from '@/components/docs-section';
 import type { PropsTableRow } from '@/components/props-table';
+import { useTranslation } from '@/hooks/use-translation';
 
 export const Route = createFileRoute('/loaders/squeeze/')({
     component: SqueezeLoaderPage,
@@ -161,12 +162,13 @@ SqueezeLoader.displayName = 'SqueezeLoader';
 `;
 
 function SqueezeLoaderPage() {
+  const {t} = useTranslation();
     return (
         <MainLayout>
             <div className="px-6 py-16 w-full">
                 <PageTitle>Squeeze Loader</PageTitle>
                 <p className="text-white/60 max-w-xl">
-                    A smooth, animated loading spinner with a squeezing effect that creates a visually appealing loading indicator.
+                    {t('A smooth, animated loading spinner with a squeezing effect that creates a visually appealing loading indicator.')}
                 </p>
 
                 <div className="mt-8 flex flex-col gap-10">
@@ -204,7 +206,7 @@ function SqueezeLoaderPage() {
 
                 <UsageSection
                     title="Component Code"
-                    description="A customizable loading spinner with a smooth squeezing animation effect. The component is built with Tailwind CSS and CSS animations for optimal performance."
+                    description={t('A customizable loading spinner with a smooth squeezing animation effect. The component is built with Tailwind CSS and CSS animations for optimal performance.')}
                     code={componentCode}
                 />
 
@@ -212,10 +214,10 @@ function SqueezeLoaderPage() {
                     description={
                         <>
                             <p className="mb-4">
-                                <strong>Squeeze Loader</strong> &mdash; A visually appealing loading indicator that features a smooth squeezing animation effect. The component is highly customizable and can be easily integrated into any React application.
+                                <strong>Squeeze Loader</strong> &mdash; {t('A visually appealing loading indicator that features a smooth squeezing animation effect. The component is highly customizable and can be easily integrated into any React application.')}
                             </p>
                             <p className="mb-4">
-                                The animation consists of two elements that move in a synchronized pattern, creating an engaging loading experience. The component uses CSS custom properties for easy theming and customization.
+                                {t('The animation consists of two elements that move in a synchronized pattern, creating an engaging loading experience. The component uses CSS custom properties for easy theming and customization.')}
                             </p>
                         </>
                     }

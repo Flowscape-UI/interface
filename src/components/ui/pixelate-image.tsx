@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useRef, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { InputSelectNumber } from './input-select-number';

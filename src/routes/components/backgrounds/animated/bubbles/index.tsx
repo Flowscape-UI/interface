@@ -7,6 +7,7 @@ import { PreviewTabs } from '@/components/preview-tabs';
 import { UsageSection } from '@/components/usage-section';
 import { DocsSection } from '@/components/docs-section';
 import type { PropsTableRow } from '@/components/props-table';
+import { useTranslation } from '@/hooks/use-translation';
 
 export const Route = createFileRoute('/components/backgrounds/animated/bubbles/')({
     component: BubblesPage,
@@ -208,13 +209,14 @@ function AnimatedBubbles({
  * -------------------------------------------------- */
 
 function BubblesPage() {
+    const {t} = useTranslation()
     return (
         <MainLayout>
             <div className="w-full px-6 py-16">
                 <PageTitle>Animated Bubbles Background</PageTitle>
                 <p className="max-w-xl text-white/60">
-                    A mesmerizing, interactive "lava lamp" effect created with CSS. Fully
-                    customizable via props.
+                    {t(`A mesmerizing, interactive "lava lamp" effect created with CSS. Fully
+                    customizable via props.`)}
                 </p>
 
                 <div className="mt-8 flex flex-col gap-10">
@@ -266,7 +268,7 @@ function BubblesPage() {
 
                 <UsageSection
                     description={
-                        "This component creates a dynamic, interactive bubble background. It's built to be self-contained and highly customizable through props."
+                        t("This component creates a dynamic, interactive bubble background. It's built to be self-contained and highly customizable through props.")
                     }
                     code={bubblesCode}
                 />
@@ -274,9 +276,9 @@ function BubblesPage() {
                 <DocsSection
                     description={
                         <p>
-                            The component uses a clever SVG filter to achieve the 'gooey' or 'lava
-                            lamp' effect. The animation is pure CSS, powered by dynamic CSS
-                            variables passed from React.
+                            {t('The component uses a clever SVG filter to achieve the')} 'gooey' | 'lava
+                            lamp' {t('effect.')} {t(`The animation is pure CSS, powered by dynamic CSS
+                            variables passed from React.`)}
                         </p>
                     }
                     rows={rows}

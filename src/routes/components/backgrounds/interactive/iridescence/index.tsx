@@ -6,18 +6,20 @@ import { UsageSection } from '@/components/usage-section';
 import { DocsSection } from '@/components/docs-section';
 import type { PropsTableRow } from '@/components/props-table';
 import Iridescence from './Iridescence';
+import { useTranslation } from '@/hooks/use-translation';
 
 export const Route = createFileRoute('/components/backgrounds/interactive/iridescence/')({
     component: IridescencePage,
 });
 
 function IridescencePage() {
+    const {t} = useTranslation();
     return (
         <MainLayout>
             <div className="w-full px-6 py-16">
                 <PageTitle>Iridescence Background</PageTitle>
                 <p className="max-w-xl text-white/60">
-                    A WebGL-based iridescent shader effect that reacts to mouse movement.
+                    {t('A WebGL-based iridescent shader effect that reacts to mouse movement.')}
                 </p>
 
                 <div className="mt-8 flex flex-col gap-10">
@@ -47,15 +49,15 @@ function IridescencePage() {
                 </div>
 
                 <UsageSection
-                    description="This component uses a WebGL shader to create a dynamic, colorful, and interactive background."
+                    description={t("This component uses a WebGL shader to create a dynamic, colorful, and interactive background.")}
                     code={defaultCode}
                 />
 
                 <DocsSection
                     description={
                         <p>
-                            The effect is rendered on a `canvas` element and can be customized
-                            through various props to change its color, speed, and interactivity.
+                            {t(`The effect is rendered on a 'canvas' element and can be customized
+                            through various props to change its color, speed, and interactivity.`)}
                         </p>
                     }
                     rows={rows}

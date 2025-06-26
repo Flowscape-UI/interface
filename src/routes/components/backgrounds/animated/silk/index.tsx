@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unknown-property */
 import React, { forwardRef, useMemo, useRef, useLayoutEffect } from 'react';
 import { Canvas, useFrame, useThree, type RootState } from '@react-three/fiber';
 import { Color, Mesh, ShaderMaterial, type IUniform } from 'three';
@@ -10,6 +9,7 @@ import { PreviewTabs } from '@/components/preview-tabs';
 import { UsageSection } from '@/components/usage-section';
 import { DocsSection } from '@/components/docs-section';
 import type { PropsTableRow } from '@/components/props-table';
+import { useTranslation } from '@/hooks/use-translation';
 
 export const Route = createFileRoute('/components/backgrounds/animated/silk/')({
     component: SilkPage,
@@ -177,12 +177,13 @@ const Silk: React.FC<SilkProps> = ({
  * -------------------------------------------------- */
 
 function SilkPage() {
+    const {t} = useTranslation();
     return (
         <MainLayout>
             <div className="w-full px-6 py-16">
                 <PageTitle>Silk Background</PageTitle>
                 <p className="max-w-xl text-white/60">
-                    A mesmerizing, animated silk-like background created with shaders in
+                    {t('A mesmerizing, animated silk-like background created with shaders in')}{' '}
                     React Three Fiber.
                 </p>
 
@@ -213,15 +214,15 @@ function SilkPage() {
                 </div>
 
                 <UsageSection
-                    description="This component creates an animated silk background using a custom shader. It is highly configurable through props."
+                    description={t("This component creates an animated silk background using a custom shader. It is highly configurable through props.")}
                     code={defaultCode}
                 />
 
                 <DocsSection
                     description={
                         <p>
-                            The effect is achieved using a GLSL shader within a React Three Fiber
-                            canvas. All properties are passed as uniforms to the shader.
+                            {t('The effect is achieved using a GLSL shader within a')} React Three Fiber
+                            canvas. {t('All properties are passed as uniforms to the shader.')}
                         </p>
                     }
                     rows={rows}

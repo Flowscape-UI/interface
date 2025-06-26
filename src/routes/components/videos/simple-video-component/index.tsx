@@ -6,6 +6,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { MainLayout } from '@/main-layout';
 import { SimpleVideo } from '@/components/ui/simple-video';
 import { UsageSection } from '@/components/usage-section';
+import { useTranslation } from '@/hooks/use-translation';
 
 export const Route = createFileRoute(
   '/components/videos/simple-video-component/',
@@ -14,12 +15,13 @@ export const Route = createFileRoute(
 });
 
 function SimpleVideoPageComponent() {
+    const {t} = useTranslation();
     return (
         <MainLayout>
             <div className="px-6 py-16 w-full">
                 <PageTitle>Simple Video Component</PageTitle>
                 <p className="text-white/60 max-w-xl">
-                    A simple, YouTube-like video player with essential controls and customizable panel colors.
+                    {t('A simple video player with essential controls and customizable panel colors.')}
                 </p>
 
                 <div className="mt-8 flex flex-col gap-10">
@@ -44,12 +46,12 @@ function SimpleVideoPageComponent() {
 
                 <UsageSection
                     title="Component Code"
-                    description="The source code for the SimpleVideo component."
+                    description={`${t('The source code for the')} SimpleVideo ${t('component')}.`}
                     code={simpleVideoComponentCode}
                 />
 
                 <DocsSection
-                    description="The SimpleVideo component provides a clean and modern video playback experience with essential features and customizable controls."
+                    description={`${t('The')} SimpleVideo ${t('component provides a clean and modern video playback experience with essential features and customizable controls')}.`}
                     rows={rows}
                 />
 

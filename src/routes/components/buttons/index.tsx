@@ -10,20 +10,22 @@ import AnimatedGradientButton from '@/components/ui/animated-gradient-button';
 import { DocsSection } from "@/components/docs-section";
 import type { PropsTableRow } from "@/components/props-table";
 import { UsageSection } from "@/components/usage-section";
+import { useTranslation } from '@/hooks/use-translation';
 
 export const Route = createFileRoute('/components/buttons/')({
     component: ButtonsPage,
 });
 
 function ButtonsPage() {
+  const {t} = useTranslation();
     return (
         <MainLayout>
             <div className="px-4 sm:px-6 py-16">
                 <PageTitle>Buttons</PageTitle>
                 <p className="text-white/60">
-                    Buttons are used to trigger actions or events. They can be styled in different
+                    {t(`Buttons are used to trigger actions or events. They can be styled in different
                     ways to indicate their purpose. This page showcases various button styles and
-                    their usage.
+                    their usage`)}.
                 </p>
 
                 <div className="mt-8 flex flex-col gap-5">
@@ -32,7 +34,7 @@ function ButtonsPage() {
                     </PreviewTabs>
 
                     <PreviewTabs
-                        title="Default Button with `isLoading` props"
+                        title="Loading Button"
                         codeText={buttonCode}
                     >
                         <Button isLoading>Click Me</Button>
@@ -58,12 +60,12 @@ function ButtonsPage() {
             <UsageSection
                 title="Component Code"
                 description={
-                    'This is a reusable animated gradient button component. It uses CSS @property for smooth animations and can be customized with various props for gradients, colors, and effects.'
+                    `${t('This is a reusable animated gradient button component')}. ${t('It uses')} CSS @property ${t('for smooth animations and can be customized with various props for gradients, colors, and effects')}.`
                 }
                 code={componentCode}
             />
             <DocsSection
-                description="The following props are available for the AnimatedGradientButton component."
+                description={`${t('The following props are available for the')} AnimatedGradientButton ${t('component')}.`}
                 rows={rows}
             />
         </MainLayout>

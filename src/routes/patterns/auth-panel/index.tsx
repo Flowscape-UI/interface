@@ -6,6 +6,7 @@ import { AuthPanel } from '@/components/ui/auth-panel';
 import { UsageSection } from '@/components/usage-section';
 import { DocsSection } from '@/components/docs-section';
 import type { PropsTableRow } from '@/components/props-table';
+import { useTranslation } from '@/hooks/use-translation';
 
 export const Route = createFileRoute('/patterns/auth-panel/')({
   component: AuthPanelPage,
@@ -148,22 +149,23 @@ const rows: PropsTableRow[] = [
 ];
 
 function AuthPanelPage() {
+  const {t} = useTranslation();
   return (
     <MainLayout>
       <div className="px-6 py-16 w-full">
         <PageTitle>Auth Panel</PageTitle>
         <p className="text-white/60 max-w-xl">
-          A flexible and reusable authentication component for handling user login and registration, with optional social logins.
+          {t('A flexible and reusable authentication component for handling user login and registration, with optional social logins.')}
         </p>
 
         <div className="mt-8 flex flex-col gap-10">
-          <PreviewTabs title="Default Login" codeText={defaultLoginCode}>
+          <PreviewTabs title='Default Login' codeText={defaultLoginCode}>
             <div className="flex justify-center items-center p-8 bg-neutral-900 rounded-lg">
               <AuthPanel onLogin={(data) => console.log('Login:', data)} />
             </div>
           </PreviewTabs>
 
-          <PreviewTabs title="Register Mode" codeText={registerModeCode}>
+          <PreviewTabs title='Register Mode' codeText={registerModeCode}>
             <div className="flex justify-center items-center p-8 bg-neutral-900 rounded-lg">
               <AuthPanel
                 initialMode="register"
@@ -172,7 +174,7 @@ function AuthPanelPage() {
             </div>
           </PreviewTabs>
 
-          <PreviewTabs title="With Social Logins" codeText={withSocialCode}>
+          <PreviewTabs title='With Social Logins' codeText={withSocialCode}>
             <div className="flex justify-center items-center p-8 bg-neutral-900 rounded-lg">
               <AuthPanel
                 title="Join Flowscape"
@@ -188,7 +190,7 @@ function AuthPanelPage() {
 
         <UsageSection
           title="Component Code"
-          description="The complete source code for the AuthPanel component. Use this as a reference for understanding its internal workings."
+          description={t('The complete source code for the AuthPanel component. Use this as a reference for understanding its internal workings.')}
           code={fullComponentCode}
         />
 
@@ -196,10 +198,10 @@ function AuthPanelPage() {
           description={
             <>
               <p className="mb-4">
-                <strong>Auth Panel</strong> is a self-contained component for user authentication. It provides a clean UI for both login and registration forms and can be easily extended with social login providers.
+                <strong>Auth Panel</strong> {t('is a self-contained component for user authentication. It provides a clean UI for both login and registration forms and can be easily extended with social login providers.')}
               </p>
               <p>
-                Switch between login and registration modes seamlessly. The component is built with Tailwind CSS and shadcn/ui components for a consistent and modern look.
+                {t('Switch between login and registration modes seamlessly. The component is built with Tailwind CSS & shadcn/ui components for a consistent and modern look.')}
               </p>
             </>
           }

@@ -6,6 +6,7 @@ import { Preloader } from '@/components/ui/preloader';
 import { UsageSection } from '@/components/usage-section';
 import { DocsSection } from '@/components/docs-section';
 import type { PropsTableRow } from '@/components/props-table';
+import { useTranslation } from '@/hooks/use-translation';
 
 export const Route = createFileRoute('/loaders/preloader/')({
     component: PreloaderPage,
@@ -276,12 +277,13 @@ export const Preloader = forwardRef<HTMLDivElement, PreloaderProps>(
 Preloader.displayName = 'Preloader';`;
 
 function PreloaderPage() {
+  const {t} = useTranslation();
     return (
         <MainLayout>
             <div className="px-6 py-16 w-full">
                 <PageTitle>Preloader</PageTitle>
                 <p className="text-white/60 max-w-xl">
-                    A customizable preloader with three concentric spinning rings and smooth animations.
+                    {t('A customizable preloader with three concentric spinning rings and smooth animations.')}
                 </p>
 
                 <div className="mt-8 flex flex-col gap-10">
@@ -331,7 +333,7 @@ function PreloaderPage() {
 
                 <UsageSection
                     title="Component Code"
-                    description="A highly customizable preloader with three spinning rings. The component supports full-screen mode and can be easily integrated into any part of your application."
+                    description={t('A highly customizable preloader with three spinning rings. The component supports full-screen mode and can be easily integrated into any part of your application.')}
                     code={componentCode}
                 />
 
@@ -339,10 +341,10 @@ function PreloaderPage() {
                     description={
                         <>
                             <p className="mb-4">
-                                <strong>Preloader</strong> &mdash; A versatile loading indicator featuring three concentric spinning rings with independent animation speeds. Perfect for full-page loading states or inline loading indicators.
+                                <strong>Preloader</strong> &mdash; {t('A versatile loading indicator featuring three concentric spinning rings with independent animation speeds. Perfect for full-page loading states or inline loading indicators.')}
                             </p>
                             <p className="mb-4">
-                                The component is highly customizable, allowing you to adjust colors, sizes, animation speeds, and more. It also provides callbacks for mount and unmount events.
+                                {t('The component is highly customizable, allowing you to adjust colors, sizes, animation speeds, and more. It also provides callbacks for mount and unmount events.')}
                             </p>
                         </>
                     }
