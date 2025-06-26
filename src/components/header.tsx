@@ -39,13 +39,7 @@ const GithubLink = ({ stars, className }: { stars: number; className?: string })
 
 export function Header() {
     const [stars, setStars] = useState(0);
-    const [selectedLanguage, setSelectedLanguage] = useState(() => localStorage.getItem('currentLanguage') || 'en');
-
-    const { t, languages, isLoadingLanguages } = useTranslation();
-
-    useEffect(() => {
-        localStorage.setItem('currentLanguage', selectedLanguage);
-    }, [selectedLanguage]);
+    const { t, languages, isLoadingLanguages, setCurrentLanguage, currentLanguage } = useTranslation();
 
     useEffect(() => {
         fetch('https://api.github.com/repos/Flowscape-UI/interface')
@@ -91,8 +85,8 @@ export function Header() {
                     {/* <NavLinks className="hidden md:flex" /> */}
                     <GithubLink stars={stars} className="hidden md:flex" />
 
-                    <Select onValueChange={setSelectedLanguage} defaultValue={selectedLanguage}>
-                        <SelectTrigger className="w-[180px] h-[36px] hidden md:flex text-slate-200 border-slate-700 hover:bg-slate-800">
+                                        <Select onValueChange={setCurrentLanguage} value={currentLanguage}>
+                        <SelectTrigger className="w-[120px] h-[36px] flex text-slate-200 border-slate-700 hover:bg-slate-800">
                             <SelectValue placeholder="Language" />
                         </SelectTrigger>
                         <SelectContent className="bg-slate-900 text-slate-200 border-slate-700">

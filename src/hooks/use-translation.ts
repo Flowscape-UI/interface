@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 // --- Type Definitions ---
@@ -110,14 +110,20 @@ interface UseTranslationHook {
  * Provides methods to fetch supported languages and translate text in a way similar to i18n libraries.
  */
 export function useTranslation(): UseTranslationHook {
+    const [isDetecting, setIsDetecting] = useState(true);
     const queryClient = useQueryClient();
     const [translatingKeys, setTranslatingKeys] = useState<Set<string>>(new Set());
-    const [currentLanguage, _setCurrentLanguage] = useState<string>(() => localStorage.getItem('currentLanguage') || 'en');
+        const [currentLanguage, _setCurrentLanguage] = useState<string>(() => localStorage.getItem('currentLanguage') || 'en');
+    const previousLanguageRef = useRef<string>(currentLanguage);
 
-    const setCurrentLanguage = (lang: string) => {
+    useEffect(() => {
+        previousLanguageRef.current = currentLanguage;
+    }, [currentLanguage]);
+
+    const setCurrentLanguage = useCallback((lang: string) => {
         localStorage.setItem('currentLanguage', lang);
         _setCurrentLanguage(lang);
-    };
+    }, []);
 
     const { 
         data: languages, 
@@ -150,26 +156,77 @@ export function useTranslation(): UseTranslationHook {
         },
     });
 
+    useEffect(() => {
+        const detectAndSetLanguage = async () => {
+            // Skip if a language is already set in localStorage
+            if (localStorage.getItem('currentLanguage')) {
+                setIsDetecting(false);
+                return;
+            }
+
+            // Wait until languages are loaded
+            if (isLoadingLanguages || !languages) {
+                return;
+            }
+
+            try {
+                const response = await fetch('http://ip-api.com/json/?fields=status,countryCode');
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.status === 'success' && data.countryCode) {
+                        const detectedLangCode = data.countryCode.toLowerCase();
+                        const isSupported = languages.some(lang => lang.code === detectedLangCode);
+
+                        if (isSupported) {
+                            setCurrentLanguage(detectedLangCode);
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error('Error detecting language by IP:', error);
+            } finally {
+                setIsDetecting(false);
+            }
+        };
+
+        detectAndSetLanguage();
+    }, [languages, isLoadingLanguages, setCurrentLanguage]);
+
     const t = useCallback((text: string, languageFrom: string = 'en'): string => {
         const languageTo = currentLanguage;
         if (languageTo === languageFrom) {
             return text;
         }
 
-        const key = `${languageTo}:${text}:${languageFrom}`;
-        const cachedTranslation = queryClient.getQueryData<TranslateResponse>(['translation', key]);
+        // 1. Check for the desired (new) translation
+        const newKey = `${languageTo}:${text}:${languageFrom}`;
+        const newCachedTranslation = queryClient.getQueryData<TranslateResponse>(['translation', newKey]);
 
-        if (cachedTranslation) {
-            return cachedTranslation.translated_text;
+        if (isDetecting) return text; // Return original text while detecting language
+
+        if (newCachedTranslation) {
+            return newCachedTranslation.translated_text;
         }
 
-        if (!translatingKeys.has(key)) {
-            setTranslatingKeys(prev => new Set(prev).add(key));
+        // 2. If not found, start fetching it in the background
+        if (!translatingKeys.has(newKey)) {
+            setTranslatingKeys(prev => new Set(prev).add(newKey));
             mutate({ text, languageTo, languageFrom });
         }
 
+        // 3. While it's fetching, try to return the previous language's translation to avoid flicker
+        const previousLanguage = previousLanguageRef.current;
+        if (previousLanguage !== languageTo) {
+            const oldKey = `${previousLanguage}:${text}:${languageFrom}`;
+            const oldCachedTranslation = queryClient.getQueryData<TranslateResponse>(['translation', oldKey]);
+            if (oldCachedTranslation) {
+                return oldCachedTranslation.translated_text;
+            }
+        }
+
+        // 4. If all else fails, return the original text
         return text;
-    }, [mutate, queryClient, translatingKeys, currentLanguage]);
+    }, [mutate, queryClient, translatingKeys, currentLanguage, isDetecting]);
 
     return {
         t,
