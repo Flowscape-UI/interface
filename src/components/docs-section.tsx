@@ -48,9 +48,9 @@ export function DocsSection({
             </h1>
 
             {/* Description */}
-            <p className="max-w-3xl text-base leading-relaxed text-slate-300">
+            <div className="max-w-3xl text-base leading-relaxed text-slate-300">
                 {description}
-            </p>
+            </div>
 
             <div className="mt-8">
                 <PropsTable rows={rows}/>

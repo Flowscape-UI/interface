@@ -1,175 +1,195 @@
-import type React from "react"
-import { CreditCard } from "./credit-card"
-import { usePaymentForm } from "./hooks/use-payment-form"
-import type { PaymentFormProps } from "./types/payment-form"
-import { cn } from "@/lib/utils"
+import type React from 'react';
+import { useId } from 'react';
+import { CreditCard } from './credit-card';
+import { usePaymentForm } from './hooks/use-payment-form';
+import type { PaymentFormProps } from './types/payment-form';
+import { cn } from '@/lib/utils';
 
 const defaultLabels = {
-  cardNumber: "CARD NUMBER",
-  cardHolder: "CARD HOLDER",
-  expiryDate: "EXPIRY DATE",
-  cvv: "CVV",
-  submitButton: "Submit Payment",
-  enterCardNumber: "Enter card number",
-  fullName: "FULL NAME",
-  monthYear: "MM/YY",
-}
+    cardNumber: 'CARD NUMBER',
+    cardHolder: 'CARD HOLDER',
+    expiryDate: 'EXPIRY DATE',
+    cvv: 'CVV',
+    submitButton: 'Submit Payment',
+    enterCardNumber: 'Enter card number',
+    fullName: 'FULL NAME',
+    monthYear: 'MM/YY',
+};
 
 const defaultPlaceholders = {
-  cardNumber: "1234 5678 9012 3456",
-  cardHolder: "FULL NAME",
-  expiryDate: "MM/YY",
-  cvv: "•••",
-}
+    cardNumber: '1234 5678 9012 3456',
+    cardHolder: 'FULL NAME',
+    expiryDate: 'MM/YY',
+    cvv: '•••',
+};
 
 export default function PaymentForm({
-  onSubmit,
-  labels = {},
-  placeholders = {},
-  className = "",
-  disabled = false,
+    onSubmit = () => {},
+    labels = {},
+    placeholders = {},
+    className = '',
+    disabled = false,
 }: PaymentFormProps) {
-  const {
-    cardData,
-    cardType,
-    isFlipped,
-    displayData,
-    updateCardNumber,
-    updateCardHolder,
-    updateCardExpiry,
-    updateCardCvv,
-    flipCard,
-  } = usePaymentForm()
+    const cardNumberId = useId();
+    const cardHolderId = useId();
+    const expiryId = useId();
+    const cvvId = useId();
+    const {
+        cardData,
+        cardType,
+        isFlipped,
+        displayData,
+        updateCardNumber,
+        updateCardHolder,
+        updateCardExpiry,
+        updateCardCvv,
+        flipCard,
+    } = usePaymentForm();
 
-  const mergedLabels = { ...defaultLabels, ...labels }
-  const mergedPlaceholders = { ...defaultPlaceholders, ...placeholders }
+    const mergedLabels = { ...defaultLabels, ...labels };
+    const mergedPlaceholders = { ...defaultPlaceholders, ...placeholders };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (onSubmit && !disabled) {
-      onSubmit(cardData)
-    }
-  }
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        if (onSubmit && !disabled) {
+            onSubmit(cardData);
+        }
+    };
 
-  const handleCardNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value.length <= 19) {
-      updateCardNumber(e.target.value)
-    }
-  }
+    const handleCardNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.value.length <= 19) {
+            updateCardNumber(e.target.value);
+        }
+    };
 
-  const handleCardHolderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    updateCardHolder(e.target.value)
-  }
+    const handleCardHolderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        updateCardHolder(e.target.value);
+    };
 
-  const handleExpiryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value.length <= 5) {
-      updateCardExpiry(e.target.value)
-    }
-  }
+    const handleExpiryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.value.length <= 5) {
+            updateCardExpiry(e.target.value);
+        }
+    };
 
-  const handleCvvChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value.length <= 3) {
-      updateCardCvv(e.target.value)
-    }
-  }
+    const handleCvvChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.value.length <= 3) {
+            updateCardCvv(e.target.value);
+        }
+    };
 
-  const handleCvvFocus = () => flipCard(true)
-  const handleCvvBlur = () => flipCard(false)
+    const handleCvvFocus = () => flipCard(true);
+    const handleCvvBlur = () => flipCard(false);
 
-  const isFormValid = cardType.type && cardData.number && cardData.holder && cardData.expiry && cardData.cvv
+    const isFormValid =
+        cardType.type && cardData.number && cardData.holder && cardData.expiry && cardData.cvv;
 
-  const inputStyles = "w-full p-4 border border-gray-300 rounded-lg text-base box-border transition-all duration-300 bg-gray-50 text-gray-800 focus:outline-none focus:bg-white disabled:opacity-60 disabled:cursor-not-allowed"
-
-  return (
-    <div className={cn("w-full max-w-[420px] [perspective:1000px] font-mono", className)}>
-      <CreditCard
-        displayData={displayData}
-        cardType={cardType}
-        isFlipped={isFlipped}
-        bankName={cardType.name || mergedLabels.enterCardNumber}
-      />
-
-      <form
-        className="bg-white p-[5%] rounded-xl shadow-lg -mt-[140px] pt-[160px] border border-gray-200 max-[450px]:-mt-[120px] max-[450px]:pt-[140px]"
-        onSubmit={handleSubmit}
-        autoComplete="off"
-      >
-        <div className="mb-[5%] relative">
-          <label htmlFor="card-number" className="block mb-1.5 text-sm text-gray-600 font-medium">
-            {mergedLabels.cardNumber}
-          </label>
-          <input
-            type="text"
-            id="card-number"
-            className={inputStyles}
-            value={cardData.number}
-            onChange={handleCardNumberChange}
-            placeholder={mergedPlaceholders.cardNumber}
-            disabled={disabled}
-            style={{
-              borderColor: cardData.number ? cardType.color : '#D1D5DB',
-              boxShadow: cardData.number ? `0 0 0 2px ${cardType.color}33` : 'none',
-            }}
-          />
-        </div>
-
-        <div className="mb-[5%] relative">
-          <label htmlFor="card-holder" className="block mb-1.5 text-sm text-gray-600 font-medium">
-            {mergedLabels.cardHolder}
-          </label>
-          <input
-            type="text"
-            id="card-holder"
-            className={inputStyles}
-            value={cardData.holder}
-            onChange={handleCardHolderChange}
-            placeholder={mergedPlaceholders.cardHolder}
-            disabled={disabled}
-          />
-        </div>
-
-        <div className="flex gap-4">
-          <div className="mb-[5%] relative w-full">
-            <label htmlFor="card-expiry" className="block mb-1.5 text-sm text-gray-600 font-medium">
-              {mergedLabels.expiryDate}
-            </label>
-            <input
-              type="text"
-              id="card-expiry"
-              className={inputStyles}
-              value={cardData.expiry}
-              onChange={handleExpiryChange}
-              placeholder={mergedPlaceholders.expiryDate}
-              disabled={disabled}
-            />
-          </div>
-          <div className="mb-[5%] relative w-full">
-            <label htmlFor="card-cvv" className="block mb-1.5 text-sm text-gray-600 font-medium">
-              {mergedLabels.cvv}
-            </label>
-            <input
-              type="password"
-              id="card-cvv"
-              className={inputStyles}
-              value={cardData.cvv}
-              onChange={handleCvvChange}
-              onFocus={handleCvvFocus}
-              onBlur={handleCvvBlur}
-              placeholder={mergedPlaceholders.cvv}
-              disabled={disabled}
-            />
-          </div>
-        </div>
-
-        <button
-          type="submit"
-          disabled={!isFormValid || disabled}
-          className="w-full p-4 text-white border-none rounded-lg text-base font-light cursor-pointer transition-all duration-300 shadow-md hover:enabled:-translate-y-0.5 hover:enabled:shadow-lg disabled:opacity-60 disabled:cursor-not-allowed disabled:transform-none"
-          style={{ background: `linear-gradient(135deg, ${cardType.color}, #00d2ff)` }}
+    return (
+        <form
+            onSubmit={handleSubmit}
+            className={cn(
+                'mx-auto flex w-full max-w-md flex-col gap-6 rounded-xl bg-neutral-900 p-4 shadow-lg sm:p-6',
+                className,
+            )}
         >
-          {mergedLabels.submitButton}
-        </button>
-      </form>
-    </div>
-  )
+            <div className="flex flex-col items-center gap-4 sm:gap-6">
+                <div className="w-full max-w-xs sm:max-w-sm md:max-w-md">
+                    <CreditCard
+                        displayData={displayData}
+                        cardType={cardType}
+                        isFlipped={isFlipped}
+                        bankName={mergedLabels.fullName}
+                    />
+                </div>
+                <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2">
+                    <div className="flex flex-col gap-1">
+                        <label
+                            htmlFor={cardNumberId}
+                            className="text-xs font-medium text-white sm:text-sm"
+                        >
+                            {mergedLabels.cardNumber}
+                        </label>
+                        <input
+                            id={cardNumberId}
+                            type="text"
+                            className="input input-bordered focus:ring-primary w-full rounded-md bg-neutral-800 px-3 py-2 text-base text-white transition placeholder:text-neutral-400 focus:ring-2 focus:outline-none sm:text-sm"
+                            placeholder={mergedPlaceholders.cardNumber}
+                            value={cardData.number}
+                            onChange={handleCardNumberChange}
+                            disabled={disabled}
+                            autoComplete="cc-number"
+                            inputMode="numeric"
+                            pattern="[0-9\s]*"
+                            maxLength={19}
+                        />
+                    </div>
+                    <div className="flex flex-col gap-1">
+                        <label
+                            htmlFor={cardHolderId}
+                            className="text-xs font-medium text-white sm:text-sm"
+                        >
+                            {mergedLabels.cardHolder}
+                        </label>
+                        <input
+                            id={cardHolderId}
+                            type="text"
+                            className="input input-bordered focus:ring-primary w-full rounded-md bg-neutral-800 px-3 py-2 text-base text-white transition placeholder:text-neutral-400 focus:ring-2 focus:outline-none sm:text-sm"
+                            placeholder={mergedPlaceholders.cardHolder}
+                            value={cardData.holder}
+                            onChange={handleCardHolderChange}
+                            disabled={disabled}
+                            autoComplete="cc-name"
+                        />
+                    </div>
+                    <div className="flex flex-col gap-1">
+                        <label
+                            htmlFor={expiryId}
+                            className="text-xs font-medium text-white sm:text-sm"
+                        >
+                            {mergedLabels.expiryDate}
+                        </label>
+                        <input
+                            id={expiryId}
+                            type="text"
+                            className="input input-bordered focus:ring-primary w-full rounded-md bg-neutral-800 px-3 py-2 text-base text-white transition placeholder:text-neutral-400 focus:ring-2 focus:outline-none sm:text-sm"
+                            placeholder={mergedPlaceholders.expiryDate}
+                            value={cardData.expiry}
+                            onChange={handleExpiryChange}
+                            disabled={disabled}
+                            autoComplete="cc-exp"
+                            maxLength={5}
+                        />
+                    </div>
+                    <div className="flex flex-col gap-1">
+                        <label
+                            htmlFor={cvvId}
+                            className="text-xs font-medium text-white sm:text-sm"
+                        >
+                            {mergedLabels.cvv}
+                        </label>
+                        <input
+                            id={cvvId}
+                            type="password"
+                            className="input input-bordered focus:ring-primary w-full rounded-md bg-neutral-800 px-3 py-2 text-base text-white transition placeholder:text-neutral-400 focus:ring-2 focus:outline-none sm:text-sm"
+                            placeholder={mergedPlaceholders.cvv}
+                            value={cardData.cvv}
+                            onChange={handleCvvChange}
+                            onFocus={handleCvvFocus}
+                            onBlur={handleCvvBlur}
+                            disabled={disabled}
+                            autoComplete="cc-csc"
+                            maxLength={4}
+                        />
+                    </div>
+                </div>
+            </div>
+            <button
+                type="submit"
+                disabled={!isFormValid || disabled}
+                className="bg-primary hover:bg-primary/90 w-full rounded-lg px-4 py-3 text-base font-semibold text-white shadow-md transition-all duration-300 disabled:cursor-not-allowed disabled:opacity-60 sm:text-lg"
+            >
+                {mergedLabels.submitButton}
+            </button>
+        </form>
+    );
 }

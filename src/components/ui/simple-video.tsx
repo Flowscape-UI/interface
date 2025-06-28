@@ -1,5 +1,15 @@
 import { cn } from '@/lib/utils';
-import { Maximize, Pause, Play, Rewind, FastForward, RotateCcw, Volume1, Volume2, VolumeX } from 'lucide-react';
+import {
+    Maximize,
+    Pause,
+    Play,
+    Rewind,
+    FastForward,
+    RotateCcw,
+    Volume1,
+    Volume2,
+    VolumeX,
+} from 'lucide-react';
 import React, { useState, useRef, useEffect } from 'react';
 
 interface SimpleVideoProps {
@@ -8,11 +18,7 @@ interface SimpleVideoProps {
     className?: string;
 }
 
-export function SimpleVideo({ 
-    src, 
-    isPaused, 
-    className
-}: SimpleVideoProps) {
+export function SimpleVideo({ src, isPaused = false, className = '' }: SimpleVideoProps) {
     const videoRef = useRef<HTMLVideoElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
     const clickTimeout = useRef<number | null>(null);
@@ -42,8 +48,14 @@ export function SimpleVideo({
             videoRef.current?.pause();
             setIsPlaying(false);
         } else if (isPaused === false) {
-            videoRef.current?.play();
-            setIsPlaying(true);
+            videoRef.current
+                ?.play()
+                .then(() => {
+                    setIsPlaying(true);
+                })
+                .catch(() => {
+                    setIsPlaying(false);
+                });
         }
     }, [isPaused]);
 
@@ -59,7 +71,7 @@ export function SimpleVideo({
             const isCurrentlyPaused = videoRef.current.paused || isVideoEnded;
 
             if (isCurrentlyPaused) {
-                if(isVideoEnded) videoRef.current.currentTime = 0;
+                if (isVideoEnded) videoRef.current.currentTime = 0;
                 videoRef.current.play();
                 setIsPlaying(true);
                 setIsVideoEnded(false);
@@ -87,7 +99,7 @@ export function SimpleVideo({
 
     const handleScrubStart = (e: React.MouseEvent<HTMLDivElement>) => {
         if (!videoRef.current || !progressContainerRef.current) return;
-        
+
         const rect = progressContainerRef.current.getBoundingClientRect();
         const pos = (e.clientX - rect.left) / rect.width;
         const clampedPos = Math.max(0, Math.min(1, pos));
@@ -105,19 +117,19 @@ export function SimpleVideo({
     };
 
     const formatTime = (seconds: number) => {
-        if (isNaN(seconds) || seconds < 0) return "0:00";
+        if (isNaN(seconds) || seconds < 0) return '0:00';
 
         const hours = Math.floor(seconds / 3600);
         const minutes = Math.floor((seconds % 3600) / 60);
         const secs = Math.floor(seconds % 60);
 
-        const secsStr = secs < 10 ? `0${secs}` : `${secs}`;
-        const minsStr = minutes < 10 ? `0${minutes}` : `${minutes}`;
+        const secsStr = secs < 10 ? '0' + secs : '' + secs;
+        const minsStr = minutes < 10 ? '0' + minutes : '' + minutes;
 
         if (hours > 0) {
-            return `${hours}:${minsStr}:${secsStr}`;
+            return hours + ':' + minsStr + ':' + secsStr;
         }
-        return `${minutes}:${secsStr}`;
+        return minutes + ':' + secsStr;
     };
 
     const toggleFullScreen = () => {
@@ -234,12 +246,12 @@ export function SimpleVideo({
     useEffect(() => {
         const handleScrubMove = (e: MouseEvent) => {
             if (!videoRef.current || !progressContainerRef.current) return;
-            
+
             const rect = progressContainerRef.current.getBoundingClientRect();
             const pos = (e.clientX - rect.left) / rect.width;
             const clampedPos = Math.max(0, Math.min(1, pos));
             const newTime = clampedPos * duration;
-            
+
             videoRef.current.currentTime = newTime;
             setProgress(newTime);
         };
@@ -263,15 +275,15 @@ export function SimpleVideo({
         <div
             ref={containerRef}
             className={cn(
-                'relative w-full aspect-video bg-black group',
+                'group relative aspect-video w-full bg-black',
                 !(isMouseOver || isBuffering || isVideoEnded) && 'cursor-none',
-                className
+                className,
             )}
         >
             <video
                 ref={videoRef}
                 src={src}
-                className="w-full h-full object-cover"
+                className="h-full w-full object-cover"
                 onTimeUpdate={handleTimeUpdate}
                 onLoadedData={() => setDuration(videoRef.current?.duration || 0)}
                 onEnded={handleVideoEnd}
@@ -282,92 +294,108 @@ export function SimpleVideo({
             />
 
             {isBuffering && (
-                <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-25 pointer-events-none">
-                    <div className="w-12 h-12 border-4 border-white border-t-transparent border-solid rounded-full animate-spin"></div>
+                <div className="bg-opacity-25 pointer-events-none absolute inset-0 flex items-center justify-center bg-black">
+                    <div className="h-12 w-12 animate-spin rounded-full border-4 border-solid border-white border-t-transparent"></div>
                 </div>
             )}
 
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <div className={cn(
-                    "bg-black bg-opacity-50 rounded-full p-4 transition-opacity duration-300",
-                    ((isMouseOver || isCenterIconVisible) && !isBuffering) ? "opacity-100" : "opacity-0"
-                )}>
-                    {isPlaying ? 
-                        <Pause className='text-white h-9 w-9 sm:h-12 sm:w-12' /> : 
-                        <Play className='text-white h-9 w-9 sm:h-12 sm:w-12' />
-                    }
+            <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+                <div
+                    className={cn(
+                        'bg-opacity-50 rounded-full bg-black p-4 transition-opacity duration-300',
+                        (isMouseOver || isCenterIconVisible) && !isBuffering
+                            ? 'opacity-100'
+                            : 'opacity-0',
+                    )}
+                >
+                    {isPlaying ? (
+                        <Pause className="h-9 w-9 text-white sm:h-12 sm:w-12" />
+                    ) : (
+                        <Play className="h-9 w-9 text-white sm:h-12 sm:w-12" />
+                    )}
                 </div>
             </div>
 
-            <div className="absolute inset-y-0 left-0 flex items-center justify-center w-1/3 pointer-events-none">
-                <div className={cn(
-                    "flex items-center gap-2 text-white bg-black/50 rounded-full p-1 sm:p-2 transition-opacity duration-300",
-                    showRewind ? "opacity-100" : "opacity-0"
-                )}>
+            <div className="pointer-events-none absolute inset-y-0 left-0 flex w-1/3 items-center justify-center">
+                <div
+                    className={cn(
+                        'flex items-center gap-2 rounded-full bg-black/50 p-1 text-white transition-opacity duration-300 sm:p-2',
+                        showRewind ? 'opacity-100' : 'opacity-0',
+                    )}
+                >
                     <Rewind className="h-6 w-6 sm:h-8 sm:w-8" />
-                    <span className="text-sm sm:text-lg font-semibold">-10s</span>
+                    <span className="text-sm font-semibold sm:text-lg">-10s</span>
                 </div>
             </div>
-            <div className="absolute inset-y-0 right-0 flex items-center justify-center w-1/3 pointer-events-none">
-                <div className={cn(
-                    "flex items-center gap-2 text-white bg-black/50 rounded-full p-1 sm:p-2 transition-opacity duration-300",
-                    showFastForward ? "opacity-100" : "opacity-0"
-                )}>
-                    <span className="text-sm sm:text-lg font-semibold">+10s</span>
+            <div className="pointer-events-none absolute inset-y-0 right-0 flex w-1/3 items-center justify-center">
+                <div
+                    className={cn(
+                        'flex items-center gap-2 rounded-full bg-black/50 p-1 text-white transition-opacity duration-300 sm:p-2',
+                        showFastForward ? 'opacity-100' : 'opacity-0',
+                    )}
+                >
+                    <span className="text-sm font-semibold sm:text-lg">+10s</span>
                     <FastForward className="h-6 w-6 sm:h-8 sm:w-8" />
                 </div>
             </div>
 
             <div
                 className={cn(
-                    'absolute bottom-0 left-0 right-0 p-2 sm:p-4 transition-opacity duration-300',
-                    (isMouseOver || isBuffering || isVideoEnded) ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+                    'absolute right-0 bottom-0 left-0 p-2 transition-opacity duration-300 sm:p-4',
+                    isMouseOver || isBuffering || isVideoEnded
+                        ? 'pointer-events-auto opacity-100'
+                        : 'pointer-events-none opacity-0',
                 )}
             >
-                <div 
+                <div
                     ref={progressContainerRef}
-                    className="relative w-full h-1 group/progress cursor-pointer transition-all duration-200 hover:h-1.5"
+                    className="group/progress relative h-1 w-full cursor-pointer transition-all duration-200 hover:h-1.5"
                     onMouseDown={handleScrubStart}
                     onMouseMove={handleProgressMouseMove}
                     onMouseLeave={handleProgressMouseLeave}
                 >
                     {hoverTime !== null && (
                         <div
-                            className="absolute bottom-5 transform -translate-x-1/2 bg-black bg-opacity-80 text-white text-xs rounded py-1 px-2 pointer-events-none"
-                            style={{ left: `${hoverPosition * 100}%` }}
+                            className="bg-opacity-80 pointer-events-none absolute bottom-5 -translate-x-1/2 transform rounded bg-black px-2 py-1 text-xs text-white"
+                            style={{ left: hoverPosition * 100 + '%' }}
                         >
                             {formatTime(hoverTime)}
                         </div>
                     )}
-                    <div className="absolute top-0 left-0 w-full h-full bg-gray-500/50 rounded-full">
-                        <div 
-                            className="h-full bg-gray-200/50 rounded-full"
-                            style={{ width: `${(buffered / duration) * 100}%` }}
+                    <div className="absolute top-0 left-0 h-full w-full rounded-full bg-gray-500/50">
+                        <div
+                            className="h-full rounded-full bg-gray-200/50"
+                            style={{ width: (buffered / duration) * 100 + '%' }}
                         ></div>
                     </div>
-                    <div 
-                        className="absolute top-0 left-0 h-full bg-red-600 rounded-full"
-                        style={{ width: `${(progress / duration) * 100}%` }}
-                    >
-                    </div>
                     <div
-                        className="absolute top-1/2 -translate-y-1/2 w-3 h-3 bg-red-600 rounded-full transform -translate-x-1/2 pointer-events-none"
-                        style={{ left: `${(progress / duration) * 100}%` }}
+                        className="absolute top-0 left-0 h-full rounded-full bg-red-600"
+                        style={{ width: (progress / duration) * 100 + '%' }}
+                    ></div>
+                    <div
+                        className="pointer-events-none absolute top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 transform rounded-full bg-red-600"
+                        style={{ left: (progress / duration) * 100 + '%' }}
                     ></div>
                 </div>
-                <div className="flex items-center justify-between text-white mt-2 text-xs sm:text-sm">
+                <div className="mt-2 flex items-center justify-between text-xs text-white sm:text-sm">
                     <div className="flex items-center gap-2 sm:gap-3">
-                        <button onClick={togglePlayPause} className="focus:outline-none cursor-pointer">
+                        <button
+                            onClick={togglePlayPause}
+                            className="cursor-pointer focus:outline-none"
+                        >
                             {isVideoEnded ? (
-                                <RotateCcw className='h-5 w-5 sm:h-6 sm:w-6'/>
+                                <RotateCcw className="h-5 w-5 sm:h-6 sm:w-6" />
                             ) : isPlaying ? (
-                                <Pause className='h-5 w-5 sm:h-6 sm:w-6'/>
+                                <Pause className="h-5 w-5 sm:h-6 sm:w-6" />
                             ) : (
-                                <Play className='h-5 w-5 sm:h-6 sm:w-6'/>
+                                <Play className="h-5 w-5 sm:h-6 sm:w-6" />
                             )}
                         </button>
-                        <div className="flex items-center gap-1 sm:gap-2 group/volume">
-                            <button onClick={toggleMute} className="focus:outline-none cursor-pointer">
+                        <div className="group/volume flex items-center gap-1 sm:gap-2">
+                            <button
+                                onClick={toggleMute}
+                                className="cursor-pointer focus:outline-none"
+                            >
                                 {isMuted || volume === 0 ? (
                                     <VolumeX className="h-5 w-5 sm:h-6 sm:w-6" />
                                 ) : volume < 0.5 ? (
@@ -383,15 +411,18 @@ export function SimpleVideo({
                                 step="0.05"
                                 value={isMuted ? 0 : volume}
                                 onChange={handleVolumeChange}
-                                className="w-0 opacity-0 h-1.5 bg-white/80 rounded-lg appearance-none cursor-pointer transition-all duration-300 group-hover/volume:w-12 group-hover/volume:sm:w-16 group-hover/volume:opacity-100 accent-red-600"
+                                className="h-1.5 w-0 cursor-pointer appearance-none rounded-lg bg-white/80 accent-red-600 opacity-0 transition-all duration-300 group-hover/volume:w-12 group-hover/volume:opacity-100 group-hover/volume:sm:w-16"
                             />
                         </div>
                         <span className="w-24 sm:w-auto">
                             {formatTime(progress)} / {formatTime(duration)}
                         </span>
                     </div>
-                    <button onClick={toggleFullScreen} className="focus:outline-none cursor-pointer">
-                        <Maximize className='h-5 w-5 sm:h-6 sm:w-6'/>
+                    <button
+                        onClick={toggleFullScreen}
+                        className="cursor-pointer focus:outline-none"
+                    >
+                        <Maximize className="h-5 w-5 sm:h-6 sm:w-6" />
                     </button>
                 </div>
             </div>

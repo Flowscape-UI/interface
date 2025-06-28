@@ -52,15 +52,70 @@ const withVignetteCode = `import { LetterGlitchCard } from '@/components/ui/lett
 `;
 
 const rows: PropsTableRow[] = [
-    { prop: "title", type: "string", required: true, description: "The title of the card." },
-    { prop: "description", type: "string", required: true, description: "The description text of the card." },
-    { prop: "className", type: "string", required: false, defaultValue: '""', description: "Custom classes for the main container." },
-    { prop: "children", type: "React.ReactNode", required: false, defaultValue: "undefined", description: "Content to be displayed inside the card." },
-    { prop: "glitchColors", type: "string[]", required: false, defaultValue: "['#2b4539', ...]", description: "Controls the colors of the letters rendered in the canvas." },
-    { prop: "glitchSpeed", type: "number", required: false, defaultValue: "50", description: "Controls the speed at which letters scramble in the animation." },
-    { prop: "centerVignette", type: "boolean", required: false, defaultValue: "false", description: "When true, renders a radial gradient in the center of the container." },
-    { prop: "outerVignette", type: "boolean", required: false, defaultValue: "true", description: "When true, renders an inner radial gradient around the edges of the container." },
-    { prop: "smooth", type: "boolean", required: false, defaultValue: "true", description: "When true, smoothens the animation of the letters for a more subtle feel." },
+    {
+        prop: 'title',
+        type: 'string',
+        required: false,
+        defaultValue: '""',
+        description: 'The title of the card.',
+    },
+    {
+        prop: 'description',
+        type: 'string',
+        required: false,
+        defaultValue: '""',
+        description: 'The description text of the card.',
+    },
+    {
+        prop: 'className',
+        type: 'string',
+        required: false,
+        defaultValue: '""',
+        description: 'Custom classes for the main container.',
+    },
+    {
+        prop: 'children',
+        type: 'React.ReactNode',
+        required: false,
+        defaultValue: 'undefined',
+        description: 'Content to be displayed inside the card.',
+    },
+    {
+        prop: 'glitchColors',
+        type: 'string[]',
+        required: false,
+        defaultValue: "['#2b4539', ...]",
+        description: 'Controls the colors of the letters rendered in the canvas.',
+    },
+    {
+        prop: 'glitchSpeed',
+        type: 'number',
+        required: false,
+        defaultValue: '50',
+        description: 'Controls the speed at which letters scramble in the animation.',
+    },
+    {
+        prop: 'centerVignette',
+        type: 'boolean',
+        required: false,
+        defaultValue: 'false',
+        description: 'When true, renders a radial gradient in the center of the container.',
+    },
+    {
+        prop: 'outerVignette',
+        type: 'boolean',
+        required: false,
+        defaultValue: 'true',
+        description:
+            'When true, renders an inner radial gradient around the edges of the container.',
+    },
+    {
+        prop: 'smooth',
+        type: 'boolean',
+        required: false,
+        defaultValue: 'true',
+        description: 'When true, smoothens the animation of the letters for a more subtle feel.',
+    },
 ];
 
 const componentCode = `import { useRef, useEffect } from "react";
@@ -76,7 +131,7 @@ export interface LetterGlitchProps {
   children?: React.ReactNode;
 }
 
-const LetterGlitch = ({
+export const LetterGlitch = ({
   glitchColors = ["#2b4539", "#61dca3", "#61b3dc"],
   glitchSpeed = 50,
   centerVignette = false,
@@ -104,64 +159,9 @@ const LetterGlitch = ({
   const charHeight = 20;
 
   const lettersAndSymbols = [
-    "A",
-    "B",
-    "C",
-    "D",
-    "E",
-    "F",
-    "G",
-    "H",
-    "I",
-    "J",
-    "K",
-    "L",
-    "M",
-    "N",
-    "O",
-    "P",
-    "Q",
-    "R",
-    "S",
-    "T",
-    "U",
-    "V",
-    "W",
-    "X",
-    "Y",
-    "Z",
-    "!",
-    "@",
-    "#",
-    "$",
-    "&",
-    "*",
-    "(",
-    ")",
-    "-",
-    "_",
-    "+",
-    "=",
-    "/",
-    "[",
-    "]",
-    "{",
-    "}",
-    ";",
-    ":",
-    "<",
-    ">",
-    ",",
-    "0",
-    "1",
-    "2",
-    "3",
-    "4",
-    "5",
-    "6",
-    "7",
-    "8",
-    "9",
+    "A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z",
+    "!","@","#","$","&","*","(",")","-","_","+","=","/","[","]","{","}",";",":","<",">",",",
+    "0","1","2","3","4","5","6","7","8","9"
   ];
 
   const getRandomChar = () => {
@@ -176,7 +176,7 @@ const LetterGlitch = ({
 
   const hexToRgb = (hex: string) => {
     const shorthandRegex = /^#?([a-f\\d])([a-f\\d])([a-f\\d])$/i;
-    hex = hex.replace(shorthandRegex, (m, r, g, b) => {
+    hex = hex.replace(shorthandRegex, (r, g, b) => {
       return r + r + g + g + b + b;
     });
 
@@ -329,7 +329,7 @@ const LetterGlitch = ({
     resizeCanvas();
     animate();
 
-    let resizeTimeout: NodeJS.Timeout;
+    let resizeTimeout: ReturnType<typeof setTimeout>;
 
     const handleResize = () => {
       clearTimeout(resizeTimeout);
@@ -367,16 +367,44 @@ const LetterGlitch = ({
   );
 };
 
-export default LetterGlitch;
+interface LetterGlitchCardProps extends LetterGlitchProps {
+  title?: string;
+  description?: string;
+  className?: string;
+}
+
+export function LetterGlitchCard({
+  title,
+  description,
+  className,
+  ...props
+}: LetterGlitchCardProps) {
+  return (
+    <LetterGlitch className={cn('h-[500px] w-80 rounded-lg p-4', className)} {...props}>
+      <h3 className="text-2xl font-bold text-white">{title}</h3>
+      <p className="mt-2 text-white/70">{description}</p>
+    </LetterGlitch>
+  );
+}
+
+import type { ClassValue } from "clsx";
+
+import { clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
+
+export const cn = (...inputs: ClassValue[]) => {
+  return twMerge(clsx(inputs));
+};
+
 `;
 
 function LetterGlitchCardPage() {
-  const {t} = useTranslation();
+    const { t } = useTranslation();
     return (
         <MainLayout>
-            <div className="px-6 py-16 w-full">
+            <div className="w-full px-6 py-16">
                 <PageTitle>Letter Glitch Card</PageTitle>
-                <p className="text-white/60 max-w-xl">
+                <p className="max-w-xl text-white/60">
                     {t('A card component with a canvas-based animated glitch effect background')}.
                 </p>
 
@@ -396,6 +424,7 @@ function LetterGlitchCardPage() {
                         title="Fast & Furious"
                         description={`${t('A very fast and aggressive glitch effect')}.`}
                         codeText={fastFuriousCode}
+                        reactBitsUrl="https://www.reactbits.dev/backgrounds/letter-glitch"
                     >
                         <LetterGlitchCard
                             title="Cyber-Attack"
@@ -408,6 +437,7 @@ function LetterGlitchCardPage() {
                         title="Slow & Sharp"
                         description={`${t('A slow, non-smooth animation for a retro feel')}.`}
                         codeText={slowSharpCode}
+                        reactBitsUrl="https://www.reactbits.dev/backgrounds/letter-glitch"
                     >
                         <LetterGlitchCard
                             title="Old Terminal"
@@ -417,10 +447,11 @@ function LetterGlitchCardPage() {
                             smooth={false}
                         />
                     </PreviewTabs>
-                     <PreviewTabs
+                    <PreviewTabs
                         title="With Vignette"
                         description={`${t('This card has center and outer vignettes enabled for a focused look')}.`}
                         codeText={withVignetteCode}
+                        reactBitsUrl="https://www.reactbits.dev/backgrounds/letter-glitch"
                     >
                         <LetterGlitchCard
                             title="Cinematic"
@@ -441,7 +472,11 @@ function LetterGlitchCardPage() {
                     description={
                         <>
                             <p className="mb-4">
-                                <strong>Letter Glitch Card</strong> &mdash; {t('a customizable card component with a canvas-based animated glitch effect background')}.
+                                <strong>Letter Glitch Card</strong> &mdash;{' '}
+                                {t(
+                                    'a customizable card component with a canvas-based animated glitch effect background',
+                                )}
+                                .
                             </p>
                         </>
                     }
@@ -450,4 +485,4 @@ function LetterGlitchCardPage() {
             </div>
         </MainLayout>
     );
-} 
+}

@@ -7,9 +7,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import React, { useState } from 'react';
 import { FaCheck, FaCopy, FaDownload, FaSpinner } from 'react-icons/fa6';
 import AnimatedGradientButton from '@/components/ui/animated-gradient-button';
-import { DocsSection } from "@/components/docs-section";
-import type { PropsTableRow } from "@/components/props-table";
-import { UsageSection } from "@/components/usage-section";
+import { DocsSection } from '@/components/docs-section';
+import type { PropsTableRow } from '@/components/props-table';
+import { UsageSection } from '@/components/usage-section';
 import { useTranslation } from '@/hooks/use-translation';
 
 export const Route = createFileRoute('/components/buttons/')({
@@ -17,15 +17,16 @@ export const Route = createFileRoute('/components/buttons/')({
 });
 
 function ButtonsPage() {
-  const {t} = useTranslation();
+    const { t } = useTranslation();
     return (
         <MainLayout>
-            <div className="px-4 sm:px-6 py-16">
+            <div className="px-4 py-16 sm:px-6">
                 <PageTitle>Buttons</PageTitle>
                 <p className="text-white/60">
                     {t(`Buttons are used to trigger actions or events. They can be styled in different
                     ways to indicate their purpose. This page showcases various button styles and
-                    their usage`)}.
+                    their usage`)}
+                    .
                 </p>
 
                 <div className="mt-8 flex flex-col gap-5">
@@ -33,10 +34,7 @@ function ButtonsPage() {
                         <Button>Click Me</Button>
                     </PreviewTabs>
 
-                    <PreviewTabs
-                        title="Loading Button"
-                        codeText={buttonCode}
-                    >
+                    <PreviewTabs title="Loading Button" codeText={buttonCode}>
                         <Button isLoading>Click Me</Button>
                     </PreviewTabs>
 
@@ -50,18 +48,17 @@ function ButtonsPage() {
                         </DownloadButton>
                     </PreviewTabs>
 
-                    <PreviewTabs title="Animated Gradient Button" codeText={animatedGradientButtonCode}>
-                        <AnimatedGradientButton>
-                            Animated Gradient Button
-                        </AnimatedGradientButton>
+                    <PreviewTabs
+                        title="Animated Gradient Button"
+                        codeText={animatedGradientButtonCode}
+                    >
+                        <AnimatedGradientButton>Animated Gradient Button</AnimatedGradientButton>
                     </PreviewTabs>
                 </div>
             </div>
             <UsageSection
                 title="Component Code"
-                description={
-                    `${t('This is a reusable animated gradient button component')}. ${t('It uses')} CSS @property ${t('for smooth animations and can be customized with various props for gradients, colors, and effects')}.`
-                }
+                description={`${t('This is a reusable animated gradient button component')}. ${t('It uses')} CSS @property ${t('for smooth animations and can be customized with various props for gradients, colors, and effects')}.`}
                 code={componentCode}
             />
             <DocsSection
@@ -73,8 +70,8 @@ function ButtonsPage() {
 }
 
 const buttonCode = `
-import { JSX, useState } from "react";
 import { cn } from "@/lib/utils";
+import { FaSpinner } from 'react-icons/fa'
 
 export interface BaseButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     variant?: "primary" | "secondary" | "ghost";
@@ -98,7 +95,7 @@ export function Button({
     return (
         <button
             className={cn(
-                "relative inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition disabled:cursor-not-allowed disabled:opacity-60",
+                "relative cursor-pointer inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition disabled:cursor-not-allowed disabled:opacity-60",
                 baseStyles[variant],
                 className
             )}
@@ -112,6 +109,8 @@ export function Button({
         </button>
     );
 }
+
+
 
 `;
 
@@ -716,22 +715,107 @@ export default function AnimatedGradientButton({
 `;
 
 const rows: PropsTableRow[] = [
-    { prop: 'children', type: 'React.ReactNode', required: true, description: 'The content of the button.' },
-    { prop: 'disabled', type: 'boolean', required: false, description: 'Whether the button is disabled.' },
-    { prop: 'className', type: 'string', required: false, description: 'Additional classes for custom styling.' },
-    { prop: 'style', type: 'CSSProperties', required: false, description: 'Inline styles for custom styling.' },
-    { prop: 'gradientColors', type: 'GradientColor[]', required: false, description: 'An array of gradient colors.' },
-    { prop: 'animationDuration', type: 'number', required: false, description: 'The duration of the animation.' },
-    { prop: 'animationEnabled', type: 'boolean', required: false, description: 'Whether the animation is enabled.' },
+    {
+        prop: 'children',
+        type: 'React.ReactNode',
+        required: true,
+        description: 'The content of the button.',
+    },
+    {
+        prop: 'disabled',
+        type: 'boolean',
+        required: false,
+        description: 'Whether the button is disabled.',
+    },
+    {
+        prop: 'className',
+        type: 'string',
+        required: false,
+        description: 'Additional classes for custom styling.',
+    },
+    {
+        prop: 'style',
+        type: 'CSSProperties',
+        required: false,
+        description: 'Inline styles for custom styling.',
+    },
+    {
+        prop: 'gradientColors',
+        type: 'GradientColor[]',
+        required: false,
+        description: 'An array of gradient colors.',
+    },
+    {
+        prop: 'animationDuration',
+        type: 'number',
+        required: false,
+        description: 'The duration of the animation.',
+    },
+    {
+        prop: 'animationEnabled',
+        type: 'boolean',
+        required: false,
+        description: 'Whether the animation is enabled.',
+    },
     { prop: 'padding', type: 'string', required: false, description: 'The padding of the button.' },
-    { prop: 'fontSize', type: 'string', required: false, description: 'The font size of the button.' },
-    { prop: 'borderRadius', type: 'string', required: false, description: 'The border radius of the button.' },
-    { prop: 'backgroundColor', type: 'string', required: false, description: 'The background color of the button.' },
-    { prop: 'textColor', type: 'string', required: false, description: 'The text color of the button.' },
-    { prop: 'hoverBlur', type: 'number', required: false, description: 'The blur amount for the hover effect.' },
-    { prop: 'hoverOpacity', type: 'number', required: false, description: 'The opacity for the hover effect.' },
-    { prop: 'transitionDuration', type: 'number', required: false, description: 'The duration of the transition.' },
-    { prop: 'type', type: '"button" | "submit" | "reset"', required: false, description: 'The type of the button.' },
-    { prop: 'aria-label', type: 'string', required: false, description: 'The accessible label for the button.' },
-    { prop: 'onClick', type: '() => void', required: false, description: 'Function to call when the button is clicked.' },
+    {
+        prop: 'fontSize',
+        type: 'string',
+        required: false,
+        description: 'The font size of the button.',
+    },
+    {
+        prop: 'borderRadius',
+        type: 'string',
+        required: false,
+        description: 'The border radius of the button.',
+    },
+    {
+        prop: 'backgroundColor',
+        type: 'string',
+        required: false,
+        description: 'The background color of the button.',
+    },
+    {
+        prop: 'textColor',
+        type: 'string',
+        required: false,
+        description: 'The text color of the button.',
+    },
+    {
+        prop: 'hoverBlur',
+        type: 'number',
+        required: false,
+        description: 'The blur amount for the hover effect.',
+    },
+    {
+        prop: 'hoverOpacity',
+        type: 'number',
+        required: false,
+        description: 'The opacity for the hover effect.',
+    },
+    {
+        prop: 'transitionDuration',
+        type: 'number',
+        required: false,
+        description: 'The duration of the transition.',
+    },
+    {
+        prop: 'type',
+        type: '"button" | "submit" | "reset"',
+        required: false,
+        description: 'The type of the button.',
+    },
+    {
+        prop: 'aria-label',
+        type: 'string',
+        required: false,
+        description: 'The accessible label for the button.',
+    },
+    {
+        prop: 'onClick',
+        type: '() => void',
+        required: false,
+        description: 'Function to call when the button is clicked.',
+    },
 ];

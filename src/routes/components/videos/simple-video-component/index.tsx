@@ -8,38 +8,27 @@ import { SimpleVideo } from '@/components/ui/simple-video';
 import { UsageSection } from '@/components/usage-section';
 import { useTranslation } from '@/hooks/use-translation';
 
-export const Route = createFileRoute(
-  '/components/videos/simple-video-component/',
-)({
-  component: SimpleVideoPageComponent,
+export const Route = createFileRoute('/components/videos/simple-video-component/')({
+    component: SimpleVideoPageComponent,
 });
 
 function SimpleVideoPageComponent() {
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     return (
         <MainLayout>
-            <div className="px-6 py-16 w-full">
+            <div className="w-full px-6 py-16">
                 <PageTitle>Simple Video Component</PageTitle>
-                <p className="text-white/60 max-w-xl">
-                    {t('A simple video player with essential controls and customizable panel colors.')}
+                <p className="max-w-xl text-white/60">
+                    {t(
+                        'A simple video player with essential controls and customizable panel colors.',
+                    )}
                 </p>
 
                 <div className="mt-8 flex flex-col gap-10">
                     <PreviewTabs title="Default Player" codeText={videoPlayerCodeDefault}>
-                        <SimpleVideo className='w-full h-full' src="https://archive.org/download/apple-september-2017-key-note-at-the-steve-jobs-theater-full-1080p-720p-30fps-h-264-128kbit-aac/Apple%20September%2C%202017%20Key%20Note%20at%20the%20Steve%20Jobs%20Theater%20Full%2C%201080p%20%28720p_30fps_H264-128kbit_AAC%29.mp4"  />
-                    </PreviewTabs>
-
-                    <PreviewTabs title="Player with Blue Controls" codeText={videoPlayerCodeBlue}>
-                        <SimpleVideo 
-                            className='w-full h-full' 
-                            src="https://archive.org/download/apple-september-2017-key-note-at-the-steve-jobs-theater-full-1080p-720p-30fps-h-264-128kbit-aac/Apple%20September%2C%202017%20Key%20Note%20at%20the%20Steve%20Jobs%20Theater%20Full%2C%201080p%20%28720p_30fps_H264-128kbit_AAC%29.mp4" 
-                        />
-                    </PreviewTabs>
-
-                     <PreviewTabs title="Player with Green Controls" codeText={videoPlayerCodeGreen}>
-                        <SimpleVideo 
-                            className='w-full h-full' 
-                            src="https://archive.org/download/apple-september-2017-key-note-at-the-steve-jobs-theater-full-1080p-720p-30fps-h-264-128kbit-aac/Apple%20September%2C%202017%20Key%20Note%20at%20the%20Steve%20Jobs%20Theater%20Full%2C%201080p%20%28720p_30fps_H264-128kbit_AAC%29.mp4" 
+                        <SimpleVideo
+                            className="h-full w-full"
+                            src="https://archive.org/download/apple-september-2017-key-note-at-the-steve-jobs-theater-full-1080p-720p-30fps-h-264-128kbit-aac/Apple%20September%2C%202017%20Key%20Note%20at%20the%20Steve%20Jobs%20Theater%20Full%2C%201080p%20%28720p_30fps_H264-128kbit_AAC%29.mp4"
                         />
                     </PreviewTabs>
                 </div>
@@ -54,7 +43,6 @@ function SimpleVideoPageComponent() {
                     description={`${t('The')} SimpleVideo ${t('component provides a clean and modern video playback experience with essential features and customizable controls')}.`}
                     rows={rows}
                 />
-
             </div>
         </MainLayout>
     );
@@ -71,12 +59,14 @@ const rows: PropsTableRow[] = [
         prop: 'isPaused',
         type: 'boolean',
         required: false,
+        defaultValue: 'false',
         description: 'Externally control the pause state of the video.',
     },
     {
         prop: 'className',
         type: 'string',
         required: false,
+        defaultValue: '""',
         description: 'Custom class for the video container.',
     },
 ];
@@ -89,30 +79,20 @@ export default function VideoExample() {
     );
 }`;
 
-const videoPlayerCodeBlue = `import { SimpleVideo } from '@/components/ui/simple-video';
-
-export default function VideoExample() {
-    return (
-       <SimpleVideo 
-            className='w-full h-full' 
-            src="https://archive.org/download/apple-september-2017-key-note-at-the-steve-jobs-theater-full-1080p-720p-30fps-h-264-128kbit-aac/Apple%20September%2C%202017%20Key%20Note%20at%20the%20Steve%20Jobs%20Theater%20Full%2C%201080p%20%28720p_30fps_H264-128kbit_AAC%29.mp4"
-       />
-    );
-}`;
-
-const videoPlayerCodeGreen = `import { SimpleVideo } from '@/components/ui/simple-video';
-
-export default function VideoExample() {
-    return (
-       <SimpleVideo 
-            className='w-full h-full' 
-            src="https://archive.org/download/apple-september-2017-key-note-at-the-steve-jobs-theater-full-1080p-720p-30fps-h-264-128kbit-aac/Apple%20September%2C%202017%20Key%20Note%20at%20the%20Steve%20Jobs%20Theater%20Full%2C%201080p%20%28720p_30fps_H264-128kbit_AAC%29.mp4"
-       />
-    );
-}`;
-
-const simpleVideoComponentCode = `import { cn } from '@/lib/utils';
-import { Maximize, Pause, Play, Rewind, FastForward, RotateCcw } from 'lucide-react';
+const simpleVideoComponentCode = `import type { ClassValue } from "clsx";
+import { clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
+import {
+    Maximize,
+    Pause,
+    Play,
+    Rewind,
+    FastForward,
+    RotateCcw,
+    Volume1,
+    Volume2,
+    VolumeX,
+} from 'lucide-react';
 import React, { useState, useRef, useEffect } from 'react';
 
 interface SimpleVideoProps {
@@ -121,13 +101,11 @@ interface SimpleVideoProps {
     className?: string;
 }
 
-export function SimpleVideo({ 
-    src, 
-    isPaused, 
-    className, 
-}: SimpleVideoProps) {
+export function SimpleVideo({ src, isPaused = false, className = '' }: SimpleVideoProps) {
     const videoRef = useRef<HTMLVideoElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
+    const clickTimeout = useRef<number | null>(null);
+    const iconTimerRef = useRef<number | null>(null);
 
     const [isPlaying, setIsPlaying] = useState(false);
     const [progress, setProgress] = useState(0);
@@ -136,14 +114,31 @@ export function SimpleVideo({
     const [isVideoEnded, setIsVideoEnded] = useState(false);
     const [showRewind, setShowRewind] = useState(false);
     const [showFastForward, setShowFastForward] = useState(false);
+    const [buffered, setBuffered] = useState(0);
+    const [isBuffering, setIsBuffering] = useState(false);
+
+    const [isCenterIconVisible, setIsCenterIconVisible] = useState(false);
+    const inactivityTimerRef = useRef<number | null>(null);
+    const progressContainerRef = useRef<HTMLDivElement>(null);
+    const [isScrubbing, setIsScrubbing] = useState(false);
+    const [hoverTime, setHoverTime] = useState<number | null>(null);
+    const [hoverPosition, setHoverPosition] = useState(0);
+    const [volume, setVolume] = useState(1);
+    const [isMuted, setIsMuted] = useState(false);
 
     useEffect(() => {
         if (isPaused) {
             videoRef.current?.pause();
             setIsPlaying(false);
         } else if (isPaused === false) {
-            videoRef.current?.play();
-            setIsPlaying(true);
+            videoRef.current
+                ?.play()
+                .then(() => {
+                    setIsPlaying(true);
+                })
+                .catch(() => {
+                    setIsPlaying(false);
+                });
         }
     }, [isPaused]);
 
@@ -154,23 +149,29 @@ export function SimpleVideo({
 
     const togglePlayPause = () => {
         if (videoRef.current) {
-            if (isVideoEnded) {
-                videoRef.current.currentTime = 0;
+            if (iconTimerRef.current) clearTimeout(iconTimerRef.current);
+
+            const isCurrentlyPaused = videoRef.current.paused || isVideoEnded;
+
+            if (isCurrentlyPaused) {
+                if (isVideoEnded) videoRef.current.currentTime = 0;
                 videoRef.current.play();
                 setIsPlaying(true);
                 setIsVideoEnded(false);
-            } else if (videoRef.current.paused) {
-                videoRef.current.play();
-                setIsPlaying(true);
             } else {
                 videoRef.current.pause();
                 setIsPlaying(false);
             }
+
+            setIsCenterIconVisible(true);
+            iconTimerRef.current = window.setTimeout(() => {
+                setIsCenterIconVisible(false);
+            }, 500);
         }
     };
 
     const handleTimeUpdate = () => {
-        if (videoRef.current) {
+        if (videoRef.current && !isScrubbing) {
             if (isVideoEnded && videoRef.current.currentTime < videoRef.current.duration) {
                 setIsVideoEnded(false);
             }
@@ -179,19 +180,39 @@ export function SimpleVideo({
         }
     };
 
-    const handleSeek = (e: React.MouseEvent<HTMLProgressElement>) => {
-        if (videoRef.current) {
-            const rect = e.currentTarget.getBoundingClientRect();
-            const pos = (e.clientX - rect.left) / rect.width;
-            videoRef.current.currentTime = pos * videoRef.current.duration;
+    const handleScrubStart = (e: React.MouseEvent<HTMLDivElement>) => {
+        if (!videoRef.current || !progressContainerRef.current) return;
+
+        const rect = progressContainerRef.current.getBoundingClientRect();
+        const pos = (e.clientX - rect.left) / rect.width;
+        const clampedPos = Math.max(0, Math.min(1, pos));
+        const newTime = clampedPos * duration;
+
+        videoRef.current.currentTime = newTime;
+        setProgress(newTime);
+        setIsScrubbing(true);
+    };
+
+    const handleProgress = () => {
+        if (videoRef.current && videoRef.current.buffered.length > 0) {
+            setBuffered(videoRef.current.buffered.end(videoRef.current.buffered.length - 1));
         }
     };
 
-    const formatTime = (time: number) => {
-        if (isNaN(time)) return '0:00';
-        const minutes = Math.floor(time / 60);
-        const seconds = Math.floor(time % 60);
-        return \`\${minutes}:\${seconds < 10 ? '0' : ''}\${seconds}\`;
+    const formatTime = (seconds: number) => {
+        if (isNaN(seconds) || seconds < 0) return '0:00';
+
+        const hours = Math.floor(seconds / 3600);
+        const minutes = Math.floor((seconds % 3600) / 60);
+        const secs = Math.floor(seconds % 60);
+
+        const secsStr = secs < 10 ? '0' + secs : '' + secs;
+        const minsStr = minutes < 10 ? '0' + minutes : '' + minutes;
+
+        if (hours > 0) {
+            return hours + ':' + minsStr + ':' + secsStr;
+        }
+        return minutes + ':' + secsStr;
     };
 
     const toggleFullScreen = () => {
@@ -202,82 +223,297 @@ export function SimpleVideo({
         }
     };
 
-    const handleDoubleClick = (e: React.MouseEvent<HTMLVideoElement>) => {
-        if (!videoRef.current) return;
+    const handleProgressMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
         const rect = e.currentTarget.getBoundingClientRect();
-        const clickX = e.clientX - rect.left;
+        const pos = (e.clientX - rect.left) / rect.width;
+        const clampedPos = Math.max(0, Math.min(1, pos));
+        setHoverPosition(clampedPos);
+        setHoverTime(clampedPos * duration);
+    };
 
-        if (clickX < rect.width / 2) {
-            videoRef.current.currentTime -= 10;
-            setShowRewind(true);
-            setTimeout(() => setShowRewind(false), 500);
-        } else {
-            videoRef.current.currentTime += 10;
-            setShowFastForward(true);
-            setTimeout(() => setShowFastForward(false), 500);
+    const handleProgressMouseLeave = () => {
+        setHoverTime(null);
+    };
+
+    const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const newVolume = parseFloat(e.target.value);
+        setVolume(newVolume);
+        setIsMuted(newVolume === 0);
+        if (videoRef.current) {
+            videoRef.current.volume = newVolume;
+            videoRef.current.muted = newVolume === 0;
         }
     };
+
+    const toggleMute = () => {
+        const newMutedState = !isMuted;
+        setIsMuted(newMutedState);
+        if (videoRef.current) {
+            videoRef.current.muted = newMutedState;
+        }
+        if (!newMutedState && volume === 0) {
+            const defaultVolume = 0.5;
+            setVolume(defaultVolume);
+            if (videoRef.current) {
+                videoRef.current.volume = defaultVolume;
+            }
+        }
+    };
+
+    const handleVideoClick = (e: React.MouseEvent<HTMLVideoElement>) => {
+        if (clickTimeout.current) {
+            clearTimeout(clickTimeout.current);
+            clickTimeout.current = null;
+
+            if (!videoRef.current) return;
+            const rect = e.currentTarget.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            const leftThird = rect.width / 3;
+            const rightThird = (rect.width / 3) * 2;
+
+            if (clickX < leftThird) {
+                videoRef.current.currentTime -= 10;
+                setShowRewind(true);
+                setTimeout(() => setShowRewind(false), 500);
+            } else if (clickX > rightThird) {
+                videoRef.current.currentTime += 10;
+                setShowFastForward(true);
+                setTimeout(() => setShowFastForward(false), 500);
+            }
+        } else {
+            clickTimeout.current = window.setTimeout(() => {
+                togglePlayPause();
+                clickTimeout.current = null;
+            }, 250);
+        }
+    };
+
+    useEffect(() => {
+        const container = containerRef.current;
+
+        const resetInactivityTimer = () => {
+            if (inactivityTimerRef.current) {
+                clearTimeout(inactivityTimerRef.current);
+            }
+            inactivityTimerRef.current = window.setTimeout(() => {
+                setIsMouseOver(false);
+            }, 3000);
+        };
+
+        const handleActivity = () => {
+            setIsMouseOver(true);
+            resetInactivityTimer();
+        };
+
+        const handleMouseLeave = () => {
+            setIsMouseOver(false);
+        };
+
+        if (container) {
+            container.addEventListener('mousemove', handleActivity);
+            container.addEventListener('mouseleave', handleMouseLeave);
+            handleActivity();
+        }
+
+        return () => {
+            if (container) {
+                container.removeEventListener('mousemove', handleActivity);
+                container.removeEventListener('mouseleave', handleMouseLeave);
+            }
+            if (inactivityTimerRef.current) {
+                clearTimeout(inactivityTimerRef.current);
+            }
+        };
+    }, []);
+
+    useEffect(() => {
+        const handleScrubMove = (e: MouseEvent) => {
+            if (!videoRef.current || !progressContainerRef.current) return;
+
+            const rect = progressContainerRef.current.getBoundingClientRect();
+            const pos = (e.clientX - rect.left) / rect.width;
+            const clampedPos = Math.max(0, Math.min(1, pos));
+            const newTime = clampedPos * duration;
+
+            videoRef.current.currentTime = newTime;
+            setProgress(newTime);
+        };
+
+        const handleScrubEnd = () => {
+            setIsScrubbing(false);
+        };
+
+        if (isScrubbing) {
+            window.addEventListener('mousemove', handleScrubMove);
+            window.addEventListener('mouseup', handleScrubEnd);
+        }
+
+        return () => {
+            window.removeEventListener('mousemove', handleScrubMove);
+            window.removeEventListener('mouseup', handleScrubEnd);
+        };
+    }, [isScrubbing, duration]);
 
     return (
         <div
             ref={containerRef}
-            className={cn('relative w-full aspect-video bg-black group', className)}
-            onMouseEnter={() => setIsMouseOver(true)}
-            onMouseLeave={() => setIsMouseOver(false)}
+            className={cn(
+                'group relative aspect-video w-full bg-black',
+                !(isMouseOver || isBuffering || isVideoEnded) && 'cursor-none',
+                className,
+            )}
         >
             <video
                 ref={videoRef}
                 src={src}
-                className="w-full h-full"
+                className="h-full w-full object-cover"
                 onTimeUpdate={handleTimeUpdate}
                 onLoadedData={() => setDuration(videoRef.current?.duration || 0)}
                 onEnded={handleVideoEnd}
-                onClick={togglePlayPause}
-                onDoubleClick={handleDoubleClick}
+                onClick={handleVideoClick}
+                onWaiting={() => setIsBuffering(true)}
+                onPlaying={() => setIsBuffering(false)}
+                onProgress={handleProgress}
             />
 
-            <div className='absolute inset-0 flex items-center justify-between pointer-events-none'>
-                <div className={cn('transition-opacity duration-300 opacity-0 ml-10', { 'opacity-100': showRewind })}>
-                    <Rewind className='text-white' size={48} />
+            {isBuffering && (
+                <div className="bg-opacity-25 pointer-events-none absolute inset-0 flex items-center justify-center bg-black">
+                    <div className="h-12 w-12 animate-spin rounded-full border-4 border-solid border-white border-t-transparent"></div>
                 </div>
-                <div className={cn('transition-opacity duration-300 opacity-0 mr-10', { 'opacity-100': showFastForward })}>
-                    <FastForward className='text-white' size={48} />
+            )}
+
+            <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+                <div
+                    className={cn(
+                        'bg-opacity-50 rounded-full bg-black p-4 transition-opacity duration-300',
+                        (isMouseOver || isCenterIconVisible) && !isBuffering
+                            ? 'opacity-100'
+                            : 'opacity-0',
+                    )}
+                >
+                    {isPlaying ? (
+                        <Pause className="h-9 w-9 text-white sm:h-12 sm:w-12" />
+                    ) : (
+                        <Play className="h-9 w-9 text-white sm:h-12 sm:w-12" />
+                    )}
+                </div>
+            </div>
+
+            <div className="pointer-events-none absolute inset-y-0 left-0 flex w-1/3 items-center justify-center">
+                <div
+                    className={cn(
+                        'flex items-center gap-2 rounded-full bg-black/50 p-1 text-white transition-opacity duration-300 sm:p-2',
+                        showRewind ? 'opacity-100' : 'opacity-0',
+                    )}
+                >
+                    <Rewind className="h-6 w-6 sm:h-8 sm:w-8" />
+                    <span className="text-sm font-semibold sm:text-lg">-10s</span>
+                </div>
+            </div>
+            <div className="pointer-events-none absolute inset-y-0 right-0 flex w-1/3 items-center justify-center">
+                <div
+                    className={cn(
+                        'flex items-center gap-2 rounded-full bg-black/50 p-1 text-white transition-opacity duration-300 sm:p-2',
+                        showFastForward ? 'opacity-100' : 'opacity-0',
+                    )}
+                >
+                    <span className="text-sm font-semibold sm:text-lg">+10s</span>
+                    <FastForward className="h-6 w-6 sm:h-8 sm:w-8" />
                 </div>
             </div>
 
             <div
                 className={cn(
-                    'absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t to-transparent transition-opacity duration-300',
-                    controlsColor,
-                    isMouseOver || !isPlaying ? 'opacity-100' : 'opacity-0'
+                    'absolute right-0 bottom-0 left-0 p-2 transition-opacity duration-300 sm:p-4',
+                    isMouseOver || isBuffering || isVideoEnded
+                        ? 'pointer-events-auto opacity-100'
+                        : 'pointer-events-none opacity-0',
                 )}
             >
-                <progress
-                    className="w-full h-1 [&::-webkit-progress-bar]:bg-gray-500 [&::-webkit-progress-value]:bg-red-600 [&::-moz-progress-bar]:bg-red-600 cursor-pointer"
-                    value={progress}
-                    max={duration}
-                    onClick={handleSeek}
-                />
-                <div className="flex items-center justify-between text-white mt-2">
-                    <div className="flex items-center gap-4">
-                        <button onClick={togglePlayPause} className="focus:outline-none">
+                <div
+                    ref={progressContainerRef}
+                    className="group/progress relative h-1 w-full cursor-pointer transition-all duration-200 hover:h-1.5"
+                    onMouseDown={handleScrubStart}
+                    onMouseMove={handleProgressMouseMove}
+                    onMouseLeave={handleProgressMouseLeave}
+                >
+                    {hoverTime !== null && (
+                        <div
+                            className="bg-opacity-80 pointer-events-none absolute bottom-5 -translate-x-1/2 transform rounded bg-black px-2 py-1 text-xs text-white"
+                            style={{ left: hoverPosition * 100 + '%' }}
+                        >
+                            {formatTime(hoverTime)}
+                        </div>
+                    )}
+                    <div className="absolute top-0 left-0 h-full w-full rounded-full bg-gray-500/50">
+                        <div
+                            className="h-full rounded-full bg-gray-200/50"
+                            style={{ width: (buffered / duration) * 100 + '%' }}
+                        ></div>
+                    </div>
+                    <div
+                        className="absolute top-0 left-0 h-full rounded-full bg-red-600"
+                        style={{ width: (progress / duration) * 100 + '%' }}
+                    ></div>
+                    <div
+                        className="pointer-events-none absolute top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 transform rounded-full bg-red-600"
+                        style={{ left: (progress / duration) * 100 + '%' }}
+                    ></div>
+                </div>
+                <div className="mt-2 flex items-center justify-between text-xs text-white sm:text-sm">
+                    <div className="flex items-center gap-2 sm:gap-3">
+                        <button
+                            onClick={togglePlayPause}
+                            className="cursor-pointer focus:outline-none"
+                        >
                             {isVideoEnded ? (
-                                <RotateCcw size={24} />
+                                <RotateCcw className="h-5 w-5 sm:h-6 sm:w-6" />
                             ) : isPlaying ? (
-                                <Pause size={24} />
+                                <Pause className="h-5 w-5 sm:h-6 sm:w-6" />
                             ) : (
-                                <Play size={24} />
+                                <Play className="h-5 w-5 sm:h-6 sm:w-6" />
                             )}
                         </button>
-                        <span>
+                        <div className="group/volume flex items-center gap-1 sm:gap-2">
+                            <button
+                                onClick={toggleMute}
+                                className="cursor-pointer focus:outline-none"
+                            >
+                                {isMuted || volume === 0 ? (
+                                    <VolumeX className="h-5 w-5 sm:h-6 sm:w-6" />
+                                ) : volume < 0.5 ? (
+                                    <Volume1 className="h-5 w-5 sm:h-6 sm:w-6" />
+                                ) : (
+                                    <Volume2 className="h-5 w-5 sm:h-6 sm:w-6" />
+                                )}
+                            </button>
+                            <input
+                                type="range"
+                                min="0"
+                                max="1"
+                                step="0.05"
+                                value={isMuted ? 0 : volume}
+                                onChange={handleVolumeChange}
+                                className="h-1.5 w-0 cursor-pointer appearance-none rounded-lg bg-white/80 accent-red-600 opacity-0 transition-all duration-300 group-hover/volume:w-12 group-hover/volume:opacity-100 group-hover/volume:sm:w-16"
+                            />
+                        </div>
+                        <span className="w-24 sm:w-auto">
                             {formatTime(progress)} / {formatTime(duration)}
                         </span>
                     </div>
-                    <button onClick={toggleFullScreen} className="focus:outline-none">
-                        <Maximize size={24} />
+                    <button
+                        onClick={toggleFullScreen}
+                        className="cursor-pointer focus:outline-none"
+                    >
+                        <Maximize className="h-5 w-5 sm:h-6 sm:w-6" />
                     </button>
                 </div>
             </div>
         </div>
     );
-}`;
+}
+
+// eslint-disable-next-line react-refresh/only-export-components
+export const cn = (...inputs: ClassValue[]) => {
+  return twMerge(clsx(inputs));
+};`;

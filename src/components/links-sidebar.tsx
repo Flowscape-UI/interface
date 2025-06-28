@@ -43,7 +43,7 @@ export const nav: Section[] = [
                 children: [
                     {
                         href: '/components/cards/letter-glitch-card',
-                        label: 'Letter Glitch',
+                        label: 'Letter Glitch Card',
                     },
                     {
                         href: '/components/cards/magic-card',
@@ -53,7 +53,6 @@ export const nav: Section[] = [
                         href: '/components/cards/card-hover',
                         label: 'Hover Card',
                     },
-
                 ],
             },
             {
@@ -97,7 +96,7 @@ export const nav: Section[] = [
                             {
                                 href: '/components/backgrounds/interactive/dot-pattern',
                                 label: 'Dot pattern',
-                            },     
+                            },
                             {
                                 href: '/components/backgrounds/interactive/parallax-stars',
                                 label: 'Parallax stars',
@@ -155,7 +154,7 @@ export const nav: Section[] = [
                     },
                 ],
             },
-            { 
+            {
                 label: 'Loaders',
                 children: [
                     { href: '/loaders/squeeze', label: 'Squeeze' },
@@ -163,8 +162,8 @@ export const nav: Section[] = [
                     { href: '/loaders/preloader', label: 'Preloader' },
                     { href: '/loaders/gusano', label: 'Gusano' },
                     { href: '/loaders/fade', label: 'Fade' },
-                ]
-            }
+                ],
+            },
         ],
     },
 ];
@@ -239,7 +238,7 @@ function SidebarNode({
                 <button
                     onClick={() => toggle(branchKey)}
                     className={cn(
-                        'flex w-full items-center justify-between rounded pl-2 py-1.5 text-base font-medium md:text-sm',
+                        'flex w-full items-center justify-between rounded py-1.5 pl-2 text-base font-medium md:text-sm',
                         branchActive ? 'text-sky-400' : 'text-white',
                         'hover:text-sky-300',
                     )}
@@ -280,7 +279,7 @@ function branchContainsPath(branch: BranchItem, pathname: string): boolean {
 export default function LinksSidebar() {
     // const pathname = usePathname();
     const pathname = useRouter().state.location.pathname;
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     const [hidden, setHidden] = useState<Set<string>>(readHidden);
 
     // persist on change
@@ -345,4 +344,3 @@ export default function LinksSidebar() {
 /* --------------------------------------------------
  * End
  * -------------------------------------------------- */
-

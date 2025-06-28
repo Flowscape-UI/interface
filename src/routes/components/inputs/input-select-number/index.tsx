@@ -13,17 +13,16 @@ export const Route = createFileRoute('/components/inputs/input-select-number/')(
     component: InputSelectNumberPage,
 });
 
-const componentCode = `import { cn, removeTrailingZeros } from '@/lib/utils';
+const componentCode = `import { cn, removeTrailingZeros } from './lib/utils';
 import React, { useRef } from 'react';
 import { FaRegDotCircle } from 'react-icons/fa';
-import { Input } from './input';
 
 export type Progression = 'linear' | 'arithmetic' | 'geometric' | 'paraboloid' | 'exponential';
 
 export interface InputSelectNumberProps
     extends Omit<React.ComponentProps<'input'>, 'defaultValue' | 'onChange'> {
     icon?: React.JSX.Element | string;
-    orientation?: 'horizontal' | 'vertical';
+    orientation?: 'horizontal' | 'vertical' | 'diagonal';
     step?: number;
     precision?: number;
     progression?: Progression;
@@ -55,31 +54,41 @@ export const InputSelectNumber = React.forwardRef<HTMLInputElement, InputSelectN
         const dragRef = useRef(null);
         const startValueRef = useRef<number>(value === '' ? 0 : Number(value));
 
-        const handleMouseDown = () => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const handleMouseDown = (_event: React.MouseEvent<HTMLDivElement>) => {
+            if (disabled) return;
+
             startValueRef.current = value === '' ? 0 : Number(value);
-            if (!disabled) {
-                document.addEventListener('mousemove', handleMouseMove);
-                document.addEventListener('mouseup', handleMouseUp);
-            }
+
+            document.addEventListener('mousemove', handleMouseMove);
+            document.addEventListener('mouseup', handleMouseUp);
         };
 
         const handleMouseUp = () => {
-            if (!disabled) {
-                document.removeEventListener('mousemove', handleMouseMove);
-                document.removeEventListener('mouseup', handleMouseUp);
-            }
+            document.removeEventListener('mousemove', handleMouseMove);
+            document.removeEventListener('mouseup', handleMouseUp);
         };
 
         const handleMouseMove = (event: MouseEvent) => {
-            const movement = orientation === 'vertical' ? -event.movementY : event.movementX;
-            const delta: number = movement * step;
-            let newValue = calculateByProgression(startValueRef.current, delta, progression);
+            let deltaMouse;
+            if (orientation === 'vertical') {
+                deltaMouse = -event.movementY;
+            } else if (orientation === 'horizontal') {
+                deltaMouse = event.movementX;
+            } else {
+                deltaMouse = event.movementX - event.movementY;
+            }
+
+            const deltaValue = deltaMouse * (step || 1);
+
+            let newValue = calculateByProgression(startValueRef.current, deltaValue, progression);
 
             if (min !== undefined && newValue < +min) newValue = +min;
             if (max !== undefined && newValue > +max) newValue = +max;
 
-            startValueRef.current = newValue;
             fieldOnChange(removeTrailingZeros(newValue, precision));
+            // Update startValueRef to allow continuous dragging without releasing mouse
+            startValueRef.current = newValue;
         };
 
         const calculateByProgression = (
@@ -97,6 +106,7 @@ export const InputSelectNumber = React.forwardRef<HTMLInputElement, InputSelectN
                 case 'exponential':
                     return value * (1 + delta * 0.01);
                 case 'geometric':
+                    // eslint-disable-next-line no-case-declarations
                     const factor = 1.05;
                     if (delta > 0) {
                         return (value + delta) * factor;
@@ -112,46 +122,40 @@ export const InputSelectNumber = React.forwardRef<HTMLInputElement, InputSelectN
 
         const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
             const rawValue = e.target.value;
-            if (rawValue === '') {
-                fieldOnChange('');
-                return;
+            if (rawValue === '' || rawValue === '-' || !isNaN(+rawValue)) {
+                fieldOnChange(rawValue);
             }
-            let numericValue = +rawValue;
-            if (max !== undefined && numericValue > +max) {
-                numericValue = +max;
-            }
-            fieldOnChange(numericValue);
         };
 
         const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
             const rawValue = e.target.value;
-            let numericValue: number | string = rawValue === '' ? '' : +rawValue;
 
-            if (numericValue === '' || isNaN(numericValue as number)) {
-                if (min !== undefined) {
-                    fieldOnChange(+min);
-                } else {
-                    fieldOnChange('');
-                }
+            if (rawValue.trim() === '' || rawValue === '-') {
+                fieldOnChange(min !== undefined ? +min : '');
                 return;
             }
 
-            if (typeof numericValue === 'number') {
-                if (min !== undefined && numericValue < +min) {
-                    numericValue = +min;
-                }
-                fieldOnChange(numericValue);
+            let numericValue = +rawValue;
+
+            if (isNaN(numericValue)) {
+                fieldOnChange(min !== undefined ? +min : '');
+                return;
             }
+
+            if (min !== undefined && numericValue < +min) {
+                numericValue = +min;
+            }
+            if (max !== undefined && numericValue > +max) {
+                numericValue = +max;
+            }
+
+            fieldOnChange(removeTrailingZeros(numericValue, precision));
         };
 
         return (
             <div
                 className={cn(
-                    'inline-flex items-center overflow-hidden rounded-lg border-2 border-gray-400 focus-within:ring-1 focus-within:ring-ring bg-transparent dark:bg-input/30',
-                    {
-                        'flex-col w-20': orientation === 'vertical',
-                        'h-8': orientation === 'horizontal',
-                    },
+                    'inline-flex h-8 items-center overflow-hidden rounded-lg border-2 border-gray-400 bg-transparent focus-within:ring-1 focus-within:ring-ring dark:bg-input/30',
                     className,
                 )}
             >
@@ -159,17 +163,17 @@ export const InputSelectNumber = React.forwardRef<HTMLInputElement, InputSelectN
                     ref={dragRef}
                     onMouseDown={handleMouseDown}
                     className={cn(
-                        'flex items-center justify-center',
+                        'flex h-full aspect-square items-center justify-center',
                         {
-                            'aspect-square h-full cursor-ew-resize':
-                                orientation === 'horizontal',
-                            'w-full h-8 cursor-ns-resize': orientation === 'vertical',
+                            'cursor-ew-resize': orientation === 'horizontal',
+                            'cursor-ns-resize': orientation === 'vertical',
+                            'cursor-nwse-resize': orientation === 'diagonal',
                         },
                         disabled && 'cursor-not-allowed opacity-50',
                     )}
                 >
                     {typeof icon === 'string' && icon.length > 0 ? (
-                        <span className="text-sm font-medium select-none">{icon.charAt(0)}</span>
+                        <span className="select-none text-sm font-medium">{icon.charAt(0)}</span>
                     ) : React.isValidElement(icon) ? (
                         icon
                     ) : (
@@ -180,11 +184,7 @@ export const InputSelectNumber = React.forwardRef<HTMLInputElement, InputSelectN
                 <Input
                     type="number"
                     className={cn(
-                        'w-full rounded-none border-none bg-transparent text-center dark:bg-transparent px-2 py-0 focus-visible:ring-0 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none',
-                        {
-                            'h-8': orientation === 'vertical',
-                            'h-full': orientation === 'horizontal',
-                        },
+                        'h-full w-full rounded-none border-none bg-transparent px-2 py-0 focus-visible:ring-0 [appearance:textfield] dark:bg-transparent [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none',
                         classNameInput,
                     )}
                     value={value}
@@ -198,7 +198,73 @@ export const InputSelectNumber = React.forwardRef<HTMLInputElement, InputSelectN
     },
 );
 
-InputSelectNumber.displayName = 'InputSelectNumber';`;
+InputSelectNumber.displayName = 'InputSelectNumber';
+
+function Input({ className, type, ...props }: React.ComponentProps<"input">) {
+  return (
+    <input
+      type={type}
+      data-slot="input"
+      className={cn(
+        "file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
+        "focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]",
+        "aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+
+export { Input }
+
+// Libs
+
+import type { ClassValue } from "clsx";
+
+import { clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
+
+export const cn = (...inputs: ClassValue[]) => {
+  return twMerge(clsx(inputs));
+};
+
+export function removeTrailingZeros(num: number, precision = 0) {
+  if (typeof num !== 'number') {
+      throw new TypeError('Input must be a number');
+  }
+
+  if (precision < 0) {
+      throw new RangeError('Precision must be a non-negative integer');
+  }
+
+  // Convert the number to a string
+  const numStr = num.toString();
+
+  // For integer numbers, remove trailing zeros and return as integer if precision is 0
+  if (Number.isInteger(num) && precision === 0) {
+      return parseInt(numStr, 10);
+  } else {
+      // Handle floating point numbers with specific precision
+      // eslint-disable-next-line prefer-const
+      let [integerPart, decimalPart] = numStr.split('.');
+
+      if (decimalPart) {
+          // Limit decimal places based on precision
+          decimalPart = decimalPart.slice(0, precision);
+          if (decimalPart.length === 0) {
+              // If there's no decimal part left after slicing, return the integer part
+              return parseInt(integerPart, 10);
+          }
+          return parseFloat(integerPart + '.' + decimalPart);
+      }
+
+      // If no decimal part, return the integer
+      return parseInt(numStr, 10);
+  }
+}
+
+`;
 
 const example1Code = `
 import { InputSelectNumber } from '@/components/ui/input-select-number';
@@ -277,16 +343,70 @@ export default function VerticalExample() {
 `;
 
 const rows: PropsTableRow[] = [
-    { prop: 'value', type: 'number | string', required: true, description: 'The current value of the input.' },
-    { prop: 'fieldOnChange', type: '(value: number | string) => void', required: true, description: 'Callback function when the value changes.' },
-    { prop: 'icon', type: 'React.JSX.Element | string', required: false, description: 'Custom icon or a single character string for the drag handle.' },
-    { prop: 'orientation', type: "'horizontal' | 'vertical'", required: false, defaultValue: "'horizontal'", description: 'The orientation of the component.' },
-    { prop: 'step', type: 'number', required: false, defaultValue: '0', description: 'The increment/decrement step for value change on drag.' },
-    { prop: 'precision', type: 'number', required: false, defaultValue: '0', description: 'The number of decimal places to preserve.' },
-    { prop: 'progression', type: "'linear' | 'arithmetic' | 'geometric' | 'paraboloid' | 'exponential'", required: false, defaultValue: "'linear'", description: 'The progression type for value change.' },
-    { prop: 'classNameInput', type: 'string', required: false, description: 'Custom class for the input element.' },
-    { prop: 'min', type: 'number | string', required: false, description: 'Minimum allowed value.' },
-    { prop: 'max', type: 'number | string', required: false, description: 'Maximum allowed value.' },
+    {
+        prop: 'value',
+        type: 'number | string',
+        required: true,
+        description: 'The current value of the input.',
+    },
+    {
+        prop: 'fieldOnChange',
+        type: '(value: number | string) => void',
+        required: true,
+        description: 'Callback function when the value changes.',
+    },
+    {
+        prop: 'icon',
+        type: 'React.JSX.Element | string',
+        required: false,
+        description: 'Custom icon or a single character string for the drag handle.',
+    },
+    {
+        prop: 'orientation',
+        type: "'horizontal' | 'vertical'",
+        required: false,
+        defaultValue: "'horizontal'",
+        description: 'The orientation of the component.',
+    },
+    {
+        prop: 'step',
+        type: 'number',
+        required: false,
+        defaultValue: '0',
+        description: 'The increment/decrement step for value change on drag.',
+    },
+    {
+        prop: 'precision',
+        type: 'number',
+        required: false,
+        defaultValue: '0',
+        description: 'The number of decimal places to preserve.',
+    },
+    {
+        prop: 'progression',
+        type: "'linear' | 'arithmetic' | 'geometric' | 'paraboloid' | 'exponential'",
+        required: false,
+        defaultValue: "'linear'",
+        description: 'The progression type for value change.',
+    },
+    {
+        prop: 'classNameInput',
+        type: 'string',
+        required: false,
+        description: 'Custom class for the input element.',
+    },
+    {
+        prop: 'min',
+        type: 'number | string',
+        required: false,
+        description: 'Minimum allowed value.',
+    },
+    {
+        prop: 'max',
+        type: 'number | string',
+        required: false,
+        description: 'Maximum allowed value.',
+    },
     { prop: 'disabled', type: 'boolean', required: false, description: 'Disables the component.' },
 ];
 
@@ -295,18 +415,25 @@ function InputSelectNumberPage() {
     const [value2, setValue2] = useState<number | string>(10.5);
     const [value3, setValue3] = useState<number | string>(100);
     const [value4, setValue4] = useState<number | string>(50);
-    const {t} = useTranslation();
+    const { t } = useTranslation();
 
     return (
         <MainLayout>
             <div className="w-full px-6 py-16">
                 <PageTitle data-toc>Input Select Number</PageTitle>
                 <p className="max-w-xl text-white/60">
-                    {t('A numeric input component that allows value changes by dragging the mouse horizontally or vertically')}.
+                    {t(
+                        'A numeric input component that allows value changes by dragging the mouse horizontally or vertically',
+                    )}
+                    .
                 </p>
 
                 <div className="mt-8 flex flex-col gap-10">
-                    <PreviewTabs title="Basic Usage" description={t('A simple input with linear progression.')} codeText={example1Code}>
+                    <PreviewTabs
+                        title="Basic Usage"
+                        description={t('A simple input with linear progression.')}
+                        codeText={example1Code}
+                    >
                         <div className="relative flex h-full items-center justify-center">
                             <InputSelectNumber
                                 value={value1}
@@ -318,7 +445,11 @@ function InputSelectNumberPage() {
                         </div>
                     </PreviewTabs>
 
-                    <PreviewTabs title="With Precision" description={t('An input that handles decimal values.')} codeText={example2Code}>
+                    <PreviewTabs
+                        title="With Precision"
+                        description={t('An input that handles decimal values.')}
+                        codeText={example2Code}
+                    >
                         <div className="relative flex h-full items-center justify-center">
                             <InputSelectNumber
                                 value={value2}
@@ -331,7 +462,11 @@ function InputSelectNumberPage() {
                         </div>
                     </PreviewTabs>
 
-                    <PreviewTabs title="Geometric Progression" description={t('An input with non-linear value change.')} codeText={example3Code}>
+                    <PreviewTabs
+                        title="Geometric Progression"
+                        description={t('An input with non-linear value change.')}
+                        codeText={example3Code}
+                    >
                         <div className="relative flex h-full items-center justify-center">
                             <InputSelectNumber
                                 value={value3}
@@ -344,7 +479,11 @@ function InputSelectNumberPage() {
                         </div>
                     </PreviewTabs>
 
-                    <PreviewTabs title="Vertical Orientation" description={t('An input that changes value on vertical drag.')} codeText={example4Code}>
+                    <PreviewTabs
+                        title="Vertical Orientation"
+                        description={t('An input that changes value on vertical drag.')}
+                        codeText={example4Code}
+                    >
                         <div className="relative flex h-48 items-center justify-center">
                             <InputSelectNumber
                                 value={value4}
@@ -369,7 +508,8 @@ function InputSelectNumberPage() {
                     description={
                         <>
                             <p className="mb-4">
-                                <strong>Input Select Number</strong> &mdash; {t('a highly customizable numeric input component')}.
+                                <strong>Input Select Number</strong> &mdash;{' '}
+                                {t('a highly customizable numeric input component')}.
                             </p>
                         </>
                     }
