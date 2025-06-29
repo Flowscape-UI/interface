@@ -4,7 +4,7 @@ import { Link } from '@tanstack/react-router';
 import { useTranslation } from '@/hooks/use-translation';
 
 export default function Footer() {
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     const soon = () => t('soon');
 
     return (
@@ -20,11 +20,10 @@ export default function Footer() {
                         loading="eager"
                     />
                     <p className="text-sm leading-relaxed">
-                        <span className="font-semibold text-white">Flowscape</span> {t(`is an
-                        open-source`)} UI/UX {t(`library that lets you build fluid, animated interfaces
-                        without bloat. Totally
-                        free for personal &
-                        commercial projects.`)}
+                        <span className="font-semibold text-white">Flowscape</span>{' '}
+                        {t(
+                            `is an open-source UI/UX library that lets you build fluid, animated interfaces without bloat. Totally free for personal & commercial projects.`,
+                        )}
                     </p>
                 </div>
 
@@ -82,7 +81,7 @@ export default function Footer() {
             {/* Bottom note */}
             <div className="mt-12 text-center text-base text-slate-500">
                 &copy; <time dateTime={new Date().toISOString()}>{new Date().getFullYear()}</time>{' '}
-                Flowscape. {t('Crafted with')} ❤️ {t('and open‑sourced under')} MIT.
+                Flowscape. {t('Crafted with ❤️ and open‑sourced under')} MIT.
             </div>
         </footer>
     );

@@ -32,7 +32,7 @@ export function PreviewTabs({
         <Tabs defaultValue="preview" className="mx-auto mt-3 w-full max-w-[740px]">
             <div className="space-y-1">
                 <h2 className="text-2xl font-bold" data-toc>
-                    {t(String(title))}
+                    {title}
                 </h2>
                 {description && <p className="text-sm text-gray-400">{t(description)}</p>}
             </div>

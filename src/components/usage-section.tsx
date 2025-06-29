@@ -1,12 +1,9 @@
-// components/UsageSection.tsx
-'use client';
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { Card, CardContent } from './ui/card';
 import { CopyButton } from './copy-button';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { atomDark } from 'react-syntax-highlighter/dist/cjs/styles/prism';
-import { useTranslation } from '@/hooks/use-translation';
 
 interface UsageSectionProps {
     /** Markdown / JSX description placed under the title */
@@ -37,12 +34,11 @@ interface UsageSectionProps {
  * ```
  */
 export function UsageSection({ description, code, className, title = 'Usage' }: UsageSectionProps) {
-    const { t } = useTranslation();
     return (
         <section className={cn('mt-20 scroll-m-14', className)}>
             {/* Heading */}
             <h1 data-toc className="mb-4 text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                {t(title)}
+                {title}
             </h1>
 
             {/* Description */}

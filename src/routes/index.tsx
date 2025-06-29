@@ -1,5 +1,6 @@
 import { useTranslation } from '@/hooks/use-translation';
 import { GITHUB_URL } from '@/lib/constants';
+import { BBCodeRenderer } from '@/lib/parse-bb-code';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { motion } from 'framer-motion';
 
@@ -8,11 +9,10 @@ export const Route = createFileRoute('/')({
 });
 
 function RouteComponent() {
-
-    const {t} = useTranslation();
+    const { t, currentLanguage } = useTranslation();
 
     return (
-        <main className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-black px-4 sm:px-6 py-24 text-white">
+        <main className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-black px-4 py-24 text-white sm:px-6">
             {/* Subtle star-like noise overlay */}
             <div className="pointer-events-none absolute inset-0 bg-[url('/noise.png')] opacity-10 mix-blend-screen" />
 
@@ -52,15 +52,25 @@ function RouteComponent() {
                     loading="eager"
                     className="h-auto w-48 sm:w-64"
                 />
-                <h1 className="bg-gradient-to-r from-sky-400 to-cyan-300 bg-clip-text text-3xl sm:text-5xl leading-tight font-extrabold text-transparent drop-shadow-[0_4px_12px_rgba(0,255,255,0.25)]">
+                <h1 className="bg-gradient-to-r from-sky-400 to-cyan-300 bg-clip-text text-3xl leading-tight font-extrabold text-transparent drop-shadow-[0_4px_12px_rgba(0,255,255,0.25)] sm:text-5xl">
                     {t('Craft fluid')} UI & {t('seamless')} UX
                 </h1>
-                <p className="mt-2 max-w-lg text-sm sm:text-lg text-slate-300">
-                    {t('Import')} <span className="font-semibold text-white">{t('exactly')}</span>{' '}{t(`what you need —
-                    animated buttons, auth panels, interactive backgrounds, dashboard widgets &
-                    more. No bloat. Pure control.`)}
+                <p className="mt-2 max-w-lg text-sm text-slate-300 sm:text-lg">
+                    {currentLanguage === 'en' && (
+                        <BBCodeRenderer
+                            text={
+                                "Import [b class='font-semibold text-white']exactly[/b] what you need — animated buttons, auth panels, interactive backgrounds, dashboard widgets & more. No bloat. Pure control."
+                            }
+                        />
+                    )}
+                    {currentLanguage !== 'en' && (
+                        <BBCodeRenderer
+                            text={t(
+                                'Import exactly what you need — animated buttons, auth panels, interactive backgrounds, dashboard widgets & more. No bloat. Pure control.',
+                            )}
+                        />
+                    )}
                 </p>
-
                 {/* CTA */}
                 <div className="mt-8 flex flex-col gap-4 sm:flex-row">
                     <Link
