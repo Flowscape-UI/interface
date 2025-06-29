@@ -166,7 +166,11 @@ function AboutPage() {
                     </p>
                     <p className="text-sm leading-relaxed sm:text-base">
                         {t('Browse our free components — or')}{' '}
-                        <Link to="/pricing" className="font-semibold underline hover:text-white">
+                        <Link
+                            disabled
+                            to="/hire"
+                            className="font-semibold underline hover:text-white"
+                        >
                             {t('hire us via Pricing')}
                         </Link>{' '}
                         {t('to bring your next web, web3 or AI idea to life')}.
