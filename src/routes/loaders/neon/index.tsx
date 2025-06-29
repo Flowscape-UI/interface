@@ -41,88 +41,106 @@ const customColorCode = `import { NeonLoader } from '@/components/ui/neon-loader
 `;
 
 const rows: PropsTableRow[] = [
-    { 
-        prop: "size", 
-        type: "number", 
-        required: false, 
-        defaultValue: '200', 
-        description: "Size of the loader in pixels" 
+    {
+        prop: 'size',
+        type: 'number',
+        required: false,
+        defaultValue: '200',
+        description: 'Size of the loader in pixels',
     },
-    { 
-        prop: "color", 
-        type: "string", 
-        required: false, 
-        defaultValue: "'#00fff9'", 
-        description: "Color of the neon effect" 
+    {
+        prop: 'color',
+        type: 'string',
+        required: false,
+        defaultValue: "'#00fff9'",
+        description: 'Color of the neon effect',
     },
-    { 
-        prop: "duration", 
-        type: "number", 
-        required: false, 
-        defaultValue: '2', 
-        description: "Animation duration in seconds" 
+    {
+        prop: 'duration',
+        type: 'number',
+        required: false,
+        defaultValue: '2',
+        description: 'Animation duration in seconds',
     },
-    { 
-        prop: "dotSize", 
-        type: "number", 
-        required: false, 
-        defaultValue: '20', 
-        description: "Size of the center dot in pixels" 
+    {
+        prop: 'dotSize',
+        type: 'number',
+        required: false,
+        defaultValue: '20',
+        description: 'Size of the center dot in pixels',
     },
-    { 
-        prop: "strokeWidth", 
-        type: "number", 
-        required: false, 
-        defaultValue: '20', 
-        description: "Width of the loader circle" 
+    {
+        prop: 'strokeWidth',
+        type: 'number',
+        required: false,
+        defaultValue: '20',
+        description: 'Width of the loader circle',
+    },
+    {
+        prop: 'backgroundColor',
+        type: 'string',
+        required: false,
+        defaultValue: "'#000000'",
+        description: 'Background color of the loader',
     },
 ];
 
-const componentCode = `import { forwardRef } from 'react';
-import { cn } from '@/lib/utils';
+const componentCode = `
+import { type HTMLAttributes, forwardRef } from 'react';
+import type { ClassValue } from "clsx";
+import { clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
 
-interface NeonLoaderProps extends React.HTMLAttributes<HTMLDivElement> {
-  size?: number;
-  color?: string;
-  duration?: number;
+const cn = (...inputs: ClassValue[]) => {
+  return twMerge(clsx(inputs));
+};
 
-  strokeWidth?: number;
+interface NeonLoaderProps extends HTMLAttributes<HTMLDivElement> {
+    size?: number;
+    color?: string;
+    duration?: number;
+    dotSize?: number;
+    strokeWidth?: number;
+    backgroundColor?: string;
 }
 
 export const NeonLoader = forwardRef<HTMLDivElement, NeonLoaderProps>(
-  ({
-    size = 200,
-    color = '#00fff9',
-    duration = 2,
+    (
+        {
+            size = 200,
+            color = '#00fff9',
+            duration = 2,
+            dotSize = 20,
+            strokeWidth = 20,
+            backgroundColor = '#000000',
+            className,
+            style,
+            ...props
+        },
+        ref,
+    ) => {
+        const loaderStyle = {
+            '--neon-size': \`\${size}px\`,
+            '--neon-color': color,
+            '--neon-duration': \`\${duration}s\`,
+            '--neon-dot-size': \`\${dotSize}px\`,
+            '--neon-stroke-width': \`\${strokeWidth}px\`,
+            '--neon-background-color': backgroundColor,
+            ...style,
+        } as React.CSSProperties;
 
-    dotSize = 20,
-    strokeWidth = 20,
-    className,
-    style,
-    ...props
-  }, ref) => {
-    const loaderStyle = {
-      '--neon-size': \`\${size}px\`,
-      '--neon-color': color,
-      '--neon-duration': \`\${duration}s\`,
-      '--neon-dot-size': \`\${dotSize}px\`,
-      '--neon-stroke-width': \`\${strokeWidth}px\`,
-      ...style,
-    } as React.CSSProperties;
-
-    return (
-      <div 
-        ref={ref}
-        className={cn(
-          'relative w-[var(--neon-size)] h-[calc(var(--neon-size)/2)]',
-          'flex items-center justify-center',
-          showReflection && '[-webkit-box-reflect:below_0_linear-gradient(transparent,transparent,rgba(0,0,0,0.333))]',
-          className
-        )}
-        style={loaderStyle}
-        {...props}
-      >
-        <style jsx>{\`
+        return (
+            <div
+                ref={ref}
+                className={cn(
+                    'relative h-[calc(var(--neon-size)/2)] w-[var(--neon-size)]',
+                    'flex items-center justify-center',
+                    className,
+                )}
+                style={loaderStyle}
+                {...props}
+            >
+                <style>{\`
           @keyframes neon-rotate {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
@@ -175,62 +193,76 @@ export const NeonLoader = forwardRef<HTMLDivElement, NeonLoaderProps>(
           .neon-inner {
             position: absolute;
             inset: var(--neon-stroke-width);
-            background: #000;
+            background: var(--neon-background-color);
             border-radius: 50%;
             z-index: 1;
           }
         \`}</style>
-        
-        <div 
-          className="neon-loader" 
-          style={{
-            '--neon-color-rgb': color.startsWith('#') 
-              ? \`\${parseInt(color.slice(1, 3), 16)}, \${parseInt(color.slice(3, 5), 16)}, \${parseInt(color.slice(5, 7), 16)}\`
-              : '0, 255, 249' // Default teal color
-          } as React.CSSProperties}
-        >
-          <span className="neon-inner"></span>
-          <i className="neon-dot"></i>
-        </div>
-        
-        <div 
-          className="neon-loader delayed"
-          style={{
-            '--neon-color-rgb': color.startsWith('#') 
-              ? \`\${parseInt(color.slice(1, 3), 16)}, \${parseInt(color.slice(3, 5), 16)}, \${parseInt(color.slice(5, 7), 16)}\`
-              : '0, 255, 249' // Default teal color
-          } as React.CSSProperties}
-        >
-          <span className="neon-inner"></span>
-          <i className="neon-dot"></i>
-        </div>
-      </div>
-    );
-  }
+
+                <div
+                    className="neon-loader"
+                    style={
+                        {
+                            '--neon-color-rgb': color.startsWith('#')
+                                ? \`\${parseInt(color.slice(1, 3), 16)}, \${parseInt(color.slice(3, 5), 16)}, \${parseInt(color.slice(5, 7), 16)}\`
+                                : '0, 255, 249', // Default teal color
+                        } as React.CSSProperties
+                    }
+                >
+                    <span className="neon-inner"></span>
+                    <i className="neon-dot"></i>
+                </div>
+
+                <div
+                    className="neon-loader delayed"
+                    style={
+                        {
+                            '--neon-color-rgb': color.startsWith('#')
+                                ? \`\${parseInt(color.slice(1, 3), 16)}, \${parseInt(color.slice(3, 5), 16)}, \${parseInt(color.slice(5, 7), 16)}\`
+                                : '0, 255, 249', // Default teal color
+                        } as React.CSSProperties
+                    }
+                >
+                    <span className="neon-inner"></span>
+                    <i className="neon-dot"></i>
+                </div>
+            </div>
+        );
+    },
 );
 
-NeonLoader.displayName = 'NeonLoader';`;
+NeonLoader.displayName = 'NeonLoader';
+
+`;
 
 function NeonLoaderPage() {
-  const {t} = useTranslation();
+    const { t } = useTranslation();
     return (
         <MainLayout>
-            <div className="px-6 py-16 w-full">
+            <div className="w-full px-6 py-16">
                 <PageTitle>Neon Loader</PageTitle>
-                <p className="text-white/60 max-w-xl">
+                <p className="max-w-xl text-white/60">
                     {t('A stylish neon loading spinner with a glowing effect.')}
                 </p>
 
                 <div className="mt-8 flex flex-col gap-10">
-                    <PreviewTabs title="Default" codeText={defaultCode}>
-                        <div className="flex justify-center items-center h-60">
+                    <PreviewTabs
+                        title="Default"
+                        codeText={defaultCode}
+                        codeSandboxUrl="https://codepen.io/MichelleLien/pen/EaxMxvm"
+                    >
+                        <div className="flex h-60 items-center justify-center">
                             <NeonLoader />
                         </div>
                     </PreviewTabs>
 
-                    <PreviewTabs title="Small & Fast" codeText={smallCode}>
-                        <div className="flex justify-center items-center h-60">
-                            <NeonLoader 
+                    <PreviewTabs
+                        title="Small & Fast"
+                        codeText={smallCode}
+                        codeSandboxUrl="https://codepen.io/MichelleLien/pen/EaxMxvm"
+                    >
+                        <div className="flex h-60 items-center justify-center">
+                            <NeonLoader
                                 size={100}
                                 color="#ff00ff"
                                 duration={1.5}
@@ -240,9 +272,13 @@ function NeonLoaderPage() {
                         </div>
                     </PreviewTabs>
 
-                    <PreviewTabs title="Custom Color" codeText={customColorCode}>
-                        <div className="flex justify-center items-center h-60">
-                            <NeonLoader 
+                    <PreviewTabs
+                        title="Custom Color"
+                        codeText={customColorCode}
+                        codeSandboxUrl="https://codepen.io/MichelleLien/pen/EaxMxvm"
+                    >
+                        <div className="flex h-60 items-center justify-center">
+                            <NeonLoader
                                 size={150}
                                 color="#ff9900"
                                 duration={1.8}
@@ -255,7 +291,9 @@ function NeonLoaderPage() {
 
                 <UsageSection
                     title="Component Code"
-                    description={t("A customizable neon loading spinner with a glowing effect. The component is built with CSS animations for optimal performance.")}
+                    description={t(
+                        'A customizable neon loading spinner with a glowing effect. The component is built with CSS animations for optimal performance.',
+                    )}
                     code={componentCode}
                 />
 
@@ -263,10 +301,15 @@ function NeonLoaderPage() {
                     description={
                         <>
                             <p className="mb-4">
-                                <strong>Neon Loader</strong> &mdash; {t('A visually striking loading indicator that features a neon glow effect with a rotating animation. The component is highly customizable and can be easily integrated into any React application.')}
+                                <strong>Neon Loader</strong> &mdash;{' '}
+                                {t(
+                                    'A visually striking loading indicator that features a neon glow effect with a rotating animation. The component is highly customizable and can be easily integrated into any React application.',
+                                )}
                             </p>
                             <p className="mb-4">
-                                {t('The animation consists of two rotating arcs with a glowing dot that creates an engaging loading experience. The component uses CSS custom properties for easy theming and customization.')}
+                                {t(
+                                    'The animation consists of two rotating arcs with a glowing dot that creates an engaging loading experience. The component uses CSS custom properties for easy theming and customization.',
+                                )}
                             </p>
                         </>
                     }

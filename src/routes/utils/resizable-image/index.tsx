@@ -9,18 +9,28 @@ import type { PropsTableRow } from '@/components/props-table';
 import { useTranslation } from '@/hooks/use-translation';
 
 export const Route = createFileRoute('/utils/resizable-image/')({
-  component: ResizableImagePage,
+    component: ResizableImagePage,
 });
 
-const defaultCode = 'import { ResizableImage } from "@/components/ui/resizable-image";\n\n<ResizableImage src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853" alt="A cool shoe" />';
+const defaultCode =
+    'import { ResizableImage } from "@/components/ui/resizable-image";\n\n<ResizableImage src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853" alt="A cool shoe" />';
 
-const freeAspectRatioCode = 'import { ResizableImage } from "@/components/ui/resizable-image";\n\n<ResizableImage\n  src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853"\n  alt="A doctor with a stethoscope"\n  aspectRatio="free"\n  initialSize={{ width: 400, height: 250 }}\n/>';
+const freeAspectRatioCode =
+    'import { ResizableImage } from "@/components/ui/resizable-image";\n\n<ResizableImage\n  src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853"\n  alt="A doctor with a stethoscope"\n  aspectRatio="free"\n  initialSize={{ width: 400, height: 250 }}\n/>';
 
-const withLimitsCode = 'import { ResizableImage } from "@/components/ui/resizable-image";\n\n<ResizableImage\n  src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853"\n  alt="A laptop on a desk"\n  minSize={{ width: 200, height: 150 }}\n  maxSize={{ width: 600, height: 450 }}\n/>';
+const withLimitsCode =
+    'import { ResizableImage } from "@/components/ui/resizable-image";\n\n<ResizableImage\n  src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853"\n  alt="A laptop on a desk"\n  minSize={{ width: 200, height: 150 }}\n  maxSize={{ width: 600, height: 450 }}\n/>';
 
-const fullComponentCode = `import { useState, useRef, useEffect, useCallback } from 'react';
-import { cn } from '@/lib/utils';
+const fullComponentCode = `/* eslint-disable react-refresh/only-export-components */
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { Maximize } from 'lucide-react';
+import type { ClassValue } from "clsx";
+import { clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
+
+export const cn = (...inputs: ClassValue[]) => {
+  return twMerge(clsx(inputs));
+};
 
 interface ResizableImageProps {
   src: string;
@@ -39,9 +49,9 @@ export function ResizableImage({
   initialSize = { width: 300, height: 200 },
   minSize = { width: 100, height: 75 },
   maxSize = { width: 800, height: 600 },
-  className,
+  className = '',
   aspectRatio = 'preserve',
-  onResize,
+  onResize = () => {},
 }: ResizableImageProps) {
   const [size, setSize] = useState(initialSize);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -110,73 +120,127 @@ export function ResizableImage({
 }`;
 
 const rows: PropsTableRow[] = [
-    { prop: "src", type: "string", required: true, description: "Image source URL." },
-    { prop: "alt", type: "string", required: true, description: "Alternative text for the image." },
-    { prop: "initialSize", type: "{ width: number; height: number }", required: false, defaultValue: "{ width: 300, height: 200 }", description: "Initial dimensions of the image container." },
-    { prop: "minSize", type: "{ width: number; height: number }", required: false, defaultValue: "{ width: 100, height: 75 }", description: "Minimum dimensions for resizing." },
-    { prop: "maxSize", type: "{ width: number; height: number }", required: false, defaultValue: "{ width: 800, height: 600 }", description: "Maximum dimensions for resizing." },
-    { prop: "aspectRatio", type: "'preserve' | 'free'", required: false, defaultValue: "'preserve'", description: "Determines if the aspect ratio is maintained during resize." },
-    { prop: "onResize", type: "(size: { width: number; height: number }) => void", required: false, description: "Callback function fired when resizing is complete." },
-    { prop: "className", type: "string", required: false, description: "Additional classes for the container." },
+    {
+        prop: 'src',
+        type: 'string',
+        required: true,
+        description: 'Image source URL.',
+    },
+    {
+        prop: 'alt',
+        type: 'string',
+        required: true,
+        description: 'Alternative text for the image.',
+    },
+    {
+        prop: 'initialSize',
+        type: '{ width: number; height: number }',
+        required: false,
+        defaultValue: '{ width: 300, height: 200 }',
+        description: 'Initial dimensions of the image container.',
+    },
+    {
+        prop: 'minSize',
+        type: '{ width: number; height: number }',
+        required: false,
+        defaultValue: '{ width: 100, height: 75 }',
+        description: 'Minimum dimensions for resizing.',
+    },
+    {
+        prop: 'maxSize',
+        type: '{ width: number; height: number }',
+        required: false,
+        defaultValue: '{ width: 800, height: 600 }',
+        description: 'Maximum dimensions for resizing.',
+    },
+    {
+        prop: 'aspectRatio',
+        type: "'preserve' | 'free'",
+        required: false,
+        defaultValue: "'preserve'",
+        description: 'Determines if the aspect ratio is maintained during resize.',
+    },
+    {
+        prop: 'onResize',
+        type: '(size: { width: number; height: number }) => void',
+        required: false,
+        defaultValue: '() => {}',
+        description: 'Callback function fired when resizing is complete.',
+    },
+    {
+        prop: 'className',
+        type: 'string',
+        required: false,
+        defaultValue: '""',
+        description: 'Additional classes for the container.',
+    },
 ];
 
 function ResizableImagePage() {
-  const {t} = useTranslation();
-  return (
-    <MainLayout>
-      <div className="px-6 py-16 w-full">
-        <PageTitle>Resizable Image</PageTitle>
-        <p className="text-white/60 max-w-xl">
-          {t(`An interactive component that allows users to resize an image by dragging a handle. It's highly customizable and easy to integrate.`)}
-        </p>
+    const { t } = useTranslation();
+    return (
+        <MainLayout>
+            <div className="w-full px-6 py-16">
+                <PageTitle>Resizable Image</PageTitle>
+                <p className="max-w-xl text-white/60">
+                    {t(
+                        `An interactive component that allows users to resize an image by dragging a handle. It's highly customizable and easy to integrate.`,
+                    )}
+                </p>
 
-        <div className="mt-8 flex flex-col gap-10">
-          <PreviewTabs title="Default" codeText={defaultCode}>
-            <div className="flex justify-center items-center p-8 rounded-lg h-[400px]">
-              <ResizableImage src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853" alt="A cool shoe" />
+                <div className="mt-8 flex flex-col gap-10">
+                    <PreviewTabs title="Default" codeText={defaultCode}>
+                        <div className="flex h-[400px] items-center justify-center rounded-lg p-8">
+                            <ResizableImage
+                                src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853"
+                                alt="A cool shoe"
+                            />
+                        </div>
+                    </PreviewTabs>
+
+                    <PreviewTabs title="Free Aspect Ratio" codeText={freeAspectRatioCode}>
+                        <div className="flex h-[400px] items-center justify-center rounded-lg p-8">
+                            <ResizableImage
+                                src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853"
+                                alt="A doctor with a stethoscope"
+                                aspectRatio="free"
+                                initialSize={{ width: 400, height: 250 }}
+                            />
+                        </div>
+                    </PreviewTabs>
+
+                    <PreviewTabs title="With Size Limits" codeText={withLimitsCode}>
+                        <div className="flex h-[600px] items-center justify-center rounded-lg p-8">
+                            <ResizableImage
+                                src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853"
+                                alt="A laptop on a desk"
+                                minSize={{ width: 200, height: 150 }}
+                                maxSize={{ width: 600, height: 450 }}
+                            />
+                        </div>
+                    </PreviewTabs>
+                </div>
+
+                <UsageSection
+                    title="Component Code"
+                    description={`${t('The complete source code for the')} ResizableImage ${t('component')}.`}
+                    code={fullComponentCode}
+                />
+
+                <DocsSection
+                    description={
+                        <>
+                            <p className="mb-4">
+                                <strong>Resizable Image</strong>{' '}
+                                {t(
+                                    'provides a user-friendly way to dynamically resize images within a web page. It features a clean handle for resizing and displays the current dimensions in real-time.',
+                                )}
+                            </p>
+                        </>
+                    }
+                    rows={rows}
+                />
             </div>
-          </PreviewTabs>
-
-          <PreviewTabs title="Free Aspect Ratio" codeText={freeAspectRatioCode}>
-            <div className="flex justify-center items-center p-8 rounded-lg h-[400px]">
-              <ResizableImage
-                src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853"
-                alt="A doctor with a stethoscope"
-                aspectRatio="free"
-                initialSize={{ width: 400, height: 250 }}
-              />
-            </div>
-          </PreviewTabs>
-
-          <PreviewTabs title="With Size Limits" codeText={withLimitsCode}>
-            <div className="flex justify-center items-center p-8 rounded-lg h-[600px]">
-              <ResizableImage
-                src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853"
-                alt="A laptop on a desk"
-                minSize={{ width: 200, height: 150 }}
-                maxSize={{ width: 600, height: 450 }}
-              />
-            </div>
-          </PreviewTabs>
-        </div>
-
-        <UsageSection
-          title="Component Code"
-          description={`${t("The complete source code for the")} ResizableImage ${t('component')}.`}
-          code={fullComponentCode}
-        />
-
-        <DocsSection
-          description={
-            <>
-              <p className="mb-4">
-                <strong>Resizable Image</strong> {t('provides a user-friendly way to dynamically resize images within a web page. It features a clean handle for resizing and displays the current dimensions in real-time.')}
-              </p>
-            </>
-          }
-          rows={rows}
-        />
-      </div>
-    </MainLayout>
-  );
+        </MainLayout>
+    );
 }

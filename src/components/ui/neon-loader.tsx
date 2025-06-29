@@ -2,68 +2,51 @@ import { cn } from '@/lib/utils';
 import { type HTMLAttributes, forwardRef } from 'react';
 
 interface NeonLoaderProps extends HTMLAttributes<HTMLDivElement> {
-  /**
-   * Size of the loader in pixels
-   * @default 200
-   */
-  size?: number;
-  /**
-   * Primary color of the loader
-   * @default '#00fff9'
-   */
-  color?: string;
-  /**
-   * Animation duration in seconds
-   * @default 2
-   */
-  duration?: number;
-  /**
-   * Size of the center dot in pixels
-   * @default 20
-   */
-  dotSize?: number;
-  /**
-   * Width of the loader circle
-   * @default 20
-   */
-  strokeWidth?: number;
+    size?: number;
+    color?: string;
+    duration?: number;
+    dotSize?: number;
+    strokeWidth?: number;
+    backgroundColor?: string;
 }
 
-/**
- * A neon-style loading spinner with a glowing effect.
- */
 export const NeonLoader = forwardRef<HTMLDivElement, NeonLoaderProps>(
-  ({
-    size = 200,
-    color = '#00fff9',
-    duration = 2,
-    dotSize = 20,
-    strokeWidth = 20,
-    className,
-    style,
-    ...props
-  }, ref) => {
-    const loaderStyle = {
-      '--neon-size': `${size}px`,
-      '--neon-color': color,
-      '--neon-duration': `${duration}s`,
-      '--neon-dot-size': `${dotSize}px`,
-      '--neon-stroke-width': `${strokeWidth}px`,
-      ...style,
-    } as React.CSSProperties;
+    (
+        {
+            size = 200,
+            color = '#00fff9',
+            duration = 2,
+            dotSize = 20,
+            strokeWidth = 20,
+            backgroundColor = '#000000',
+            className,
+            style,
+            ...props
+        },
+        ref,
+    ) => {
+        const loaderStyle = {
+            '--neon-size': `${size}px`,
+            '--neon-color': color,
+            '--neon-duration': `${duration}s`,
+            '--neon-dot-size': `${dotSize}px`,
+            '--neon-stroke-width': `${strokeWidth}px`,
+            '--neon-background-color': backgroundColor,
+            ...style,
+        } as React.CSSProperties;
 
-    return (
-      <div 
-        ref={ref}
-        className={cn(
-          'relative w-[var(--neon-size)] h-[calc(var(--neon-size)/2)]',
-          'flex items-center justify-center',
-          className
-        )}
-        style={loaderStyle}
-        {...props}
-      >
-        <style>{`
+        return (
+            <div
+                ref={ref}
+                className={cn(
+                    'relative h-[calc(var(--neon-size)/2)] w-[var(--neon-size)]',
+                    'flex items-center justify-center',
+                    className,
+                )}
+                style={loaderStyle}
+                {...props}
+            >
+                <style>{`
           @keyframes neon-rotate {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
@@ -116,38 +99,42 @@ export const NeonLoader = forwardRef<HTMLDivElement, NeonLoaderProps>(
           .neon-inner {
             position: absolute;
             inset: var(--neon-stroke-width);
-            background: #000;
+            background: var(--neon-background-color);
             border-radius: 50%;
             z-index: 1;
           }
         `}</style>
-        
-        <div 
-          className="neon-loader" 
-          style={{
-            '--neon-color-rgb': color.startsWith('#') 
-              ? `${parseInt(color.slice(1, 3), 16)}, ${parseInt(color.slice(3, 5), 16)}, ${parseInt(color.slice(5, 7), 16)}`
-              : '0, 255, 249' // Default teal color
-          } as React.CSSProperties}
-        >
-          <span className="neon-inner"></span>
-          <i className="neon-dot"></i>
-        </div>
-        
-        <div 
-          className="neon-loader delayed"
-          style={{
-            '--neon-color-rgb': color.startsWith('#') 
-              ? `${parseInt(color.slice(1, 3), 16)}, ${parseInt(color.slice(3, 5), 16)}, ${parseInt(color.slice(5, 7), 16)}`
-              : '0, 255, 249' // Default teal color
-          } as React.CSSProperties}
-        >
-          <span className="neon-inner"></span>
-          <i className="neon-dot"></i>
-        </div>
-      </div>
-    );
-  }
+
+                <div
+                    className="neon-loader"
+                    style={
+                        {
+                            '--neon-color-rgb': color.startsWith('#')
+                                ? `${parseInt(color.slice(1, 3), 16)}, ${parseInt(color.slice(3, 5), 16)}, ${parseInt(color.slice(5, 7), 16)}`
+                                : '0, 255, 249', // Default teal color
+                        } as React.CSSProperties
+                    }
+                >
+                    <span className="neon-inner"></span>
+                    <i className="neon-dot"></i>
+                </div>
+
+                <div
+                    className="neon-loader delayed"
+                    style={
+                        {
+                            '--neon-color-rgb': color.startsWith('#')
+                                ? `${parseInt(color.slice(1, 3), 16)}, ${parseInt(color.slice(3, 5), 16)}, ${parseInt(color.slice(5, 7), 16)}`
+                                : '0, 255, 249', // Default teal color
+                        } as React.CSSProperties
+                    }
+                >
+                    <span className="neon-inner"></span>
+                    <i className="neon-dot"></i>
+                </div>
+            </div>
+        );
+    },
 );
 
 NeonLoader.displayName = 'NeonLoader';

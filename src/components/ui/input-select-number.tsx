@@ -141,7 +141,7 @@ export const InputSelectNumber = React.forwardRef<HTMLInputElement, InputSelectN
         return (
             <div
                 className={cn(
-                    'inline-flex h-8 items-center overflow-hidden rounded-lg border-2 border-gray-400 bg-transparent focus-within:ring-1 focus-within:ring-ring dark:bg-input/30',
+                    'focus-within:ring-ring dark:bg-input/30 inline-flex h-8 items-center overflow-hidden rounded-lg border-2 border-gray-400 bg-transparent focus-within:ring-1',
                     className,
                 )}
             >
@@ -149,7 +149,7 @@ export const InputSelectNumber = React.forwardRef<HTMLInputElement, InputSelectN
                     ref={dragRef}
                     onMouseDown={handleMouseDown}
                     className={cn(
-                        'flex h-full aspect-square items-center justify-center',
+                        'flex aspect-square h-full items-center justify-center',
                         {
                             'cursor-ew-resize': orientation === 'horizontal',
                             'cursor-ns-resize': orientation === 'vertical',
@@ -159,7 +159,7 @@ export const InputSelectNumber = React.forwardRef<HTMLInputElement, InputSelectN
                     )}
                 >
                     {typeof icon === 'string' && icon.length > 0 ? (
-                        <span className="select-none text-sm font-medium">{icon.charAt(0)}</span>
+                        <span className="text-sm font-medium select-none">{icon.charAt(0)}</span>
                     ) : React.isValidElement(icon) ? (
                         icon
                     ) : (
@@ -170,7 +170,7 @@ export const InputSelectNumber = React.forwardRef<HTMLInputElement, InputSelectN
                 <Input
                     type="number"
                     className={cn(
-                        'h-full w-full rounded-none border-none bg-transparent px-2 py-0 focus-visible:ring-0 [appearance:textfield] dark:bg-transparent [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none',
+                        'h-full w-full [appearance:textfield] rounded-none border-none bg-transparent px-2 py-0 focus-visible:ring-0 dark:bg-transparent [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none',
                         classNameInput,
                     )}
                     value={value}

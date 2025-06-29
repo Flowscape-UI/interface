@@ -73,7 +73,7 @@ function WavyBackground({
             {waves.map((wave, index) => (
                 <div
                     key={index}
-                    className="absolute left-0 w-full h-[20vh] antialiased"
+                    className="absolute left-0 h-[20vh] w-full antialiased"
                     style={
                         {
                             bottom: `${wave.bottom}px`,
@@ -98,7 +98,7 @@ function WavyBackground({
  * -------------------------------------------------- */
 
 function WavyPage() {
-    const {t} = useTranslation()
+    const { t } = useTranslation();
     return (
         <MainLayout>
             <div className="w-full px-6 py-16">
@@ -109,13 +109,21 @@ function WavyPage() {
                 </p>
 
                 <div className="mt-8 flex flex-col gap-10">
-                    <PreviewTabs title="Default" codeText={defaultCode}>
+                    <PreviewTabs
+                        title="Default"
+                        codeText={defaultCode}
+                        codeSandboxUrl="https://codepen.io/natgeyzentech/pen/PoRYvRM"
+                    >
                         <div className="relative h-full w-full overflow-hidden rounded-lg">
                             <WavyBackground />
                         </div>
                     </PreviewTabs>
 
-                    <PreviewTabs title="Sunset Theme" codeText={sunsetCode}>
+                    <PreviewTabs
+                        title="Sunset Theme"
+                        codeText={sunsetCode}
+                        codeSandboxUrl="https://codepen.io/natgeyzentech/pen/PoRYvRM"
+                    >
                         <div className="relative h-full w-full overflow-hidden rounded-lg">
                             <WavyBackground
                                 backgroundColor="#a35709"
@@ -157,7 +165,11 @@ function WavyPage() {
                         </div>
                     </PreviewTabs>
 
-                    <PreviewTabs title="Stormy Ocean Theme" codeText={stormyCode}>
+                    <PreviewTabs
+                        title="Stormy Ocean Theme"
+                        codeText={stormyCode}
+                        codeSandboxUrl="https://codepen.io/natgeyzentech/pen/PoRYvRM"
+                    >
                         <div className="relative h-full w-full overflow-hidden rounded-lg">
                             <WavyBackground
                                 backgroundColor="#03071e"
@@ -201,8 +213,10 @@ function WavyPage() {
                 </div>
 
                 <UsageSection
-                    description={t("This component creates an animated wavy background. It's self-contained and customizable through props.")}
-                    code={defaultCode}
+                    description={t(
+                        "This component creates an animated wavy background. It's self-contained and customizable through props.",
+                    )}
+                    code={wavyComponentCode}
                 />
 
                 <DocsSection
@@ -240,7 +254,8 @@ const rows: PropsTableRow[] = [
         type: 'string',
         defaultValue: 'SVG data URI',
         required: false,
-        description: 'URL or data URI for the wave image. Defaults to a high-quality seamless SVG wave.',
+        description:
+            'URL or data URI for the wave image. Defaults to a high-quality seamless SVG wave.',
     },
     {
         prop: 'waves',
@@ -302,4 +317,84 @@ export default function Page() {
       />
     </div>
   );
-}`; 
+}`;
+
+const wavyComponentCode = `
+import type { CSSProperties } from 'react'
+
+interface WaveConfig {
+    duration: number;
+    delay: number;
+    opacity: number;
+    zIndex: number;
+    bottom: number;
+    direction: 'forward' | 'reverse';
+}
+
+interface WavyBackgroundProps {
+    backgroundColor?: string;
+    height?: string;
+    waveImage?: string;
+    waves?: WaveConfig[];
+    className?: string;
+}
+
+const defaultWaves: WaveConfig[] = [
+    { duration: 20, delay: 0, opacity: 0.9, zIndex: 15, bottom: 0, direction: 'forward' },
+    { duration: 15, delay: -5, opacity: 0.7, zIndex: 10, bottom: 10, direction: 'reverse' },
+    { duration: 10, delay: -2, opacity: 0.4, zIndex: 5, bottom: 15, direction: 'forward' },
+    { duration: 5, delay: -5, opacity: 0.5, zIndex: 1, bottom: 20, direction: 'reverse' },
+];
+
+const waveSvg = \`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" preserveAspectRatio="none"><path d="M0,50 C250,100 250,0 500,50 S750,100 1000,50 L1000,100 L0,100 Z" fill="white"/></svg>\`;
+const encodedWaveSvg = \`data:image/svg+xml;base64,\${typeof window !== 'undefined' ? btoa(waveSvg) : ''}\`;
+
+export function WavyBackground({
+    backgroundColor = '#4779f7',
+    height = '100%',
+    waveImage = encodedWaveSvg,
+    waves = defaultWaves,
+    className = '',
+}: WavyBackgroundProps) {
+    return (
+        <section
+            className={\`relative w-full overflow-hidden \${className}\`}
+            style={{
+                height,
+                backgroundColor,
+                willChange: 'transform',
+            }}
+        >
+            <style>{\`
+                @keyframes waveForward {
+                    0% { background-position-x: 0; }
+                    100% { background-position-x: 100vw; }
+                }
+                @keyframes waveReverse {
+                    0% { background-position-x: 0; }
+                    100% { background-position-x: -100vw; }
+                }
+            \`}</style>
+            {waves.map((wave, index) => (
+                <div
+                    key={index}
+                    className="absolute left-0 h-[20vh] w-full antialiased"
+                    style={
+                        {
+                            bottom: \`\${wave.bottom}px\`,
+                            backgroundImage: \`url(\${waveImage})\`,
+                            backgroundSize: '100vw 20vh',
+                            opacity: wave.opacity,
+                            zIndex: wave.zIndex,
+                            animation: \`\${wave.direction === 'forward' ? 'waveForward' : 'waveReverse'} \${wave.duration}s linear infinite\`,
+                            animationDelay: \`\${wave.delay}s\`,
+                            transform: 'translateZ(0)',
+                            backfaceVisibility: 'hidden',
+                        } as CSSProperties
+                    }
+                />
+            ))}
+        </section>
+    );
+}
+`;

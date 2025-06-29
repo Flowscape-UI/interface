@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import { cva, type VariantProps } from 'class-variance-authority';
-
 import { cn } from '@/lib/utils';
+import { toast } from 'sonner';
+import { FaSpinner, FaCopy, FaCheck, FaDownload } from 'react-icons/fa6';
 
 const buttonVariants = cva(
     "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
@@ -17,6 +18,9 @@ const buttonVariants = cva(
                 secondary: 'bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80',
                 ghost: 'hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50',
                 link: 'text-primary underline-offset-4 hover:underline',
+                copy: 'bg-muted text-foreground hover:bg-muted/80',
+                download: 'bg-accent text-accent-foreground hover:bg-accent/80',
+                loading: 'bg-primary text-primary-foreground opacity-80',
             },
             size: {
                 default: 'h-9 px-4 py-2 has-[>svg]:px-3',
@@ -32,25 +36,130 @@ const buttonVariants = cva(
     },
 );
 
-function Button({
-    className,
-    variant,
-    size,
-    asChild = false,
-    ...props
-}: React.ComponentProps<'button'> &
-    VariantProps<typeof buttonVariants> & {
-        asChild?: boolean;
-    }) {
-    const Comp = asChild ? Slot : 'button';
-
-    return (
-        <Comp
-            data-slot="button"
-            className={cn(buttonVariants({ variant, size, className }))}
-            {...props}
-        />
-    );
+interface UnifiedButtonProps
+    extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+        VariantProps<typeof buttonVariants> {
+    asChild?: boolean;
+    isLoading?: boolean;
+    icon?: React.ReactNode;
+    copyText?: string;
+    downloadHref?: string;
+    downloadFilename?: string;
+    successLabel?: string;
+    copyLabel?: string;
+    downloadLabel?: string;
 }
 
-export { Button, buttonVariants };
+export const Button = React.forwardRef<HTMLButtonElement, UnifiedButtonProps>(function Button(
+    {
+        className,
+        variant = 'default',
+        size,
+        asChild = false,
+        isLoading = false,
+        icon,
+        copyText,
+        downloadHref,
+        downloadFilename,
+        children,
+        copyLabel = 'Copy',
+        successLabel = 'Copied',
+        downloadLabel = 'Download',
+        ...props
+    },
+    ref,
+) {
+    const [copied, setCopied] = React.useState(false);
+    const Comp = asChild ? Slot : 'button';
+
+    // Copy to clipboard logic
+    const handleCopy = async (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        if (!copyText) return;
+        try {
+            await navigator.clipboard.writeText(copyText);
+            setCopied(true);
+            toast.success(successLabel, { description: copyText });
+            setTimeout(() => setCopied(false), 1500);
+        } catch {
+            toast.error('Copy failed');
+        }
+    };
+
+    // Download logic
+    const handleDownload = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        if (!downloadHref) return;
+        const link = document.createElement('a');
+        link.href = downloadHref;
+        if (downloadFilename) link.download = downloadFilename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        toast.success(downloadLabel + ' started');
+    };
+
+    // Variant-specific rendering
+    if (copyText) {
+        return (
+            <Comp
+                ref={ref}
+                data-slot="button"
+                type="button"
+                aria-label={copyLabel}
+                className={cn(
+                    buttonVariants({ variant: 'copy', size, className }),
+                    'w-28 justify-center',
+                )}
+                onClick={handleCopy}
+                {...props}
+            >
+                {copied ? (
+                    <span className="inline-flex items-center gap-1">
+                        <FaCheck className="h-4 w-4" /> {successLabel}
+                    </span>
+                ) : (
+                    <span className="inline-flex items-center gap-1">
+                        <FaCopy className="h-4 w-4" /> {copyLabel}
+                    </span>
+                )}
+            </Comp>
+        );
+    }
+
+    if (downloadHref) {
+        return (
+            <Comp
+                ref={ref}
+                data-slot="button"
+                type="button"
+                aria-label={downloadLabel}
+                className={cn(buttonVariants({ variant: 'download', size, className }))}
+                onClick={handleDownload}
+                {...props}
+            >
+                <FaDownload className="h-4 w-4" />
+                {children || downloadLabel}
+            </Comp>
+        );
+    }
+
+    // Loading variant
+    return (
+        <Comp
+            ref={ref}
+            data-slot="button"
+            className={cn(
+                buttonVariants({ variant: isLoading ? 'loading' : variant, size, className }),
+            )}
+            disabled={isLoading || props.disabled}
+            {...props}
+        >
+            {isLoading && <FaSpinner className="size-4 animate-spin" />}
+            {icon && !isLoading && icon}
+            {children}
+        </Comp>
+    );
+});
+
+export { buttonVariants };
