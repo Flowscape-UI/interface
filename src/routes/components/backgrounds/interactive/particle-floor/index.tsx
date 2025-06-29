@@ -243,11 +243,12 @@ const rows: PropsTableRow[] = [
 
 const particleFloorDefaultCode = `<ParticleFloorDemo />`;
 
-const particleFloorRedStyleCode = `<ParticleFloorDemo
-                            color="#ff0000"
-                            particleSize={0.15}
-                            showControls={false}
-                        />`;
+const particleFloorRedStyleCode = `
+<ParticleFloorDemo
+    color="#ff0000"
+    particleSize={0.15}
+    showControls={false}
+/>`;
 
 const particleFloorHighDensityCode = `<ParticleFloorDemo density={0.2} particleSize={0.08} waveIntensity={0.5} />`;
 

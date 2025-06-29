@@ -522,45 +522,48 @@ function DotPatternInteractive({
 //     );
 // }
 
-const dotPatternDefaultCode = `<DotPatternInteractive
-                            gap={16}
-                            baseRadius={1}
-                            maxRadius={3}
-                            reach={80}
-                            staticColor="#64748b"
-                            activeColor="#38bdf8"
-                            className="absolute inset-0 top-1/2 left-1/2 size-full -translate-x-1/2 -translate-y-1/2"
-                            trailing
-                            trailLength={20}
-                            minTrailLength={1}
-                            animate="on-hover"
-                            trailingRadius={10}
-                            trailingGradient={{ from: '#38bdf8', to: '#FF0000' }}
-                            trailingLifetime={50}
-                        />
-                        <div className="pointer-events-none absolute inset-0 bg-black mask-[radial-gradient(600px_circle_at_center,transparent,black)]" />`;
+const dotPatternDefaultCode = `
+<DotPatternInteractive
+    gap={16}
+    baseRadius={1}
+    maxRadius={3}
+    reach={80}
+    staticColor="#64748b"
+    activeColor="#38bdf8"
+    className="absolute inset-0 top-1/2 left-1/2 size-full -translate-x-1/2 -translate-y-1/2"
+    trailing
+    trailLength={20}
+    minTrailLength={1}
+    animate="on-hover"
+    trailingRadius={10}
+    trailingGradient={{ from: '#38bdf8', to: '#FF0000' }}
+    trailingLifetime={50}
+/>
+<div className="pointer-events-none absolute inset-0 bg-black mask-[radial-gradient(600px_circle_at_center,transparent,black)]" />`;
 
-const dotPatternWithoutTrailingCode = `<DotPatternInteractive
-                        gap={16}
-                        baseRadius={1}
-                        maxRadius={3}
-                        reach={80}
-                        staticColor="#64748b"
-                        activeColor="#38bdf8"
-                        className="absolute inset-0 top-1/2 left-1/2 size-full -translate-x-1/2 -translate-y-1/2"
-                    />`;
+const dotPatternWithoutTrailingCode = `
+<DotPatternInteractive
+    gap={16}
+    baseRadius={1}
+    maxRadius={3}
+    reach={80}
+    staticColor="#64748b"
+    activeColor="#38bdf8"
+    className="absolute inset-0 top-1/2 left-1/2 size-full -translate-x-1/2 -translate-y-1/2"
+/>`;
 
-const dotPatternWhenMouseClickedCode = ` <DotPatternInteractive
-                            gap={16}
-                            baseRadius={1}
-                            maxRadius={3}
-                            reach={80}
-                            staticColor="#64748b"
-                            activeColor="#38bdf8"
-                            className="absolute inset-0 top-1/2 left-1/2 size-full -translate-x-1/2 -translate-y-1/2"
-                            animate="on-action"
-                        />
-                        <div className="pointer-events-none absolute inset-0 bg-black mask-[radial-gradient(600px_circle_at_center,transparent,black)]" />`;
+const dotPatternWhenMouseClickedCode = `
+<DotPatternInteractive
+    gap={16}
+    baseRadius={1}
+    maxRadius={3}
+    reach={80}
+    staticColor="#64748b"
+    activeColor="#38bdf8"
+    className="absolute inset-0 top-1/2 left-1/2 size-full -translate-x-1/2 -translate-y-1/2"
+    animate="on-action"
+/>
+<div className="pointer-events-none absolute inset-0 bg-black mask-[radial-gradient(600px_circle_at_center,transparent,black)]" />`;
 
 /* --------- Code snippets for PreviewTabs (trimmed for brevity) --------- */
 const componentCode = `import type { ClassValue } from "clsx";

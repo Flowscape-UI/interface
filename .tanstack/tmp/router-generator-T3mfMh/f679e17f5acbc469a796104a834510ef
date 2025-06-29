@@ -1,0 +1,9 @@
+import { createFileRoute } from '@tanstack/react-router'
+
+export const Route = createFileRoute('/components/buttons/download-file')({
+  component: RouteComponent,
+})
+
+function RouteComponent() {
+  return <div>Hello "/components/buttons/download-file"!</div>
+}

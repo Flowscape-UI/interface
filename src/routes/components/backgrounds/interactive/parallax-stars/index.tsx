@@ -165,10 +165,11 @@ const defaultCode = `import ParallaxStarsInteractive from "@/components/Parallax
 
 <ParallaxStarsInteractive parallax={30} mode="inverse" />`;
 
-const emojiCode = ` <ParallaxStarsInteractive
-                            className="size-full"
-                            renderStar={(s) => <span style={{ fontSize: s.size * 4 }}>✨</span>}
-                        />`;
+const emojiCode = `
+<ParallaxStarsInteractive
+    className="size-full"
+    renderStar={(s) => <span style={{ fontSize: s.size * 4 }}>✨</span>}
+/>`;
 
 const inverseCode = `<ParallaxStarsInteractive className="size-full" mode="inverse" />`;
 

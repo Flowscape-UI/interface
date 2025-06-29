@@ -103,7 +103,7 @@ export function PreviewTabs({
             <TabsContent value="code">
                 <Card className="aspect-video max-h-[500px] w-full overflow-hidden overflow-y-auto">
                     <CardContent className="relative">
-                        <div className="absolute right-8">
+                        <div className="absolute right-6">
                             <CopyButton copyText={codeText} />
                         </div>
                         <SyntaxHighlighter

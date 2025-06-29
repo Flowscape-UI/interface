@@ -10,7 +10,8 @@ const buttonVariants = cva(
     {
         variants: {
             variant: {
-                default: 'bg-primary text-primary-foreground shadow-xs hover:bg-primary/90',
+                default:
+                    'bg-[#2280cc] text-white shadow-xs hover:text-white/70 hover:bg-[#2280cc]/70',
                 destructive:
                     'bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60',
                 outline:
@@ -36,10 +37,11 @@ const buttonVariants = cva(
     },
 );
 
-interface UnifiedButtonProps
+export interface ButtonProps
     extends React.ButtonHTMLAttributes<HTMLButtonElement>,
         VariantProps<typeof buttonVariants> {
     asChild?: boolean;
+    mode?: 'default' | 'copy' | 'download' | 'loading';
     isLoading?: boolean;
     icon?: React.ReactNode;
     copyText?: string;
@@ -50,17 +52,18 @@ interface UnifiedButtonProps
     downloadLabel?: string;
 }
 
-export const Button = React.forwardRef<HTMLButtonElement, UnifiedButtonProps>(function Button(
+export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(function Button(
     {
-        className,
+        className = '',
         variant = 'default',
-        size,
+        size = 'default',
         asChild = false,
+        mode = 'default',
         isLoading = false,
         icon,
-        copyText,
-        downloadHref,
-        downloadFilename,
+        copyText = '',
+        downloadHref = '',
+        downloadFilename = '',
         children,
         copyLabel = 'Copy',
         successLabel = 'Copied',
@@ -99,8 +102,8 @@ export const Button = React.forwardRef<HTMLButtonElement, UnifiedButtonProps>(fu
         toast.success(downloadLabel + ' started');
     };
 
-    // Variant-specific rendering
-    if (copyText) {
+    // Универсальный рендеринг по mode
+    if (mode === 'copy') {
         return (
             <Comp
                 ref={ref}
@@ -108,7 +111,7 @@ export const Button = React.forwardRef<HTMLButtonElement, UnifiedButtonProps>(fu
                 type="button"
                 aria-label={copyLabel}
                 className={cn(
-                    buttonVariants({ variant: 'copy', size, className }),
+                    buttonVariants({ variant: variant ?? 'copy', size, className }),
                     'w-28 justify-center',
                 )}
                 onClick={handleCopy}
@@ -127,14 +130,14 @@ export const Button = React.forwardRef<HTMLButtonElement, UnifiedButtonProps>(fu
         );
     }
 
-    if (downloadHref) {
+    if (mode === 'download') {
         return (
             <Comp
                 ref={ref}
                 data-slot="button"
                 type="button"
                 aria-label={downloadLabel}
-                className={cn(buttonVariants({ variant: 'download', size, className }))}
+                className={cn(buttonVariants({ variant: variant ?? 'download', size, className }))}
                 onClick={handleDownload}
                 {...props}
             >
@@ -144,19 +147,31 @@ export const Button = React.forwardRef<HTMLButtonElement, UnifiedButtonProps>(fu
         );
     }
 
-    // Loading variant
+    if (mode === 'loading' || isLoading) {
+        return (
+            <Comp
+                ref={ref}
+                data-slot="button"
+                className={cn(buttonVariants({ variant: 'loading', size, className }))}
+                disabled
+                {...props}
+            >
+                <FaSpinner className="size-4 animate-spin" />
+                {children}
+            </Comp>
+        );
+    }
+
+    // Default
     return (
         <Comp
             ref={ref}
             data-slot="button"
-            className={cn(
-                buttonVariants({ variant: isLoading ? 'loading' : variant, size, className }),
-            )}
-            disabled={isLoading || props.disabled}
+            className={cn(buttonVariants({ variant, size, className }))}
+            disabled={props.disabled}
             {...props}
         >
-            {isLoading && <FaSpinner className="size-4 animate-spin" />}
-            {icon && !isLoading && icon}
+            {icon}
             {children}
         </Comp>
     );
