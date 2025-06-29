@@ -39,7 +39,8 @@ const GithubLink = ({ stars, className }: { stars: number; className?: string })
 
 export function Header() {
     const [stars, setStars] = useState(0);
-    const { t, languages, isLoadingLanguages, setCurrentLanguage, currentLanguage } = useTranslation();
+    const { t, languages, isLoadingLanguages, setCurrentLanguage, currentLanguage } =
+        useTranslation();
 
     useEffect(() => {
         fetch('https://api.github.com/repos/Flowscape-UI/interface')
@@ -71,10 +72,10 @@ export function Header() {
 
     return (
         <header className="supports-backdrop-blur:bg-background/90 border-border sticky top-0 z-[1000] w-full border-b bg-white/5 backdrop-blur-lg">
-            <div className="flex w-full items-center justify-between px-4 sm:px-6 py-3">
+            <div className="flex w-full items-center justify-between px-4 py-3 sm:px-6">
                 <Link
                     to="/"
-                    className="inline-flex items-center gap-2 text-base sm:text-lg font-bold tracking-tight text-white"
+                    className="inline-flex items-center gap-2 text-base font-bold tracking-tight text-white sm:text-lg"
                 >
                     <img src="/brand/logo.svg" alt="Flowscape" className="h-6 w-auto sm:h-8" />
                     <span className="hidden sm:inline">Flowscape</span>
@@ -85,13 +86,18 @@ export function Header() {
                     {/* <NavLinks className="hidden md:flex" /> */}
                     <GithubLink stars={stars} className="hidden md:flex" />
 
-                                        <Select onValueChange={setCurrentLanguage} value={currentLanguage}>
-                        <SelectTrigger className="w-[120px] h-[36px] flex text-slate-200 border-slate-700 hover:bg-slate-800">
+                    <Select onValueChange={setCurrentLanguage} value={currentLanguage}>
+                        <SelectTrigger className="flex h-[36px] w-[120px] border-slate-700 text-slate-200 hover:bg-slate-800">
                             <SelectValue placeholder="Language" />
                         </SelectTrigger>
-                        <SelectContent sideOffset={4} className="z-[2000] bg-slate-900 text-slate-200 border-slate-700">
+                        <SelectContent
+                            sideOffset={4}
+                            className="z-[2000] border-slate-700 bg-slate-900 text-slate-200"
+                        >
                             {isLoadingLanguages ? (
-                                <SelectItem value="loading" disabled>Loading...</SelectItem>
+                                <SelectItem value="loading" disabled>
+                                    Loading...
+                                </SelectItem>
                             ) : (
                                 languages?.map((lang) => (
                                     <SelectItem key={lang.code} value={lang.code}>
@@ -124,13 +130,17 @@ export function Header() {
                                     <nav className="flex flex-col gap-4">
                                         {nav.map((n) => (
                                             <DrawerClose asChild key={n.href}>
-                                                <Link to={n.href} className="w-full text-left py-2">
+                                                <Link to={n.href} className="w-full py-2 text-left">
                                                     {n.label}
                                                 </Link>
                                             </DrawerClose>
                                         ))}
                                         <DrawerClose asChild>
-                                            <Link disabled to="/auth" className="w-full text-left py-2">
+                                            <Link
+                                                disabled
+                                                to="/auth"
+                                                className="w-full py-2 text-left"
+                                            >
                                                 {t('Sign In', 'ru')}
                                             </Link>
                                         </DrawerClose>

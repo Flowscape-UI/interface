@@ -2,44 +2,6 @@ import { useEffect, useState } from 'react';
 import { cn } from '../lib/utils';
 import { Link, useRouter } from '@tanstack/react-router';
 
-/**
- * **TableOfContents** — автоматическая динамическая навигация по заголовкам.
- *
- * Компонент ищет все элементы с атрибутом `data-toc` (например, `<h2 data-toc>`)
- * и формирует из них многоуровневый список якорных ссылок. Текущий заголовок
- * подсвечивается через `IntersectionObserver`.
- *
- * **Ключевые моменты**
- * - Не требует пропсов — подключите в сайдбаре один раз.
- * - Поддерживает любую вложенность (`h2 », h3 », h4 …`).
- * - Sticky-позиционирование (`top-24`) + авто-scroll внутри.
- * - Автоматически генерирует `id` для заголовков по их тексту.
- *
- * ### Пример
- * ```tsx
- * import TableOfContents from "@/components/TableOfContents";
- *
- * export default function DocsPage() {
- *   return (
- *     <div className="mx-auto max-w-4xl lg:grid lg:grid-cols-[1fr_220px] gap-8">
- *       <article>
- *         <h2 data-toc>Installation</h2>
- *         <p>…</p>
- *         <h3 data-toc>Create app</h3>
- *         <p>…</p>
- *         <h2 data-toc>Usage</h2>
- *         <p>…</p>
- *       </article>
- *
- *       <aside className="hidden lg:block">
- *         <TableOfContents />
- *       </aside>
- *     </div>
- *   );
- * }
- * ```
- */
-
 export default function TableOfContents() {
     const pathname = useRouter().state.location.pathname;
     const [items, setItems] = useState<{ id: string; text: string; level: number }[]>([]);
